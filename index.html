@@ -1,4 +1,86 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+/* swipe bins: trash on the doubt side (left), saved folder on the trust side (right) */
+.bin{position:absolute;top:46%;width:3.1rem;height:3.1rem;border-radius:16px;display:grid;place-items:center;z-index:4;pointer-events:none;opacity:0;transition:opacity .18s,transform .18s;transform:scale(.8)}
+.bin svg{width:1.7rem;height:1.7rem}
+.bin.l{left:.35rem;background:var(--coral);color:var(--coral-ink)}
+.bin.r{right:.35rem;background:var(--tq);color:var(--tq-ink)}
+.stage.lean-n .bin.l,.stage.lean-y .bin.r,.bin.show{opacity:.95;transform:none}
+.bin.got{animation:binGot .5s}
+@keyframes binGot{30%{transform:scale(1.28)}60%{transform:scale(.92)}}
+.card.gone.tobin{transition:transform .42s cubic-bezier(.5,0,.75,.3),opacity .42s}
+#play.sp .bin{display:none}
+/* first-time play-style intro */
+.mintro{position:fixed;inset:0;z-index:60;background:rgba(14,19,48,.78);display:grid;place-items:center;padding:1rem;animation:fadein .2s}
+.mbox{width:min(100%,360px);background:var(--ink2);border-radius:24px;padding:1.1rem 1.1rem 1rem;text-align:center;box-shadow:0 0 0 1.5px var(--saffron)}
+.mbox small{color:var(--saffron);font-weight:700;font-size:.8rem}
+.mbox h3{margin:.1rem 0 .6rem;font-size:1.35rem}
+.mbox p{margin:.7rem 0 .9rem;line-height:1.6;font-size:.98rem}
+.mbox .cta{width:100%}
+.demo{position:relative;height:150px;border-radius:16px;background:linear-gradient(180deg,#9ADCF0,#5BB4E5);overflow:hidden;direction:rtl}
+.dhand{position:absolute;width:2.4rem;height:2.4rem;border-radius:50%;background:rgba(35,44,90,.85);box-shadow:0 0 0 3px var(--saffron);z-index:5;pointer-events:none}
+.dcard{position:absolute;left:50%;top:50%;width:46%;height:62%;margin:-15% 0 0 -23%;background:#fff;border-radius:12px;padding:.6rem;display:flex;flex-direction:column;gap:.35rem;box-shadow:0 6px 14px rgba(35,44,90,.3)}
+.dcard i{display:block;height:.45rem;border-radius:9px;background:#D7DBEA}
+.dbin{position:absolute;top:50%;margin-top:-1.1rem;width:2.2rem;height:2.2rem;border-radius:10px;display:grid;place-items:center}
+.dbin svg{width:1.2rem;height:1.2rem}
+.dbin.l{left:.5rem;background:var(--coral);color:var(--coral-ink)}.dbin.r{right:.5rem;background:var(--tq);color:var(--tq-ink)}
+.d-swipe .dcard,.d-rapid .dcard{animation:dSw 4s ease-in-out infinite}
+.d-swipe .dhand,.d-rapid .dhand{left:50%;top:58%;margin-left:-1.2rem;animation:dSwH 4s ease-in-out infinite}
+@keyframes dSw{0%,12%{transform:none;opacity:1}38%{transform:translateX(-120%) translateY(-6%) scale(.12) rotate(-20deg);opacity:.2}39%,52%{transform:none;opacity:0}58%,62%{opacity:1;transform:none}88%{transform:translateX(120%) translateY(-6%) scale(.12) rotate(20deg);opacity:.2}89%,100%{opacity:0}}
+@keyframes dSwH{0%,10%{transform:none;opacity:0}16%{opacity:1;transform:none}32%{transform:translateX(-70px);opacity:1}38%,58%{opacity:0;transform:translateX(-70px)}60%{transform:none;opacity:0}66%{opacity:1;transform:none}82%{transform:translateX(70px);opacity:1}88%,100%{opacity:0;transform:translateX(70px)}}
+.d-swipe .dbin.l,.d-rapid .dbin.l{animation:dBinL 4s infinite}.d-swipe .dbin.r,.d-rapid .dbin.r{animation:dBinR 4s infinite}
+@keyframes dBinL{0%,36%,46%,100%{transform:none}40%{transform:scale(1.3)}}
+@keyframes dBinR{0%,86%,96%,100%{transform:none}90%{transform:scale(1.3)}}
+.d-rapid .dcard,.d-rapid .dhand,.d-rapid .dbin{animation-duration:1.6s!important}
+.dbar{position:absolute;left:12%;right:12%;bottom:.6rem;height:.4rem;border-radius:9px;background:rgba(255,255,255,.5);overflow:hidden}
+.dbar i{display:block;height:100%;background:var(--coral);animation:dBar 1.6s linear infinite;transform-origin:right}
+@keyframes dBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.dmsg{margin:.9rem auto 0;width:84%;background:#fff;color:var(--onpaper);border-radius:12px;padding:.55rem .7rem;font-weight:700;font-size:.9rem;line-height:1.5;text-align:start}
+.dmsg u{text-decoration:none;border-radius:6px;padding:0 .15rem;animation:dHit 2.4s infinite}
+@keyframes dHit{0%,42%{background:transparent;color:inherit}50%,95%{background:var(--coral);color:#fff}}
+@keyframes dTap{0%{transform:translate(40px,50px);opacity:0}25%{opacity:1}40%{transform:none}46%{transform:scale(.8)}52%,85%{transform:none;opacity:1}100%{opacity:0}}
+.dhand{animation:dTap 2.4s ease-in-out infinite}
+.d-tap .dhand{top:2.2rem;left:30%}
+.dopt{margin:.6rem auto 0;width:84%;background:#fff;color:var(--onpaper);border-radius:12px;padding:.5rem .7rem;font-weight:700;font-size:.85rem;text-align:start}
+.d-pair .dopt.a{animation:dOk 2.4s infinite}
+@keyframes dOk{0%,42%{box-shadow:none}50%,95%{box-shadow:inset 0 0 0 3px var(--tq)}}
+.d-pair .dhand{top:1.2rem;left:22%}
+.dopts{display:flex;gap:.5rem;justify-content:center;margin-top:.7rem}.dopts.col{flex-direction:column;align-items:center;gap:.3rem;margin-top:.4rem}
+.dopts span{background:#fff;color:var(--onpaper);border-radius:10px;padding:.35rem .8rem;font-weight:700;font-size:.82rem;min-width:40%}
+.dopts span.hit{animation:dOk 2.4s infinite}
+.d-call .dopts span.hit{background:var(--coral);color:#fff}
+.dphone{margin:.8rem auto 0;width:84%;background:var(--ink);color:#F6F6F0;border-radius:14px;padding:.5rem;display:flex;flex-direction:column;font-size:.8rem}
+.dphone b{font-size:1rem}
+.d-call .dhand{top:6.6rem;left:22%}
+.d-act .dhand{top:5.5rem;left:36%}
+.durl{margin:.6rem auto 0;width:84%;background:#fff;border-radius:999px;padding:.3rem .7rem;font-size:.8rem;color:var(--onpaper);text-align:center}
+.durl u{text-decoration:none;border-radius:6px;padding:0 .2rem;animation:dHit 2.4s infinite}
+.d-page .dcard{top:62%;height:48%}
+.d-page .dhand{top:.6rem;left:40%}
+.d-scam .dmsg u{display:inline-block;min-width:3rem}
+.d-scam .dhand{top:5rem;left:58%}
+/* inspect-the-page cards */
+.card.sp.page{padding:.55rem .6rem .6rem;gap:.35rem;background:#F4F5FA}
+.pp{display:block;width:100%;text-align:start;border-radius:10px;padding:.5rem .7rem;background:#fff;color:var(--onpaper);font-weight:600;font-size:.95rem;line-height:1.45;box-shadow:inset 0 0 0 1.5px #E1E4EE}
+.pp.purl{display:flex;align-items:center;gap:.4rem;border-radius:999px;background:#E9ECF5;font-size:.86rem;justify-content:center}
+.pp.purl svg{width:.95rem;height:.95rem;flex:none}
+.pp.ph{font-size:1.08rem;font-weight:800;box-shadow:none;background:transparent}
+.pp.pfield{color:var(--onpaper2);font-weight:500;box-shadow:inset 0 0 0 1.5px #C9CEDF}
+.pp.pbtn{background:var(--ink);color:#fff;text-align:center;font-weight:800}
+.pp.bad{box-shadow:inset 0 0 0 2.5px var(--coral);background:#FFF0F0}
+.pp.bad small{display:block;color:#B42323;font-size:.8rem;font-weight:600;margin-top:.15rem}
+.pp.no{animation:shake2 .35s;opacity:.55}
+.pfoot{display:flex;align-items:center;gap:.5rem;margin-top:.2rem}
+.pfoot span{flex:1;font-size:.85rem;font-weight:700;color:var(--onpaper2)}
+.pfoot .spopt{width:auto;flex:none;background:var(--tq);color:var(--tq-ink)}
+/* play-the-scammer cards */
+.card.scam .sphead{display:flex;align-items:center;gap:.5rem;font-size:.95rem}
+.sfox{width:2.4rem;height:2.4rem;flex:none;border-radius:50%;background:var(--ink);overflow:hidden;display:grid;place-items:center}
+.sfox svg{width:100%;height:100%}
+.smsg{margin:0 .7rem .5rem;background:var(--paper2);border-radius:14px;padding:.6rem .8rem;font-weight:700}
+.blank{text-decoration:none;display:inline-block;min-width:3rem;border-bottom:2px dashed var(--onpaper2);text-align:center}
+.blank.shown{border:0;background:var(--coral);color:#fff;border-radius:6px;padding:0 .3rem}
+@media (prefers-reduced-motion:reduce){.demo *{animation:none!important}.card.gone.tobin{transition:opacity .2s}}
+</style></head><body>
 <title>واعي</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
@@ -439,6 +521,7 @@ html{overflow:hidden}
       <div class="statusbar"><span id="clock">9:41 ص</span><span class="shl">الدروع <b id="shieldN">0</b></span><span id="count">1 / 8</span></div>
       <div class="ctx" id="ctx" hidden></div>
       <div class="cardwrap" id="cardwrap"></div>
+      <span class="bin l" id="binN" aria-hidden="true"></span><span class="bin r" id="binY" aria-hidden="true"></span>
       <div class="tbar" id="tbar"><i id="tfill"></i></div>
     </div>
     <div class="ctrl">
@@ -635,34 +718,34 @@ ITEMS.push(
 
 var SLOTS=[['7:12 ص','#F9C784','#8FD3E8',0],['9:41 ص','#9ADCF0','#5BB4E5',0],['11:05 ص','#7CCBF2','#4A9BE0',0],['1:30 م','#6BBDF0','#3F8FDA',0],['4:18 م','#8FBDEB','#F2B66D',0],['6:02 م','#F29E6D','#A9549A',0],['8:20 م','#4E4396','#222B66',1],['10:56 م','#222B66','#0B1430',1]];
 var STAGES_Y=[
- {n:'لنكن على دراية',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','y11','e11'],secs:15,loss:30,bonus:50},
- {n:'الروابط والطرود',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','y12','e9','n3'],secs:14,loss:35,bonus:60},
- {n:'واتساب والأقارب',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6'],secs:13,loss:40,bonus:70},
- {n:'أمن المعلومات',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9'],secs:12.5,loss:45,bonus:80},
- {n:'الثراء السريع',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11'],secs:12,loss:55,bonus:90},
- {n:'غسيل الأموال',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:65,bonus:100},
- {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:75,bonus:120},
- {n:'سرية العملاء والإفصاح',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:85,bonus:140},
- {n:'عالم الألعاب',d:'جواهر مجانية وحسابات مقلَّدة',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:60,bonus:120},
- {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','y3','e2','e12','e8','b9'],secs:8.5,loss:120,bonus:300}
+ {n:'لنكن على دراية',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','y11','e11'],secs:15,loss:30,bonus:50,m:'swipe'},
+ {n:'واتساب والأقارب',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6'],secs:13,loss:40,bonus:70,m:'pair',pt:'wa'},
+ {n:'الروابط والطرود',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','y12','e9','n3'],secs:14,loss:35,bonus:60,m:'tap'},
+ {n:'أمن المعلومات',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9'],secs:12.5,loss:45,bonus:80,m:'swipe'},
+ {n:'غسيل الأموال',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:65,bonus:100,m:'act'},
+ {n:'الثراء السريع',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11'],secs:12,loss:55,bonus:90,m:'page'},
+ {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:75,bonus:120,m:'call',pt:'ai'},
+ {n:'سرية العملاء والإفصاح',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:85,bonus:140,m:'rapid'},
+ {n:'عالم الألعاب',d:'جواهر مجانية وحسابات مقلَّدة',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:60,bonus:120,m:'scam'},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','y3','e2','e12','e8','b9'],secs:8.5,loss:120,bonus:300,m:'mix'}
 ];
 var STAGES=STAGES_Y;
 var STAGES_K=[
- {n:'عالم الألعاب',d:'جواهر وسكنات وحسابات',ids:['k1','k2','k5','j1','j6','j9','k8','j19','j17'],loss:20,bonus:40},
- {n:'روابط وجوائز',d:'سحوبات ونوافذ وتحديات',ids:['k4','j3','j5','j11','j13','k9','j20','j21'],loss:25,bonus:50},
- {n:'العائلة والأصدقاء',d:'من يطلب منك باسم أهلك',ids:['k3','k6','j7','j10','j12','k7','j18','j25'],loss:30,bonus:60},
- {n:'الغرباء وأمان حسابك',d:'كلمات السر والتطبيقات',ids:['j2','j4','j8','i4','i6','i2','i8','j22'],loss:30,bonus:70},
- {n:'الذكاء الاصطناعي',d:'أصوات وفيديوهات مزيفة',ids:['j14','j15','j16','a9','i3','a8','j23','k10'],loss:35,bonus:80},
- {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','n1','j24','j26','i5','y12','j19'],loss:40,bonus:150}
+ {n:'عالم الألعاب',d:'جواهر وسكنات وحسابات',ids:['k1','k2','k5','j1','j6','j9','k8','j19','j17'],loss:20,bonus:40,m:'swipe'},
+ {n:'روابط وجوائز',d:'سحوبات ونوافذ وتحديات',ids:['k4','j3','j5','j11','j13','k9','j20','j21'],loss:25,bonus:50,m:'pair'},
+ {n:'العائلة والأصدقاء',d:'من يطلب منك باسم أهلك',ids:['k3','k6','j7','j10','j12','k7','j18','j25'],loss:30,bonus:60,m:'tap'},
+ {n:'الغرباء وأمان حسابك',d:'كلمات السر والتطبيقات',ids:['j2','j4','j8','i4','i6','i2','i8','j22'],loss:30,bonus:70,m:'act'},
+ {n:'الذكاء الاصطناعي',d:'أصوات وفيديوهات مزيفة',ids:['j14','j15','j16','a9','i3','a8','j23','k10'],loss:35,bonus:80,m:'swipe'},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','n1','j24','j26','i5','y12','j19'],loss:40,bonus:150,m:'mix'}
 ];
 var STAGES_E=[
- {n:'لنكن على دراية',d:'البنك لا يطلب الرمز أبدًا',ids:['e2','e4','y8','y10','e11','e8','b9','o8'],loss:40,bonus:60},
- {n:'الأبناء والأحفاد',d:'«أنا ولدك وهذا رقمي اليديد»',ids:['e3','y3','o2','n4','o3','e10','a7','y13'],loss:50,bonus:70},
- {n:'الجهات الرسمية',d:'مباحث ومعاشات وفواتير',ids:['e1','e5','y6','o1','o4','n3','e9','c8'],loss:60,bonus:90},
- {n:'الجوائز والاستثمار',d:'أرباح مضمونة وسحوبات',ids:['e6','e7','y4','n12','o5','n10','n11'],loss:70,bonus:100},
- {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','o6','a2','a3','a5','a10','a8'],loss:80,bonus:120},
- {n:'بياناتك وسرّيتها',d:'من يسأل عنها ومن يراها',ids:['c1','c4','c6','c9','o7','c3','c5','i2'],loss:80,bonus:140},
- {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','m3','e12','y11','m8'],loss:110,bonus:300}
+ {n:'لنكن على دراية',d:'البنك لا يطلب الرمز أبدًا',ids:['e2','e4','y8','y10','e11','e8','b9','o8'],loss:40,bonus:60,m:'swipe'},
+ {n:'الأبناء والأحفاد',d:'«أنا ولدك وهذا رقمي اليديد»',ids:['e3','y3','o2','n4','o3','e10','a7','y13'],loss:50,bonus:70,m:'pair'},
+ {n:'الجهات الرسمية',d:'مباحث ومعاشات وفواتير',ids:['e1','e5','y6','o1','o4','n3','e9','c8'],loss:60,bonus:90,m:'tap'},
+ {n:'الجوائز والاستثمار',d:'أرباح مضمونة وسحوبات',ids:['e6','e7','y4','n12','o5','n10','n11'],loss:70,bonus:100,m:'act'},
+ {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','o6','a2','a3','a5','a10','a8'],loss:80,bonus:120,m:'swipe'},
+ {n:'بياناتك وسرّيتها',d:'من يسأل عنها ومن يراها',ids:['c1','c4','c6','c9','o7','c3','c5','i2'],loss:80,bonus:140,m:'tap'},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','m3','e12','y11','m8'],loss:110,bonus:300,m:'mix'}
 ];
 var TRACKS={kid:STAGES_K,youth:STAGES_Y,elder:STAGES_E};
 var AGE={kid:{n:'صغار',s:'حتى 14 سنة',pw:1.35,lens:4,loss:1,start:300},youth:{n:'شباب',s:'من 15 إلى 40',pw:1,lens:3,loss:1,start:500},elder:{n:'كبار',s:'فوق 40',pw:1.4,lens:4,loss:.8,start:500}};
@@ -764,7 +847,7 @@ function renderHome(keep){logoFox();
  var ns=nextStage();if(!keep||!S.sel)S.sel=ns;var sel=S.sel,st=STAGES[sel-1];
  $('start').textContent=gx(d[sel]?'{أعد|أعيدي} المرحلة ':'{ابدأ|ابدئي} المرحلة ')+sel;
  $('start').onclick=function(){startStage(sel)};
- $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+' · '+st.ids.length+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
+ $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+(st.m&&MODES[st.m]?' · '+MODES[st.m].n:'')+' · '+PER_STAGE+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
  var box=$('map');box.innerHTML='';
  STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),b=document.createElement('button');
   b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
@@ -833,15 +916,34 @@ function startStage(n,cu){
  if(PR.wallet<=0){PR.wallet=60;save(store);toast(kid()?'عوّضناك 60 نجمة لأنك {أخبرت|أخبرتي} أهلك بسرعة':'البنك عوّضك 60 د.ك لأنك {بلّغت|بلّغتي} بسرعة')}
  var st=cu||STAGES[n-1],items=st.ids.map(function(id){return BYID[id]});if(!cu||cu.kind!=='daily')items=shuffle(items);
  if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
- if(!cu)items=addSpecials(items,n);
+ if(!cu)items=buildMode(st,items,n);
  S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
- S.shields=PR.shields;S.lens=S.pro?0:AGE[S.age].lens+((PR.adapt||1)>1.1?1:0);S.phase='idle';
+ S.rapid=!cu&&st.m==='rapid';S.shields=PR.shields;S.lens=S.pro?0:AGE[S.age].lens+((PR.adapt||1)>1.1?1:0);S.phase='idle';
  S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:(PR.adapt||1));S.perWord=.62-.22*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;
  $('cardwrap').innerHTML='';say(n===STAGES.length?TAUNT.last:TAUNT.start,'');$('foeLoot').textContent=fmt(0);
  setCtrl(false);$('ctx').hidden=true;$('tfill').style.transform='';$('count').textContent='1 / '+items.length;
- show('play');banner(cu?{n:st.n,s:cu.kind==='daily'?'نفس البطاقات للجميع اليوم':'ركّز على نقطة ضعفك'}:{n:'المرحلة '+n+(S.pro?' · محترفين':''),s:st.n});var tk=++timer.id;setTimeout(function(){if(timer.id===tk)nextCard()},1250);
+ show('play');banner(cu?{n:st.n,s:cu.kind==='daily'?'نفس البطاقات للجميع اليوم':'ركّز على نقطة ضعفك'}:{n:'المرحلة '+n+(S.pro?' · محترفين':''),s:st.n});var tk=++timer.id,goOn=function(){if(timer.id===tk)nextCard()},seen=store.seenM=store.seenM||{};
+ if(!cu&&st.m&&st.m!=='mix'&&!seen[st.m]){setTimeout(function(){if(timer.id===tk)modeIntro(st.m,function(){seen[st.m]=1;save(store);goOn()})},1100)}else setTimeout(goOn,1250);
 }
+/* First time a play style appears: a short looping demo with a moving hand, then the stage starts. */
+var BIN={n:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
+ y:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 13l2 2 4-4"/></svg>'};
+function demoHtml(m){
+ var H='<b class="dhand"></b>',bins='<span class="dbin l">'+BIN.n+'</span><span class="dbin r">'+BIN.y+'</span>';
+ if(m==='swipe')return '<div class="demo d-swipe">'+bins+'<div class="dcard"><i></i><i></i><i style="width:60%"></i></div>'+H+'</div>';
+ if(m==='rapid')return '<div class="demo d-rapid">'+bins+'<div class="dcard"><i></i><i style="width:70%"></i></div><div class="dbar"><i></i></div>'+H+'</div>';
+ if(m==='tap')return '<div class="demo d-tap"><div class="dmsg">مبروك! ربحت جائزة. <u>أرسل رمزك السري</u> الحين.</div>'+H+'</div>';
+ if(m==='pair')return '<div class="demo d-pair"><div class="dopt a">رمز التحقق 4829. لا تشاركه مع أحد.</div><div class="dopt b">أرسل لنا الرمز الحين.</div>'+H+'</div>';
+ if(m==='call')return '<div class="demo d-call"><div class="dphone"><span>مكالمة واردة</span><b dir="ltr">+965 5••• ••77</b></div><div class="dopts"><span>أتجاوب</span><span class="hit">أسكّر</span></div>'+H+'</div>';
+ if(m==='act')return '<div class="demo d-act"><div class="dmsg">«عطني رمز التحقق»</div><div class="dopts col"><span>أعطيه الرمز</span><span class="hit">بلوك وتبليغ</span><span>أرد وأشوف</span></div>'+H+'</div>';
+ if(m==='page')return '<div class="demo d-page"><div class="durl"><u dir="ltr">mybank-kw.secure-pay.co</u></div><div class="dcard"><i></i><i style="width:50%"></i><i></i></div>'+H+'</div>';
+ if(m==='scam')return '<div class="demo d-scam"><div class="dmsg">تم إيقاف بطاقتك. <u>___</u></div><div class="dopts"><span class="hit">حدّث خلال ساعة!</span><span>زر الفرع</span></div>'+H+'</div>';
+ return '';
+}
+function modeIntro(m,done){var M=MODES[m],o=document.createElement('div');o.className='mintro';
+ o.innerHTML='<div class="mbox" role="dialog" aria-modal="true" aria-label="'+M.t+'"><small>طريقة لعب جديدة</small><h3>'+gx(M.t)+'</h3>'+demoHtml(m)+'<p>'+gx(M.d)+'</p><button class="cta" id="mGo">فهمت، يلا</button></div>';
+ $('app').appendChild(o);var b=o.querySelector('#mGo');b.focus();b.onclick=function(){o.remove();done()}}
 
 /* ---------- play ---------- */
 var timer={left:0,max:0,last:0,run:false,lastTick:9,id:0};
@@ -889,11 +991,14 @@ function nextCard(){
   if(it.lens){$('bYes').disabled=$('bNo').disabled=true;$('bIn').classList.add('glow')}
   if(!$('skipTut')){var sk=document.createElement('button');sk.className='skip';sk.id='skipTut';sk.textContent='تخطَّ التمرين';sk.onclick=function(){endTut(true)};$('stage').appendChild(sk)}
   return}
- S.phase='judge';timer.max=timer.left=(2.5+words(it)*S.perWord+(call?2:0))*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;
+ S.phase='judge';timer.max=timer.left=(S.rapid?3.4+(call?1.5:0):(2.5+words(it)*S.perWord+(call?2:0)))*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;
  $('tbar').classList.remove('low');var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)});
 }
 /* ---------- extra interaction types ---------- */
 var PAIRS=[
+ {a:'ye',t:'wa',q:'أي رسالة فعلًا من أخوك؟',real:'«وصلت البيت، بكلمك بعد العشا.» من رقمه المحفوظ.',fake:'«هذا رقمي اليديد. ضروري تحوّل لي 200 الحين ولا تقول لأحد.»',why:'رقم جديد وطلب فلوس وسرّية: انتحال. اتصل على رقمه القديم.',lever:'trust'},
+ {a:'ye',t:'wa',q:'أي إعلان بيع على واتساب أسلم؟',real:'«السعر 120 د.ك. تعال عاين، والدفع عند الاستلام.»',fake:'«آخر قطعة بـ 40 د.ك! حوّل العربون الحين وأرسلها لك.»',why:'سعر أقل بكثير وعربون قبل المعاينة: علامات بائع وهمي.',lever:'greed'},
+ {a:'ye',t:'wa',q:'أي رسالة من صديقك حقيقية؟',real:'«شفت الصورة اللي أرسلتها؟» في محادثتكم القديمة.',fake:'«وصلك رمز من 6 أرقام بالغلط، ممكن ترسله لي؟»',why:'الرمز يفتح حساب واتساب الخاص فيك. لا ترسله لأحد حتى لو صديقك.',lever:'trust'},
  {a:'all',q:'أي رسالة من البنك فعلًا؟',real:'رمز التحقق 482913 لعملية شراء. لا تشاركه مع أحد.',fake:'وصلك رمز تحقق؟ أرسله لنا الآن لإلغاء العملية.',why:'البنك يرسل الرمز ويحذّرك من مشاركته، ولا يطلبه منك أبدًا.',lever:'authority'},
  {a:'all',q:'أي رابط هو موقع البنك الرسمي؟',real:'{{mybank.com.kw}}',fake:'{{mybank-kw.secure-login.co}}',why:'اسم الجهة يجب أن يكون قبل النطاق مباشرة. الشرطات والكلمات الزائدة علامة تقليد.',lever:'authority'},
  {a:'ye',q:'أي إشعار توصيل حقيقي؟',real:'شحنتك خرجت للتوصيل اليوم. الدفع عند الاستلام.',fake:'شحنتك معلّقة. ادفع 1.250 د.ك خلال ساعة: {{kw-post.pay-fees.co}}',why:'الحقيقي يخبرك فقط، والمزيف يستعجلك ويضع رابط دفع.',lever:'urgency'},
@@ -909,6 +1014,13 @@ var PAIRS=[
  {a:'k',q:'أي تطبيق آمن؟',real:'تطبيق من المتجر الرسمي، يطلب الكاميرا فقط لأنه للتصوير.',fake:'تطبيق من رابط في الدردشة، يطلب كل صورك وجهات الاتصال.',why:'حمّل من المتجر الرسمي فقط، واسأل: لماذا يحتاج هذه الصلاحية؟',lever:'greed'}
 ];
 var CALLS=[
+ {a:'ye',t:'ai',from:'+965 6••• ••41',lever:'trust',why:'الذكاء الاصطناعي يقلّد الأصوات. اتصل على رقم قريبك المحفوظ، واسأله سؤالًا ما يعرفه غيره.',steps:[
+  {say:'(صوت أخوك بالضبط) «الحقني! صار علي حادث وأبي 400 د.ك ضروري.»',o:[['خلني أتصل عليك على رقمك',2],['شصار؟ وينك؟',1]]},
+  {say:'«تلفوني خربان، هذا رقم صاحبي. حوّل على حسابه بسرعة!»',o:[['أحوّل الحين',0],['أسكّر وأتصل على رقمه المحفوظ',2]]},
+  {say:'«لا تتصل على أحد! بس حوّل، ما عندي وقت!»',o:[['خلاص بحوّل',0],['أسكّر وأتأكد من أهلي',2]]}]},
+ {a:'ye',t:'ai',from:'مديرك · مكالمة فيديو',lever:'authority',why:'الوجه والصوت يمكن تزييفهما في الفيديو. أي طلب تحويل غير معتاد تأكد منه بقناة ثانية.',steps:[
+  {say:'(وجه مديرك وصوته) «أبيك تحوّل دفعة عاجلة لمورد جديد اليوم.»',o:[['حاضر، عطني التفاصيل',1],['أتأكد معك بالإيميل الرسمي أول',2]]},
+  {say:'«الموضوع سري، لا تكلم المالية. حوّل 3,000 د.ك الحين.»',o:[['أحوّل عشان ما أتأخر',0],['أسكّر وأتصل على مكتبه',2]]}]},
  {a:'ye',from:'البنك · قسم الحماية',lever:'authority',why:'البنك لا يطلب رمز التحقق ولا يطلب تنزيل برامج. أغلق واتصل أنت على الرقم خلف بطاقتك.',steps:[
   {say:'مساك الله بالخير. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك. أنت سويتها؟',o:[['لا، مو أنا',1],['أي بطاقة؟ عطني رقمها وأتأكد',1],['نعم سويتها',1]]},
   {say:'زين، عشان نوقفها الحين بيوصلك رمز برسالة. اقراه لي.',o:[['أقرأ له الرمز',0],['الرمز ما أعطيه لأحد',1],['أسكّر وأتصل بالبنك بنفسي',2]]},
@@ -941,6 +1053,56 @@ var ORDERS=[
  {a:'k',t:'ضغطت رابط «جواهر مجانية» وكتبت بياناتك.',steps:['أخبر أهلي فورًا','أغيّر كلمة سر اللعبة','أسكّر الصفحة وما أرجع لها','أبلّغ عن اللي أرسل الرابط'],why:'أخبر أهلك أولًا، ثم غيّر كلمة السر قبل أن يستخدمها أحد.',lever:'greed'},
  {a:'k',t:'شخص غريب يهددك بنشر صورك.',steps:['ما أرد عليه ولا أدفع','أصوّر الرسائل','أخبر أهلي فورًا','بلوك وتبليغ'],why:'لا ترد ولا تدفع. احتفظ بالدليل وأخبر أهلك، فهم معك لا ضدك.',lever:'fear'}
 ];
+/* Payment pages to inspect: each part is [kind,text,why-if-suspicious]. */
+var PAGES=[
+ {fake:1,lever:'greed',why:'ربح مضمون، ونطاق غريب، وتحويل لحساب شخص: منصة وهمية.',parts:[['url','quick-profit.trade','نطاق غريب لا يتبع أي جهة مرخّصة.'],['h','منصة تداول الذهب الذكية',''],['text','ربح مضمون 40٪ كل أسبوع بدون مخاطرة','لا يوجد ربح مضمون. هذا طُعم الطمع.'],['field','اسم المستخدم',''],['text','حوّل الإيداع لحساب الوكيل الشخصي','المنصات المرخّصة لا تقبض على حساب شخص.'],['btn','إيداع','']]},
+ {fake:0,lever:'authority',why:'نطاق المتجر صحيح، والدفع يمر عبر صفحة البنك برمز تحقق. صفحة سليمة.',parts:[['url','alamal-store.com.kw',''],['h','متجر الأمل · الدفع',''],['text','المبلغ: 18.750 د.ك · طلب رقم 4471',''],['field','رقم البطاقة',''],['text','سيصلك رمز تحقق من البنك لتأكيد العملية',''],['btn','ادفع','']]},
+ {fake:1,lever:'greed',why:'سعر لا يُصدَّق ومؤقت ضاغط ونطاق مقلَّد: متجر وهمي.',parts:[['url','iphone-deals-kw.shop','نطاق جديد لا يخص أي متجر معروف.'],['h','عرض اليوم: آيفون بخصم 85٪','سعر أقل بكثير من السوق = طُعم.'],['text','العرض ينتهي خلال 04:59','العداد يستعجلك حتى لا تفكر.'],['field','رقم البطاقة',''],['field','الرقم السري للبطاقة (PIN)','لا توجد صفحة دفع تطلب الرقم السري أبدًا.'],['btn','اشترِ الآن','']]},
+ {fake:1,lever:'greed',why:'من يطلب استقبال أموال على حسابك وتحويلها يستخدمك في غسيل الأموال.',parts:[['url','kw-jobs-online.site','موقع وظائف مجهول بنطاق غريب.'],['h','وظيفة من البيت · 700 د.ك شهريًا','راتب كبير لشغل بسيط: طُعم.'],['text','المهمة: تستقبل تحويلات على حسابك وتحوّلها لنا','هذا تمرير أموال، وأنت تتحمل المسؤولية القانونية.'],['field','اسمك الكامل',''],['btn','سجّل الآن','']]},
+ {fake:0,lever:'authority',why:'نطاق البنك صحيح والتحويل لحسابك ورمز التحقق يصل برسالة. صفحة سليمة.',parts:[['url','mybank.com.kw',''],['h','تحويل بين حساباتك',''],['text','إلى: حساب التوفير الخاص بك',''],['text','المبلغ: 50.000 د.ك',''],['text','سيصلك رمز تحقق برسالة نصية',''],['btn','تأكيد','']]}
+];
+/* Play-the-scammer: pick the line Bu Heela would use; the point is to learn his tricks. */
+var SCAMS=[
+ {a:'all',t:'game',ctx:'رسالة داخل اللعبة',msg:'مبروك! ربحت 5,000 جوهرة. ___',o:[['دخّل اسم حسابك وكلمة السر خلال 10 دقائق عشان توصلك',2],['الجواهر تنضاف تلقائيًا من المتجر الرسمي',0],['ما نطلب كلمة السر أبدًا',0]],lever:'greed',why:'هدية كبيرة مقابل كلمة السر ومهلة قصيرة: طمع واستعجال.'},
+ {a:'all',t:'game',ctx:'حساب «دعم اللعبة»',msg:'حسابك عليه بلاغ. ___',o:[['بينحذف خلال ساعة إلا إذا أرسلت لنا رمز التحقق',2],['تقدر تراجع البلاغ من الإعدادات',0],['تواصل معنا من داخل اللعبة فقط',0]],lever:'fear',why:'التهديد بالحذف يخوّفك حتى ترسل الرمز.'},
+ {a:'all',t:'game',ctx:'لاعب تعرفه من اللعبة',msg:'أبيعك سكن نادر بنص السعر. ___',o:[['حوّل لي برا اللعبة وأعطيك إياه بعدين، ولا تقول لأحد',2],['نتبادل من نظام التبادل داخل اللعبة',0],['الشراء من المتجر الرسمي فقط',0]],lever:'trust',why:'الدفع خارج اللعبة والسرّية: ما في أي حماية لك.'},
+ {a:'all',t:'game',ctx:'موقع «شحن مجاني»',msg:'___',o:[['اشحن 10,000 جوهرة مجانًا! سجّل دخولك بحساب اللعبة هنا',2],['الشحن من المتجر الرسمي فقط',0],['لا تسجّل دخولك في مواقع خارجية',0]],lever:'greed',why:'«مجاني» مقابل تسجيل الدخول: يسرق حسابك.'},
+ {a:'ye',t:'',ctx:'رسالة نصية باسم البنك',msg:'تم إيقاف بطاقتك. ___',o:[['حدّث بياناتك من الرابط خلال ساعة وإلا تنحذف أموالك',2],['للاستفسار اتصل على الرقم خلف بطاقتك',0],['يمكنك زيارة أقرب فرع',0]],lever:'urgency',why:'الاستعجال والتخويف حتى تضغط الرابط قبل ما تفكر.'},
+ {a:'ye',t:'',ctx:'واتساب من رقم جديد',msg:'يبه هذا رقمي اليديد. ___',o:[['ضروري تحوّل لي 300 الحين ولا تقول لأمي',2],['بكلمك من رقمي القديم بعدين',0],['اتصل علي إذا تبي تتأكد',0]],lever:'trust',why:'انتحال القريب مع طلب السرّية.'}
+];
+var MODES={
+ swipe:{n:'سحب',t:'اسحب البطاقة',d:'{اسحب|اسحبي} يمين إذا {تثق|تثقين}، فتنحفظ في المجلد. ويسار إذا {تشك|تشكين}، فتروح للمهملات.'},
+ tap:{n:'لمس الخطأ',t:'المس الخطأ',d:'كل رسالة فيها علامة احتيال. {المس|المسي} الكلمة المريبة نفسها.'},
+ pair:{n:'موقفين',t:'أيهما الحقيقي؟',d:'يطلع لك موقفان: واحد حقيقي وواحد احتيال. {اختر|اختاري} الحقيقي.'},
+ call:{n:'مكالمة حية',t:'مكالمة حية',d:'المحتال يكلمك خطوة خطوة. {اختر|اختاري} ردك، وأفضل رد إنك {تسكّر|تسكّرين} وتتصل بنفسك.'},
+ act:{n:'وش تسوي الحين؟',t:'وش تسوي الحين؟',d:'الرسالة احتيال أكيد. {اختر|اختاري} التصرف الصح.'},
+ page:{n:'افحص الصفحة',t:'افحص صفحة الدفع',d:'{المس|المسي} كل شيء مريب في الصفحة. وإذا الصفحة سليمة {اضغط|اضغطي} «الصفحة سليمة».'},
+ rapid:{n:'الجولة السريعة',t:'الجولة السريعة',d:'نفس السحب، بس الوقت قصير جدًا. {فكّر|فكّري} بسرعة.'},
+ scam:{n:'العب دور المحتال',t:'العب دور المحتال',d:'{أنت|أنتِ} بو حيلة هالمرة. {اختر|اختاري} الجملة اللي يخدع فيها الناس، عشان {تعرف|تعرفين} حيله.'},
+ mix:{n:'كل الطرق',t:'',d:''}
+};
+function tagFirst(list,t){return shuffle(list.filter(function(x){return t&&x.t===t})).concat(shuffle(list.filter(function(x){return !t||x.t!==t})))}
+/* Every stage is 5 situations (Khalid, 2026-11-25). */
+var PER_STAGE=5;
+function buildMode(st,items,n){var o=buildMode0(st,items,n);return o.slice(0,PER_STAGE)}
+function buildMode0(st,items,n){
+ var m=st.m||'mix',out;
+ if(m==='swipe'||m==='rapid')return items;
+ if(m==='mix'){var mk=function(mm){return buildMode0({m:mm,pt:st.pt},items.slice(),n)};
+  var sw=items.filter(function(x){return !x.kind})[0],tp=mk('tap')[0],pr=mk('pair')[0],ac=mk('act'),cl=mk('call')[0];
+  var a1=ac.filter(function(x){return x.kind==='act'&&(!tp||x.id!==tp.id)})[0];sw=items.filter(function(x){return !x.kind&&(!tp||x.id!==tp.id)&&(!a1||x.id!==a1.id)})[0];
+  out=[sw,tp,pr,a1,cl||ac[ac.length-1]].filter(Boolean);return out}
+ var tellable=function(x){return x.scam&&x.ch!=='call'&&/\[\[|\{\{/.test(x.body)};
+ if(m==='tap'){out=items.filter(tellable).map(function(x){return spCopy(x,'tap')});
+  if(out.length<5)out=out.concat(items.filter(function(x){return x.scam&&!tellable(x)}).slice(0,5-out.length).map(function(x){return spCopy(x,'act')}));return out}
+ if(m==='act'){out=items.filter(function(x){return x.scam}).slice(0,PER_STAGE-1).map(function(x){return spCopy(x,'act')});
+  var O=poolFor(ORDERS),o=O[n%O.length];out.push({kind:'order',id:'ord'+n,d:o,from:'رتّب الخطوات',cap:'رتّب الخطوات',scam:1,lever:o.lever,tell:o.why,right:''});return out}
+ if(m==='pair')return tagFirst(poolFor(PAIRS),st.pt).slice(0,6).map(function(p,k){return {kind:'pair',id:'pair'+n+'_'+k,d:p,from:'أيهما الحقيقي؟',cap:'أيهما الحقيقي؟',scam:1,lever:p.lever,tell:p.why,right:''}});
+ if(m==='call')return tagFirst(poolFor(CALLS),st.pt).slice(0,5).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});
+ if(m==='page')return shuffle(PAGES.slice()).map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}});
+ if(m==='scam')return tagFirst(poolFor(SCAMS),'game').slice(0,6).map(function(c,k){return {kind:'scam',id:'scam'+n+'_'+k,d:c,from:c.ctx,cap:'العب دور المحتال',scam:1,lever:c.lever,tell:c.why,right:'',body:c.msg}});
+ return items;
+}
 function poolFor(list){var k=S.age==='kid'?'k':'ye';return list.filter(function(x){return x.a==='all'||x.a===k})}
 function addSpecials(items,n){
  var out=items.slice(),tapped=-1;
@@ -978,6 +1140,20 @@ function renderSpecial(it,sl){
   var draw=function(){var s=cd.steps[si];card.innerHTML='<header class="chead"><span class="cico">'+ICO.call+'</span><span class="f"><b>'+bd(cd.from)+'</b><span>مكالمة واردة · '+(si+1)+' من '+cd.steps.length+'</span></span></header><div class="cbody">'+gx(s.say)+'</div>'+spOpts(shuffle(s.o));
    spBind(card,function(ok){if(ok===2)spDone(it,card,soft>1?1:2,'');else if(ok===0)spDone(it,card,0,cd.why);else{soft++;si++;if(si>=cd.steps.length)spDone(it,card,1,'');else{sfx.tick();draw()}}});fit(card)};
   draw();sfx.ring();setTimeout(sfx.stop,1600);
+ }else if(k==='page'){
+  var pd=it.d,need=pd.parts.filter(function(x){return x[2]}).length,found=0,bad=0;card.className='card sp page';
+  coach('<b>افحص الصفحة.</b> {المس|المسي} كل شيء مريب، أو {اضغط|اضغطي} «الصفحة سليمة».');
+  card.innerHTML=pd.parts.map(function(x,i){return x[0]==='url'?'<button class="pp purl" data-i="'+i+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><bdi dir="ltr">'+x[1]+'</bdi></button>':'<button class="pp p'+x[0]+'" data-i="'+i+'">'+x[1]+'</button>'}).join('')+'<div class="pfoot"><span id="pCnt"></span><button class="spopt pok">الصفحة سليمة</button></div>';
+  [].forEach.call(card.querySelectorAll('.pp'),function(b){b.onclick=function(){if(S.phase!=='judge'||b.classList.contains('bad')||b.classList.contains('no'))return;var x=pd.parts[+b.getAttribute('data-i')];
+   if(x[2]){b.classList.add('bad');b.insertAdjacentHTML('beforeend','<small>'+x[2]+'</small>');found++;sfx.hit(found);card.querySelector('#pCnt').textContent='وجدت '+found;if(found>=need)spDone(it,card,bad===0?2:bad===1?1:0,pd.why)}
+   else{b.classList.add('no');bad++;sfx.mid();buzz(40);if(bad>=3)spDone(it,card,0,pd.why)}}});
+  card.querySelector('.pok').onclick=function(){if(S.phase!=='judge')return;if(pd.fake){[].forEach.call(card.querySelectorAll('.pp'),function(b){if(pd.parts[+b.getAttribute('data-i')][2])b.classList.add('bad')});spDone(it,card,0,pd.why)}else spDone(it,card,bad?1:2,pd.why)};
+ }else if(k==='scam'){
+  var sd=it.d,good=sd.o.filter(function(x){return x[1]===2})[0][0];card.className='card sp scam';
+  coach('<b>{أنت|أنتِ} بو حيلة.</b> أي جملة يكمّل فيها المحتال رسالته؟');
+  card.innerHTML='<div class="sphead"><span class="sfox">'+foeSvg('conf')+'</span>'+sd.ctx+'</div><div class="cbody smsg">'+sd.msg.replace('___','<u class="blank">؟</u>')+'</div>'+spOpts(shuffle(sd.o.slice()));
+  spBind(card,function(ok){var bl=card.querySelector('.blank');if(bl){bl.textContent=good;bl.classList.add('shown')}
+   spDone(it,card,ok,'حيلة '+LEVERS[sd.lever].n+': '+sd.why)});
  }else{
   var od=it.d,next=0,miss=0,sh=shuffle(od.steps.map(function(t,i){return [t,i]}));card.className='card sp order';
   coach('<b>وقعت في الفخ!</b> {رتّب|رتّبي} اللي {تسويه|تسوينه}: {المس|المسي} الخطوات بالترتيب.');
@@ -1029,8 +1205,8 @@ function bindSwipe(card){
  var x0=null,dx=0,pid=null,sy=card.querySelector('.stamp.y'),sn=card.querySelector('.stamp.n');
  card.addEventListener('pointerdown',function(e){if(S.phase!=='judge'||card.id!=='card')return;x0=e.clientX;dx=0;pid=e.pointerId});
  card.addEventListener('pointermove',function(e){if(x0===null||e.pointerId!==pid)return;dx=e.clientX-x0;if(Math.abs(dx)>8){try{card.setPointerCapture(pid)}catch(_){}
-   card.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80))}});
- function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70&&S.phase==='judge'&&card.id==='card'){judge(dx>0?'trust':'doubt')}else{card.style.transform='';sy.style.opacity=0;sn.style.opacity=0}}
+   card.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80));var stg=$('stage');stg.classList.toggle('lean-y',dx>30);stg.classList.toggle('lean-n',dx<-30)}});
+ function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70&&S.phase==='judge'&&card.id==='card'){judge(dx>0?'trust':'doubt')}else{card.style.transform='';sy.style.opacity=0;sn.style.opacity=0;$('stage').classList.remove('lean-y','lean-n')}}
  card.addEventListener('pointerup',end);card.addEventListener('pointercancel',end);
 }
 function judge(how){
@@ -1064,6 +1240,12 @@ function judge(how){
  flyOff(card,how);S.i++;nextCard();
 }
 function flyOff(card,how){
+ var into=(how==='trust'||how==='doubt')&&!card.classList.contains('sp')?$(how==='trust'?'binY':'binN'):null;
+ if(into){if(!into.firstChild)into.innerHTML=BIN[how==='trust'?'y':'n'];var cr=card.getBoundingClientRect(),br=into.getBoundingClientRect(),st=$('stage');st.classList.remove('lean-y','lean-n');into.classList.add('show');
+  card.id='';var ip0=card.querySelector('.insp');if(ip0)ip0.id='';card.classList.add('gone','tobin');var dx=br.left+br.width/2-(cr.left+cr.width/2),dy=br.top+br.height/2-(cr.top+cr.height/2);
+  card.style.transform='translate('+dx+'px,'+dy+'px) scale(.08) rotate('+(how==='trust'?18:-18)+'deg)';card.style.opacity=.3;
+  var sm0=card.querySelector(how==='trust'?'.stamp.y':'.stamp.n');if(sm0)sm0.style.opacity=1;
+  setTimeout(function(){card.remove();into.classList.remove('got');void into.offsetWidth;into.classList.add('got');setTimeout(function(){into.classList.remove('show')},550)},430);return}
  card.id='';var ip=card.querySelector('.insp');if(ip)ip.id='';card.classList.add('gone');
  card.style.transform=how==='trust'?'translateX(130%) rotate(14deg)':how==='doubt'?'translateX(-130%) rotate(-14deg)':'translateY(40%) scale(.9)';
  card.style.opacity=how==='timeout'?0:1;
@@ -1077,12 +1259,12 @@ var TUT=[
  {id:'t3',ch:'notif',from:'البنك',sub:'إشعار من التطبيق',body:'تم إيداع راتبك في حسابك. لا يلزمك أي إجراء.',insp:'إشعار داخل التطبيق الرسمي، بلا رابط ولا طلب.',scam:0,coach:'<b>تمرين 3 من 3.</b> مو كل شي احتيال. هذي سليمة: {اسحب|اسحبي} <b>يمين</b> أو {اضغط|اضغطي} «أثق».',hand:'r'}
 ];
 function startTut(){
- var st=STAGES[0];S.tut=true;S.stage=1;S.st=st;S.items=TUT.slice();if(kid())S.items[2]={id:'t3',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'الغدا جاهز، '+G('تعال','تعالي')+' تحت 🍽',insp:'رقمها المحفوظ، ولا تطلب شيئًا.',scam:0,coach:TUT[2].coach,hand:'r'};S.i=0;S.res=[];S.bal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;S.shields=PR.shields;S.lens=3;S.mult=1;S.perWord=1;S.phase='idle';
+ var st=STAGES[0];S.tut=true;S.rapid=false;S.stage=1;S.st=st;S.items=TUT.slice();if(kid())S.items[2]={id:'t3',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'الغدا جاهز، '+G('تعال','تعالي')+' تحت 🍽',insp:'رقمها المحفوظ، ولا تطلب شيئًا.',scam:0,coach:TUT[2].coach,hand:'r'};S.i=0;S.res=[];S.bal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;S.shields=PR.shields;S.lens=3;S.mult=1;S.perWord=1;S.phase='idle';
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;$('foeLoot').textContent=fmt(0);
  $('cardwrap').innerHTML='';$('stage').classList.add('tut');say(TAUNT.tut,'');show('play');nextCard();
 }
 function endTut(skip){
- timer.id++;store.tut=1;save(store);S.tut=false;$('stage').classList.remove('tut');$('bIn').classList.remove('glow');
+ timer.id++;store.tut=1;store.seenM=store.seenM||{};store.seenM.swipe=1;save(store);S.tut=false;$('stage').classList.remove('tut');$('bIn').classList.remove('glow');
  var sk=$('skipTut');if(sk)sk.remove();
  if(!skip)toast(kid()?'{جاهز|جاهزة}! الحين الوقت يمشي والخطأ بنجوم':'{جاهز|جاهزة}! الحين الوقت يمشي والخطأ بفلوس');startStage(1);
 }
