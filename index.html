@@ -703,6 +703,9 @@ store.prof=store.prof||{};
 if(!store.prof.youth&&typeof store.wallet==='number'){store.prof.youth={wallet:store.wallet,shields:store.shields||0,done:store.done||{},pdone:store.pdone||{},unlocked:store.unlocked||1,adapt:1}}
 ['wallet','shields','done','pdone','unlocked'].forEach(function(k){delete store[k]});
 var PR=null,TAUNT=TAUNTS.youth,REWARDS=REW.youth;
+/* Tester mode: opening the page with ?all opens every stage on this device only; ?lock turns it off. Progress itself is untouched. */
+var ALLOPEN=false;try{var q=location.search;if(/[?&]all\b/.test(q))localStorage.setItem('waai.all','1');if(/[?&]lock\b/.test(q))localStorage.removeItem('waai.all');ALLOPEN=localStorage.getItem('waai.all')==='1'}catch(e){}
+function UN(){return ALLOPEN?STAGES.length:PR.unlocked}
 function setProfile(){var a=store.age||'youth';STAGES=TRACKS[a];TAUNT=TAUNTS[a];REWARDS=REW[a];var p=store.prof[a];if(!p)p=store.prof[a]={wallet:AGE[a].start,shields:0,done:{},pdone:{},unlocked:1,adapt:1};PR=p;S.age=a;S.fem=store.fem===1;S.sel=0}
 
 /* ---------- helpers ---------- */
@@ -749,7 +752,7 @@ function applyBig(){document.documentElement.classList.toggle('big',!!S.big);doc
 var challenge=null;
 function parseHash(){var m=/^#?tahaddi-(\d+)-(\d+)$/.exec(location.hash||'');if(m)challenge={stage:+m[1],wallet:+m[2]}}
 function doneMap(){return S.pro?PR.pdone:PR.done}
-function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:PR.unlocked)}return STAGES.length}
+function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:UN())}return STAGES.length}
 function renderHome(keep){logoFox();
  applyBig();
  var d=doneMap(),medals=Object.keys(PR.done).length;
@@ -763,7 +766,7 @@ function renderHome(keep){logoFox();
  $('start').onclick=function(){startStage(sel)};
  $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+' · '+st.ids.length+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
  var box=$('map');box.innerHTML='';
- STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=PR.unlocked,b=document.createElement('button');
+ STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),b=document.createElement('button');
   b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.innerHTML=n+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>');
@@ -856,7 +859,7 @@ function foeSvg(m,full){
  return h+'</svg>'}
 function logoFox(){var l=$('logoFox');if(l&&!l.firstChild)l.innerHTML=foeSvg('conf')}
 function face(m){var a=$('foeAva');if(a.getAttribute('data-m')===m)return;a.setAttribute('data-m',m);a.innerHTML=foeSvg(m);a.classList.remove('in');void a.offsetWidth;a.classList.add('in')}
-function say(txt,cls,m){var b=$('foeSay');b.parentNode.classList.toggle('quiet',!S.tut);b.textContent=gx(txt);b.className='bubble '+(cls||'');void b.offsetWidth;b.classList.add('in');face(m||(cls==='bad'?'gloat':cls==='good'?'shock':'conf'))}
+function say(txt,cls,m){var b=$('foeSay');b.parentNode.classList.toggle('quiet',true);b.textContent=gx(txt);b.className='bubble '+(cls||'');void b.offsetWidth;b.classList.add('in');face(m||(cls==='bad'?'gloat':cls==='good'?'shock':'conf'))}
 function banner(w){var el=document.createElement('div');el.className='wave';el.innerHTML='<b>'+w.n+'</b><span>'+w.s+'</span>';$('stage').appendChild(el);setTimeout(function(){el.remove()},1300)}
 function pop(txt,cls){var el=document.createElement('div');el.className='gpop '+cls;el.textContent=txt;$('stage').appendChild(el);setTimeout(function(){el.remove()},900)}
 function coins(){var st=$('stage');for(var i=0;i<9;i++){var c=document.createElement('i');c.className='coin';c.style.setProperty('--dx',(Math.random()*240-120)+'px');c.style.setProperty('--dy',(-60-Math.random()*160)+'px');st.appendChild(c);(function(c){setTimeout(function(){c.remove()},700)})(c)}}
