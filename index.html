@@ -1169,9 +1169,12 @@ function renderSpecial(it,sl){
  else{timer.run=false;$('tfill').style.transform=''}
 }
 /* Recorded call lines: audio/call-<call#>-<line#>.mp3, with -m/-f when the line changes by player gender. Missing files fail silently. */
-var callAudio=null;
+var callAudio=null,CA=null;
+/* iPhone only lets audio play after a tap, so one shared player is unlocked on the first touch and reused. */
+function caInit(){if(CA)return;try{CA=new Audio();CA.preload='auto';CA.src='audio/call-1-1.mp3';CA.muted=true;var p=CA.play();if(p&&p.then)p.then(function(){CA.pause();CA.currentTime=0;CA.muted=false}).catch(function(){CA.muted=false});else CA.muted=false}catch(e){}}
+document.addEventListener('pointerdown',caInit,{once:true});
 function callVoice(cd,si,say){try{if(callAudio){callAudio.pause();callAudio=null}var n=CALLS.indexOf(cd)+1;if(!n)return;
- var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';callAudio=new Audio(f);callAudio.play().catch(function(){})}catch(e){}}
+ var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';if(!CA)caInit();CA.muted=false;CA.src=f;callAudio=CA;CA.play().catch(function(){})}catch(e){}}
 function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok)}})}
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
