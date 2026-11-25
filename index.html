@@ -947,7 +947,7 @@ function modeIntro(m,done){var M=MODES[m],o=document.createElement('div');o.clas
 
 /* ---------- play ---------- */
 var timer={left:0,max:0,last:0,run:false,lastTick:9,id:0};
-function stopAll(){timer.run=false;timer.id++;sfx.stop();hush();S.phase='idle'}
+function stopAll(){if(callAudio){callAudio.pause();callAudio=null}timer.run=false;timer.id++;sfx.stop();hush();S.phase='idle'}
 function foeSvg(m,full){
  var L=' fill="none" stroke="#2A1A12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"',st=m==='gloat'?'win':m==='defeat'?'lose':m==='shock'?'shock':'idle',f;
  if(st==='win')f='<path class="fxbrow"'+L+' d="M64 88 L86 92"/><path class="fxbrow"'+L+' d="M136 88 L114 92"/><path'+L+' d="M66 104 Q76 92 86 104"/><path'+L+' d="M114 104 Q124 92 134 104"/><path d="M86 142 Q100 164 114 142Z" fill="#2A1A12"/><path d="M94 151 Q100 158 106 151Z" fill="#FF6B6B"/>';
@@ -1137,7 +1137,7 @@ function renderSpecial(it,sl){
   spBind(card,function(ok){spDone(it,card,ok,d.why)});
  }else if(k==='call'){
   var cd=it.d,si=0,soft=0;card.className='card sp call';coach('<b>مكالمة حية.</b> {أنهِ|أنهي} المكالمة قبل ما ياخذ منك شي.');
-  var draw=function(){var s=cd.steps[si];card.innerHTML='<header class="chead"><span class="cico">'+ICO.call+'</span><span class="f"><b>'+bd(cd.from)+'</b><span>مكالمة واردة · '+(si+1)+' من '+cd.steps.length+'</span></span></header><div class="cbody">'+gx(s.say)+'</div>'+spOpts(shuffle(s.o));
+  var draw=function(){var s=cd.steps[si];callVoice(cd,si,s.say);card.innerHTML='<header class="chead"><span class="cico">'+ICO.call+'</span><span class="f"><b>'+bd(cd.from)+'</b><span>مكالمة واردة · '+(si+1)+' من '+cd.steps.length+'</span></span></header><div class="cbody">'+gx(s.say)+'</div>'+spOpts(shuffle(s.o));
    spBind(card,function(ok){if(ok===2)spDone(it,card,soft>1?1:2,'');else if(ok===0)spDone(it,card,0,cd.why);else{soft++;si++;if(si>=cd.steps.length)spDone(it,card,1,'');else{sfx.tick();draw()}}});fit(card)};
   draw();sfx.ring();setTimeout(sfx.stop,1600);
  }else if(k==='page'){
@@ -1168,6 +1168,10 @@ function renderSpecial(it,sl){
  if(timed){timer.max=timer.left=(6+words(it)*S.perWord)*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)})}
  else{timer.run=false;$('tfill').style.transform=''}
 }
+/* Recorded call lines: audio/call-<call#>-<line#>.mp3, with -m/-f when the line changes by player gender. Missing files fail silently. */
+var callAudio=null;
+function callVoice(cd,si,say){try{if(callAudio){callAudio.pause();callAudio=null}var n=CALLS.indexOf(cd)+1;if(!n)return;
+ var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';callAudio=new Audio(f);callAudio.play().catch(function(){})}catch(e){}}
 function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok)}})}
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
