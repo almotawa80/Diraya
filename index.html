@@ -80,6 +80,37 @@
 .blank{text-decoration:none;display:inline-block;min-width:3rem;border-bottom:2px dashed var(--onpaper2);text-align:center}
 .blank.shown{border:0;background:var(--coral);color:#fff;border-radius:6px;padding:0 .3rem}
 @media (prefers-reduced-motion:reduce){.demo *{animation:none!important}.card.gone.tobin{transition:opacity .2s}}
+
+/* v-ui: journey map, compact brand, lighter play HUD */
+.brand{gap:1.15rem;padding:.3rem .1rem 0}
+.brand .bell{width:3.6rem!important;height:3.6rem!important}
+.brand h1{font-size:2.1rem!important;line-height:1.1}
+.brand p{font-size:.9rem;line-height:1.5;margin-top:.1rem}
+#home .map{display:flex!important;flex-direction:column;gap:.15rem;position:relative;padding:.3rem 0 .2rem}
+#home .map::before{content:"";position:absolute;top:1.8rem;bottom:3.6rem;left:50%;border-left:3px dashed var(--ink3);transform:translateX(-50%)}
+#home .stg{display:grid!important;grid-template-columns:1fr 3.2rem 1fr;align-items:center;gap:.55rem;max-width:none!important;aspect-ratio:auto!important;border-radius:0!important;background:none!important;border:0!important;padding:.2rem 0!important;box-shadow:none!important;font-size:1rem;color:var(--fg);position:relative}
+#home .stg .dot{grid-column:2;grid-row:1;width:3.2rem;height:3.2rem;border-radius:50%;display:grid;place-items:center;background:var(--ink2);border:3px solid var(--ink3);font-weight:900;font-size:1.2rem;position:relative;z-index:1}
+#home .stg .dot svg:not(.lock){width:2rem;height:2rem}
+#home .stg .lab{grid-row:1;background:var(--ink2);border-radius:14px;padding:.4rem .65rem;text-align:start;border:2px solid transparent;min-width:0}
+#home .stg.R .lab{grid-column:1}#home .stg.L .lab{grid-column:3}
+#home .stg .lab b{display:block;font-size:.92rem;line-height:1.35;font-weight:800}
+#home .stg .lab small{display:block;font-size:.76rem;color:var(--muted);line-height:1.4}
+#home .stg.m1 .dot{border-color:var(--bronze)}#home .stg.m2 .dot{border-color:var(--silver)}#home .stg.m3 .dot{border-color:var(--saffron)}
+#home .stg.sel .dot{border-color:var(--tq);box-shadow:0 0 0 4px rgba(31,200,180,.3)}
+#home .stg.sel .lab{border-color:var(--tq);background:var(--ink3)}
+#home .stg.locked{opacity:.5}
+#home .stg .lock{position:absolute;inset:auto auto -4px -4px;width:1.1rem;height:1.1rem}
+.mapend{display:flex;flex-direction:column;align-items:center;gap:.2rem;color:var(--muted);font-size:.85rem;font-weight:700;padding-top:.3rem;position:relative;z-index:1}
+.mfox{width:3.6rem;height:3.6rem;border-radius:50%;background:var(--ink2);border:3px solid var(--coral);overflow:hidden;display:grid;place-items:center}
+.mfox svg{width:100%;height:100%}
+#home #pick{display:none}
+#home #start{position:sticky;bottom:.6rem;z-index:5;box-shadow:0 8px 22px rgba(14,19,48,.55)}
+#play .score,#play .foe{display:none!important}
+#play .hud{gap:.7rem}
+#play .hud .bal{flex:1}
+#play .hud #foeAva{width:3rem;height:3rem;flex:none}
+#play .hud #combo{flex:none}
+#play #clock{visibility:hidden}
 </style></head><body>
 <title>واعي</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -845,15 +876,18 @@ function renderHome(keep){logoFox();
  [].forEach.call(document.querySelectorAll('.cur'),function(e){e.textContent=CUR()});
  $('hWallet').textContent=fmt(PR.wallet);$('hShields').textContent=PR.shields;$('hMedals').textContent=medals;
  var ns=nextStage();if(!keep||!S.sel)S.sel=ns;var sel=S.sel,st=STAGES[sel-1];
- $('start').textContent=gx(d[sel]?'{أعد|أعيدي} المرحلة ':'{ابدأ|ابدئي} المرحلة ')+sel;
+ $('start').textContent=gx(d[sel]?'{أعد|أعيدي} المرحلة ':'{ابدأ|ابدئي} المرحلة ')+sel+' · '+st.n;
  $('start').onclick=function(){startStage(sel)};
  $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+(st.m&&MODES[st.m]?' · '+MODES[st.m].n:'')+' · '+PER_STAGE+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
  var box=$('map');box.innerHTML='';
  STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),b=document.createElement('button');
   b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
-  b.innerHTML=n+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>');
+  b.classList.add(i%2?'L':'R');var md=x.m&&MODES[x.m]?MODES[x.m].n:'';
+  b.innerHTML='<span class="dot">'+(d[n]?medalSvg(d[n]):n)+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>')+'</span><span class="lab"><b>'+x.n+'</b><small>'+(MICON[x.m]||'')+md+(n===sel&&x.d?' · '+x.d:'')+'</small></span>';
   b.onclick=function(){S.sel=n;renderHome(true)};box.appendChild(b)});
+ box.insertAdjacentHTML('beforeend','<div class="mapend"><span class="mfox">'+foeSvg('conf')+'</span><span>بو حيلة ينتظرك في النهاية</span></div>');
+ if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>2)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
 }
@@ -1070,6 +1104,7 @@ var SCAMS=[
  {a:'ye',t:'',ctx:'رسالة نصية باسم البنك',msg:'تم إيقاف بطاقتك. ___',o:[['حدّث بياناتك من الرابط خلال ساعة وإلا تنحذف أموالك',2],['للاستفسار اتصل على الرقم خلف بطاقتك',0],['يمكنك زيارة أقرب فرع',0]],lever:'urgency',why:'الاستعجال والتخويف حتى تضغط الرابط قبل ما تفكر.'},
  {a:'ye',t:'',ctx:'واتساب من رقم جديد',msg:'يبه هذا رقمي اليديد. ___',o:[['ضروري تحوّل لي 300 الحين ولا تقول لأمي',2],['بكلمك من رقمي القديم بعدين',0],['اتصل علي إذا تبي تتأكد',0]],lever:'trust',why:'انتحال القريب مع طلب السرّية.'}
 ];
+var MICON={swipe:'⇆ ',tap:'☝ ',pair:'⚖ ',call:'☎ ',act:'✓ ',page:'🔍 ',rapid:'⚡ ',scam:'🦊 ',mix:'★ '};
 var MODES={
  swipe:{n:'سحب',t:'اسحب البطاقة',d:'{اسحب|اسحبي} يمين إذا {تثق|تثقين}، فتنحفظ في المجلد. ويسار إذا {تشك|تشكين}، فتروح للمهملات.'},
  tap:{n:'لمس الخطأ',t:'المس الخطأ',d:'كل رسالة فيها علامة احتيال. {المس|المسي} الكلمة المريبة نفسها.'},
@@ -1392,6 +1427,7 @@ function renderFlip(){
 }
 
 /* ---------- boot ---------- */
+(function(){var h=document.querySelector('#play .hud'),fa=$('foeAva'),cb=$('combo');if(h&&fa){h.insertBefore(fa,$('quit'));}if(h&&cb)h.insertBefore(cb,$('quit'))})();
 window.__ranna=S;window.__face=face;setProfile();parseHash();renderHome();
 function openWho(first){
  var s=sheet('<h3>أهلًا! كيف نخاطبك؟<small>نستخدمها لصيغة الكلام فقط</small></h3><div class="lgrid" style="grid-template-columns:1fr 1fr"><button class="opt" id="wM">واعي</button><button class="opt" id="wF">واعية</button></div>'+(first?'<button class="ghost" id="wS">تخطَّ</button>':''));
