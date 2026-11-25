@@ -1,0 +1,1221 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>واعي</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Layout: one phone-sized column. HUD on top, a "phone screen" stage whose wallpaper moves from dawn to night across the day, thumb controls at the bottom. Single committed night look. */
+:root{
+  color-scheme:dark;
+  --ink:#232C5A; --ink2:#2F3A70; --ink3:#3D4884; --line:#606690;
+  --paper:#FFFFFF; --paper2:#ECE9E1; --onpaper:#232C5A; --onpaper2:#545A84;
+  --fg:#F6F6F0; --muted:#D9D8DE; --violet:#B7B4EE; --violet-d:#7D7AC4; --light:#F6F6F0; --lmuted:#D9D8DE; --gold:#E3BE7C; --deep:#232C5A;
+  --tq:#1FC8B4; --tq-ink:#04332E; --saffron:#E3BE7C; --saffron-ink:#3A2A0C; --coral:#FF6B6B; --coral-ink:#3F0A0A;
+  --c-sms:#4C6FFF; --c-wa:#1FA35B; --c-call:#14204A; --c-notif:#B7791F; --c-game:#7B4BD6; --c-social:#D6457F; --c-mail:#2F7FD0; --c-life:#0E8A7C; --c-pop:#C2410C; --bronze:#D98B5F; --silver:#CDD5EA;
+  --body:"Cairo","Segoe UI",Tahoma,sans-serif;
+  --r:18px;
+}
+html,body{height:100%}
+html{font-size:17px}
+body{background:var(--ink);color:var(--fg);font-family:var(--body);line-height:1.6;font-weight:500;overflow:hidden;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+bdi.url{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;word-break:break-all}
+.app{height:100%;max-width:460px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:.75rem;display:flex;flex-direction:column;position:relative}
+.screen{flex:1;min-height:0;display:flex;flex-direction:column;gap:.8rem}
+.scroll{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+
+/* ---------- home ---------- */
+.brand{display:flex;align-items:center;gap:1.2rem;padding:.9rem .9rem .5rem}
+.bell{position:relative;width:4.6rem;height:4.6rem;flex:none;border-radius:50%;background:var(--ink3);box-shadow:inset 0 0 0 3px var(--saffron);display:grid;place-items:center}
+.bell::before,.bell::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--saffron);animation:ripple 2.4s ease-out infinite}
+.bell::after{animation-delay:1.2s}
+.bell svg.fx{width:calc(100% - 6px);height:calc(100% - 6px);position:relative;z-index:1;overflow:hidden;border-radius:50%}.bell .fxtail{display:none}
+@keyframes ripple{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.45);opacity:0}}
+@keyframes shake{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(-14deg)}72%{transform:rotate(12deg)}78%{transform:rotate(-8deg)}84%{transform:rotate(5deg)}}
+.brand h1{font-weight:900;font-size:3.2rem;line-height:1;margin:0;color:var(--fg)}
+.brand p{margin:.15rem 0 0;color:var(--muted);font-size:.95rem}
+.dayline{display:flex;justify-content:space-between;gap:.5rem;margin:0;padding:0 .3rem;color:var(--muted);font-size:.95rem}.dayline b{color:var(--saffron)}
+.daychip{display:flex;justify-content:space-between;align-items:center;gap:.5rem;background:var(--ink2);border-radius:var(--r);padding:.6rem .9rem;font-size:.9rem}
+.daychip b{font-weight:800;font-size:1.25rem;color:var(--saffron)}
+.streak{color:var(--muted)}
+.challenge{background:var(--saffron);color:var(--saffron-ink);border-radius:var(--r);padding:.7rem .9rem;font-weight:600;font-size:.95rem}
+h2.lbl{font-size:.95rem;font-weight:700;color:var(--fg);margin:.2rem 0 -.3rem;letter-spacing:.02em}
+.tracks{display:grid;gap:.6rem}
+#home{gap:1rem}
+#home .cta{margin-top:auto}
+.track{display:flex;align-items:center;gap:.8rem;text-align:start;background:var(--ink2);border:2px solid transparent;border-radius:var(--r);padding:.65rem .8rem;transition:border-color .15s,background .15s}
+.track[aria-checked="true"]{border-color:var(--tq);background:var(--ink3)}
+.ava{flex:none;width:2.7rem;height:2.7rem;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.2rem;color:var(--onpaper);background:var(--paper)}
+.track .t1{font-weight:700;font-size:1.02rem}
+.track .t2{color:var(--muted);font-size:.9rem}
+.track .t3{margin-inline-start:auto;text-align:end;font-size:.88rem;color:var(--muted);white-space:nowrap}
+.track .t3 b{display:block;font-weight:800;font-size:1.05rem;color:var(--saffron)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;font-size:.88rem;text-align:center;color:var(--muted)}
+.how div{background:var(--ink2);border-radius:12px;padding:.55rem .35rem}
+.how b{display:block;color:var(--fg);font-size:.92rem}
+.toggles{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.tg{background:var(--ink2);border-radius:99px;padding:.4rem .9rem;font-size:.88rem;color:var(--muted)}
+.tg[aria-pressed="true"]{color:var(--tq);box-shadow:inset 0 0 0 1.5px var(--tq)}
+.cta{background:var(--saffron);color:var(--saffron-ink);font-weight:700;font-size:1.15rem;border-radius:var(--r);padding:.95rem 1rem;width:100%;box-shadow:0 5px 0 #A8854A;transition:transform .08s,box-shadow .08s}
+.cta:active{transform:translateY(4px);box-shadow:0 1px 0 #A8854A}
+.cta.alt{background:var(--saffron);color:var(--saffron-ink);box-shadow:0 5px 0 #A8854A}
+.cta.alt:active{box-shadow:0 1px 0 #A8854A}
+.ghost{background:var(--ink2);border-radius:var(--r);padding:.8rem 1rem;width:100%;font-weight:600}
+.fine{font-size:.88rem;color:var(--muted);text-align:center;margin:0}
+
+/* ---------- play ---------- */
+.hud{display:flex;align-items:center;gap:.6rem}
+.bal{line-height:1.15}
+.bal small{display:block;font-size:.88rem;color:var(--muted)}
+.bal b{font-weight:800;font-size:1.3rem;color:var(--saffron);font-variant-numeric:tabular-nums;display:inline-block}
+.bal b.hit{animation:hit .5s}
+@keyframes hit{20%{color:var(--coral);transform:scale(1.18)}}
+.dots{margin-inline-start:auto;display:flex;gap:.28rem}
+.dots i{width:.6rem;height:.6rem;border-radius:50%;background:var(--ink3)}
+.dots i.now{background:var(--fg)}
+.dots i.perfect{background:var(--tq)}.dots i.partial{background:var(--saffron)}.dots i.fell{background:var(--coral)}.dots i.miss,.dots i.timeout{background:var(--muted)}
+.x{width:2.2rem;height:2.2rem;border-radius:50%;background:var(--ink2);color:var(--muted);font-size:1.1rem;line-height:1}
+.stage{flex:1;min-height:0;border-radius:28px;padding:.7rem;display:flex;flex-direction:column;gap:.55rem;position:relative;overflow:hidden;transition:background 1s;background:linear-gradient(180deg,var(--w1,#9ADCF0),var(--w2,#5BB4E5))}
+.statusbar{display:flex;justify-content:space-between;font-size:.88rem;font-weight:700;color:var(--onpaper);padding:0 .4rem;font-variant-numeric:tabular-nums}
+.stage.night .statusbar{color:var(--fg)}
+.ctx{align-self:flex-start;background:rgba(35,44,90,.82);color:var(--fg);font-size:.88rem;border-radius:12px;padding:.35rem .7rem}
+.ctx b{color:var(--saffron);font-weight:600}
+.cardwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative}
+.app.fb .cardwrap{align-items:flex-start}
+.app.fb .ctx,.app.fb .insp{display:none}
+.card{width:100%;max-height:100%;background:var(--paper);color:var(--onpaper);border-radius:18px;box-shadow:0 14px 30px rgba(35,44,90,.35);display:flex;flex-direction:column;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;position:relative;animation:drop .35s cubic-bezier(.2,1.3,.4,1)}
+@keyframes drop{from{transform:translateY(-40px) scale(.94);opacity:0}}
+.card.fly{transition:transform .28s ease-in,opacity .28s}
+.chead{display:flex;align-items:center;gap:.6rem;padding:.65rem .85rem;border-bottom:1px solid var(--paper2)}
+.cico{flex:none;width:2.3rem;height:2.3rem;border-radius:12px;display:grid;place-items:center;color:#fff;background:var(--cc)}
+.cico svg{width:1.3rem;height:1.3rem}
+.chead .f{min-width:0;flex:1}
+.chead .f b{display:block;font-size:1rem;line-height:1.3;overflow-wrap:anywhere}
+.chead .f span{display:block;font-size:.88rem;color:var(--onpaper2)}
+.chead time{font-size:.88rem;color:var(--onpaper2);white-space:nowrap}
+.cbody{padding:.85rem .95rem;font-size:1.1rem;line-height:1.8;overflow-y:auto;overflow-wrap:anywhere}
+.card.wa .cbody{background:#E9F5EC}
+.card.wa .bub{background:#fff;border-radius:.2rem 1rem 1rem 1rem;padding:.55rem .75rem;display:inline-block;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.card.game .cbody{background:#EFE8FF}
+.card.call{background:var(--deep);color:var(--light);text-align:center}
+.card.call .chead{flex-direction:column;border:0;padding-top:1.1rem;gap:.35rem}
+.card.call .chead .f span,.card.call .chead time{color:var(--muted)}
+.card.call .cico{width:3.6rem;height:3.6rem;border-radius:50%;background:var(--tq);color:var(--tq-ink);animation:pulse 1.1s infinite}
+.card.call .cico svg{width:1.8rem;height:1.8rem}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,200,180,.6)}100%{box-shadow:0 0 0 18px rgba(31,200,180,0)}}
+.card.call .cbody{text-align:start;background:rgba(255,255,255,.1);margin:.2rem .7rem .8rem;border-radius:18px;font-size:1rem}
+.card.call .cbody::before{content:"يقول المتصل";display:block;font-size:.88rem;color:var(--muted)}
+.tell{transition:background .3s,color .3s;border-radius:.3rem}
+.card.reveal .tell,.card.reveal bdi.url{background:var(--coral);color:var(--coral-ink);padding:0 .25rem;font-weight:700;border-radius:.3rem}
+.card.reveal{box-shadow:0 0 0 4px var(--coral),0 14px 30px rgba(35,44,90,.35)}
+.why{margin:0 .8rem .75rem;padding:.45rem .7rem;border-radius:12px;background:var(--coral);color:var(--coral-ink);font-size:.92rem;font-weight:700;line-height:1.5}
+.why small{display:block;font-weight:600;font-size:.88rem}
+.hand{position:absolute;inset:auto 0 18% 0;margin:auto;width:3.2rem;height:3.2rem;border-radius:50%;background:rgba(35,44,90,.82);box-shadow:0 0 0 3px var(--saffron);z-index:3;pointer-events:none;animation:handL 1.6s ease-in-out infinite}
+.hand.r{animation-name:handR}
+@keyframes handL{0%,15%{transform:translateX(60px);opacity:0}30%{opacity:1}80%{transform:translateX(-70px);opacity:1}100%{transform:translateX(-70px);opacity:0}}
+@keyframes handR{0%,15%{transform:translateX(-60px);opacity:0}30%{opacity:1}80%{transform:translateX(70px);opacity:1}100%{transform:translateX(70px);opacity:0}}
+.ctx.coach{align-self:stretch;background:var(--onpaper);border:2px solid var(--saffron);font-size:.95rem;font-weight:600;line-height:1.55}
+.b-in.glow{box-shadow:0 0 0 3px var(--saffron);animation:bump 1s infinite}
+.skip{align-self:center;color:var(--onpaper);background:rgba(246,248,255,.7);border-radius:99px;padding:.2rem .9rem;font-size:.88rem;font-weight:700}
+.stage.night .skip{color:var(--onpaper)}
+.stage.tut .tbar{visibility:hidden}
+.insp{margin:0 .8rem .75rem;padding:.5rem .7rem;border-radius:12px;background:var(--onpaper);color:var(--paper);font-size:.92rem;display:flex;gap:.5rem;align-items:flex-start}
+.card.call .insp{background:var(--paper);color:var(--onpaper)}
+.insp svg{flex:none;width:1.1rem;height:1.1rem;margin-top:.2rem}
+.stamp{position:absolute;top:1rem;font-weight:800;font-size:1.4rem;padding:.1rem .8rem;border-radius:.6rem;border:3px solid;opacity:0;pointer-events:none;background:var(--paper)}
+.stamp.y{right:1rem;color:#0E8A7C;transform:rotate(8deg)}
+.stamp.n{left:1rem;color:#D43D3D;transform:rotate(-8deg)}
+.tbar{height:.42rem;border-radius:99px;background:rgba(35,44,90,.3);overflow:hidden}
+.tbar i{display:block;height:100%;background:var(--fg);transform-origin:right center;border-radius:99px}
+.tbar.low i{background:var(--coral)}
+.ctrl{display:grid;grid-template-columns:1fr auto 1fr;gap:.55rem;align-items:stretch}
+.ctrl button{border-radius:var(--r);padding:.8rem .5rem;font-weight:700;font-size:1.08rem;line-height:1.25}
+.ctrl small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;font-size:.88rem;opacity:.8}
+.b-yes{background:var(--tq);color:var(--tq-ink);box-shadow:0 4px 0 #0E8A7C}
+.b-no{background:var(--coral);color:var(--coral-ink);box-shadow:0 4px 0 #C23C3C}
+.b-in{background:var(--ink2);color:var(--fg);width:4rem;display:grid;place-items:center;gap:.1rem;font-size:.88rem!important;font-weight:600!important}
+.b-in svg{width:1.4rem;height:1.4rem}
+.ctrl button:active{transform:translateY(3px);box-shadow:none}
+.ctrl button:disabled{opacity:.35}
+
+/* ---------- sheet ---------- */
+.sheet{position:absolute;inset:auto 0 0 0;max-height:54%;background:var(--ink2);border-radius:1.5rem 1.5rem 0 0;padding:1rem max(16px,env(safe-area-inset-right,0px)) calc(1rem + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:.65rem;box-shadow:0 -12px 40px rgba(0,0,0,.45);animation:up .28s cubic-bezier(.2,1,.3,1);z-index:5;overflow-y:auto}
+@keyframes up{from{transform:translateY(100%)}}
+.verdict{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.verdict b{font-weight:800;font-size:1.45rem;line-height:1.35}
+.verdict span{font-size:.92rem;font-weight:600}
+.v-good b{color:var(--tq)}.v-bad b,.v-bad span{color:var(--coral)}.v-mid b{color:var(--saffron)}
+.back{font-size:.88rem;background:var(--saffron);color:var(--saffron-ink);border-radius:99px;padding:.1rem .7rem;align-self:flex-start;font-weight:600}
+.fact{background:var(--ink3);border-radius:12px;padding:.55rem .8rem;font-size:.93rem}
+.fact small{display:block;color:var(--muted);font-size:.88rem;font-weight:600}
+.lev{display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;color:var(--saffron);font-weight:600}
+.lev::before{content:"";width:.75rem;height:1rem;border-radius:.2rem;background:var(--saffron);transform:rotate(-10deg)}
+.sheet h3{margin:0;font-weight:800;font-size:1.25rem;line-height:1.4}
+.sheet h3 small{display:block;font-family:var(--body);font-size:.88rem;color:var(--muted);font-weight:500}
+.opt{background:var(--ink3);border-radius:12px;padding:.75rem .9rem;text-align:start;font-weight:600;font-size:.98rem;width:100%;border:1.5px solid var(--line)}
+.opt:active{background:var(--line)}
+
+/* ---------- report ---------- */
+.rtop{background:var(--ink2);border-radius:28px;padding:1rem;text-align:center}
+.rtop .rk{font-weight:800;font-size:1.8rem;line-height:1.35;color:var(--tq)}
+.rtop .pct{color:var(--muted);font-size:.9rem}
+.rtop .money{font-weight:800;font-size:1.4rem;color:var(--saffron);font-variant-numeric:tabular-nums}
+.grid{display:flex;justify-content:center;gap:.35rem;margin:.6rem 0 .2rem}
+.grid i{width:1.7rem;height:1.7rem;border-radius:.45rem;background:var(--muted)}
+.grid i.perfect{background:var(--tq)}.grid i.partial{background:var(--saffron)}.grid i.fell{background:var(--coral)}
+.legend{display:flex;justify-content:center;gap:.8rem;font-size:.88rem;color:var(--muted);flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:.6rem;height:.6rem;border-radius:.15rem;margin-inline-end:.3rem;background:var(--k)}
+.levs{display:flex;flex-wrap:wrap;gap:.4rem}
+.levs span{font-size:.88rem;border-radius:99px;padding:.25rem .8rem;background:var(--ink2);color:var(--muted)}
+.levs span.caught{color:var(--tq);box-shadow:inset 0 0 0 1.5px var(--tq)}
+.levs span.fell{color:var(--coral);box-shadow:inset 0 0 0 1.5px var(--coral)}
+.recap{display:grid;gap:.45rem}
+.recap div{background:var(--ink2);border-radius:12px;padding:.55rem .8rem;font-size:.92rem;border-inline-start:.3rem solid var(--k)}
+.recap b{display:block;font-size:.92rem}
+.recap span{color:var(--muted)}
+.rules{background:var(--paper);color:var(--onpaper);border-radius:var(--r);padding:.8rem 1rem;font-size:.92rem}
+.rules b{font-weight:800;font-size:1.05rem;display:block}
+.rules ol{margin:.3rem 0 0;padding-inline-start:1.2rem}
+.btns{display:grid;gap:.6rem}
+.copybox{width:100%;min-height:6.5rem;border-radius:12px;border:1.5px solid var(--line);background:var(--ink);color:var(--fg);font:inherit;font-size:.88rem;padding:.6rem;direction:rtl}
+.toast{position:absolute;inset:auto 0 5.5rem 0;margin:auto;width:max-content;max-width:90%;background:var(--paper);color:var(--onpaper);padding:.5rem 1.1rem;border-radius:99px;font-weight:600;font-size:.9rem;z-index:9;animation:up .2s}
+
+/* ---------- flip ---------- */
+.quote{background:var(--paper);color:var(--onpaper);border-radius:18px;padding:.9rem 1rem;font-size:1rem;line-height:1.75}
+.quote small{display:block;color:var(--onpaper2);font-size:.88rem}
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.lgrid .opt{text-align:center}
+.lgrid .opt.ok{background:var(--tq);color:var(--tq-ink);border-color:var(--tq)}
+.lgrid .opt.no{background:var(--coral);color:var(--coral-ink);border-color:var(--coral)}
+
+
+/* arcade layer */
+.score{margin-inline-start:auto;text-align:end;line-height:1.15}
+.score small{display:flex;justify-content:flex-end;align-items:center;gap:.35rem;white-space:nowrap;font-size:.88rem;color:var(--muted)}
+.score b{font-weight:800;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.combo{display:inline-block;background:var(--saffron);color:var(--saffron-ink);border-radius:99px;padding:0 .5rem;font-weight:800}
+.combo.in{animation:bump .3s}
+@keyframes bump{40%{transform:scale(1.35)}}
+.foe{display:flex;align-items:center;gap:.5rem;min-height:2.6rem}
+.foeava{flex:none;width:2.3rem;height:2.3rem}
+.foeava svg{width:100%;height:100%;display:block}
+.foename{flex:none;font-weight:800;font-size:.9rem;line-height:1.2}
+.foename small{display:block;font-weight:500;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.foename small b{color:var(--coral)}
+.bubble{flex:1;min-width:0;background:var(--ink2);border-radius:1rem 1rem 1rem .25rem;padding:.4rem .75rem;font-size:.88rem;font-weight:600;line-height:1.4}
+.bubble:empty{visibility:hidden}
+.bubble.in{animation:nudge .25s}
+@keyframes nudge{40%{transform:translateY(-3px)}}
+.app{overflow:clip}
+html{overflow:hidden}
+.bubble.bad{background:var(--coral);color:var(--coral-ink)}
+.bubble.good{box-shadow:inset 0 0 0 1.5px var(--tq)}
+.bubble.mid{box-shadow:inset 0 0 0 1.5px var(--saffron)}
+.card.gone{position:absolute;inset:auto 0;transition:transform .32s ease-in,opacity .32s;pointer-events:none;z-index:2;animation:none}
+.stage.shake{animation:shake2 .4s}
+@keyframes shake2{20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(4px)}}
+.gpop{position:absolute;inset:38% 0 auto 0;text-align:center;font-weight:900;font-size:2.1rem;pointer-events:none;z-index:4;animation:rise .85s ease-out forwards;text-shadow:0 2px 0 rgba(35,44,90,.55)}
+.gpop.good{color:#fff}.gpop.bad{color:var(--coral)}.gpop.mid{color:var(--saffron)}
+.gpop.bad{background:rgba(35,44,90,.85);width:max-content;margin:auto;padding:0 .9rem;border-radius:12px;inset:2.3rem 0 auto 0;font-size:1.5rem;animation-name:drop2}
+@keyframes drop2{0%{transform:scale(.7);opacity:0}20%,80%{transform:none;opacity:1}100%{opacity:0}}
+@keyframes rise{0%{transform:translateY(20px) scale(.7);opacity:0}25%{transform:translateY(0) scale(1.1);opacity:1}100%{transform:translateY(-70px);opacity:0}}
+.coin{position:absolute;left:50%;top:50%;width:.8rem;height:.8rem;border-radius:50%;background:var(--saffron);box-shadow:inset 0 0 0 2px #A8854A;z-index:3;pointer-events:none;animation:coin .65s ease-out forwards}
+@keyframes coin{to{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
+.wave{position:absolute;inset:2.2rem .7rem auto .7rem;z-index:4;pointer-events:none;background:rgba(35,44,90,.9);color:var(--fg);border-radius:18px;padding:.45rem .9rem;text-align:center;animation:wavein 1.3s forwards}
+.wave b{display:block;font-weight:900;font-size:1.3rem;color:var(--saffron)}
+.wave span{font-size:.88rem}
+@keyframes wavein{0%{transform:translateY(-30px);opacity:0}15%,80%{transform:none;opacity:1}100%{opacity:0}}
+.b-in span{display:block}.b-in b{color:var(--saffron)}
+.rtop .big{font-weight:900;font-size:2.6rem;line-height:1.2;color:var(--saffron);font-variant-numeric:tabular-nums}
+.rtop .big small{font-size:.9rem;font-weight:600;color:var(--muted)}
+.grid{flex-wrap:wrap}
+.grid i{width:1.25rem!important;height:1.25rem!important;border-radius:.35rem!important}
+.more summary{cursor:pointer;font-weight:700;padding:.6rem .2rem;color:var(--muted)}
+
+.wallet{display:flex;align-items:center;justify-content:space-between;gap:.8rem;background:var(--ink2);border-radius:var(--r);padding:.7rem 1rem}
+.wl small{display:block;color:var(--muted);font-size:.88rem}
+.wl b{font-weight:900;font-size:1.7rem;color:var(--saffron);font-variant-numeric:tabular-nums}
+.ws{display:grid;gap:.15rem;font-size:.9rem;color:var(--muted);text-align:end}
+.ws b{color:var(--fg)}
+.map{display:grid;gap:.5rem}
+.stg{display:flex;align-items:center;gap:.8rem;text-align:start;background:var(--ink2);border:2px solid transparent;border-radius:var(--r);padding:.6rem .8rem;width:100%}
+.stg.next{border-color:var(--tq);background:var(--ink3)}
+.stg.locked{opacity:.5}
+.stg .num{flex:none;width:2.3rem;height:2.3rem;border-radius:50%;display:grid;place-items:center;font-weight:900;background:var(--paper);color:var(--onpaper)}
+.stg.locked .num{background:var(--ink3);color:var(--muted)}
+.stg .sn{flex:1;min-width:0}
+.stg .sn b{display:block;font-size:1rem;line-height:1.4}
+.stg .sn span{display:block;font-size:.88rem;color:var(--muted)}
+.stg .sm{flex:none;width:2rem;height:2rem;display:grid;place-items:center;color:var(--muted)}
+.medal{width:2rem;height:2rem;display:block}
+.lock{width:1.3rem;height:1.3rem}
+.shd{width:1.6rem;height:1.6rem;flex:none}
+#home .cta{margin-top:0}
+.bigmedal .medal{width:4.2rem;height:4.2rem;margin:0 auto;animation:drop .5s cubic-bezier(.2,1.5,.4,1)}
+.ledger{margin-top:.7rem;display:grid;gap:.3rem;text-align:start;font-size:.95rem}
+.ledger div{display:flex;justify-content:space-between;gap:.6rem}
+.ledger b{font-variant-numeric:tabular-nums;font-weight:800}
+.ledger .plus{color:var(--tq)}.ledger .minus{color:var(--coral)}
+.ledger .tot{border-top:1px solid var(--line);padding-top:.4rem;margin-top:.2rem;font-size:1.05rem}
+.ledger .tot b{color:var(--saffron)}
+.award{display:flex;align-items:center;gap:.6rem;text-align:start;background:var(--ink3);border-radius:12px;padding:.55rem .8rem;margin-top:.6rem;font-size:.9rem}
+.award.gift{background:var(--saffron);color:var(--saffron-ink)}
+.rw{background:var(--ink3);border-radius:12px;padding:.6rem .85rem;opacity:.6}
+.rw.open{opacity:1;box-shadow:inset 0 0 0 1.5px var(--saffron)}
+.rw b{display:block}.rw span{font-size:.88rem;color:var(--muted)}
+.fliphead b{display:block;font-weight:900;font-size:1.35rem}
+.fliphead span{color:var(--muted);font-size:.9rem}
+.shl b{color:inherit}
+.cta:disabled{opacity:.4}
+.sheet{max-height:80%}
+/* ---------- batch 2: interface ---------- */
+.b-yes{background:var(--paper);color:var(--onpaper);box-shadow:0 4px 0 #AEB9DE}
+.b-no{background:var(--violet);color:var(--onpaper);box-shadow:0 4px 0 var(--violet-d)}
+.stamp.y{color:var(--onpaper)}.stamp.n{color:var(--violet-d)}
+.ctrl button{min-height:3.4rem}
+.x{width:48px;height:48px;flex:none}
+.tbar{height:12px;background:rgba(246,248,255,.78);box-shadow:inset 0 0 0 1px rgba(20,32,74,.25)}
+.tbar i{background:var(--onpaper)}
+.gpop{width:max-content;max-width:90%;margin:auto;padding:0 1rem;border-radius:12px;background:rgba(35,44,90,.9);text-shadow:none;font-size:1.5rem;inset:2.3rem 0 auto 0;animation-name:drop2}
+.gpop.good{color:var(--saffron)}.gpop.mid{color:#fff}
+.card{box-shadow:0 10px 0 -5px rgba(246,248,255,.6),0 20px 0 -10px rgba(246,248,255,.35),0 22px 30px rgba(35,44,90,.3)}
+.card.reveal{box-shadow:0 0 0 4px var(--coral),0 22px 30px rgba(35,44,90,.3)}
+.cbody{font-size:1.12rem}
+.foe{gap:.6rem;min-height:3.6rem}
+.foeava{width:3.5rem;height:3.5rem}
+.foeava.in{animation:bump .3s}
+.bubble{min-height:3.1rem;display:flex;align-items:center;border-radius:18px 18px 18px 4px;font-size:.92rem}
+.brand{padding:.4rem .2rem 0;gap:1rem}
+.gear{margin-inline-start:auto;width:48px;height:48px;flex:none;border-radius:50%;background:var(--ink2);display:grid;place-items:center;color:var(--muted)}
+.gear svg{width:1.5rem;height:1.5rem}
+#home{gap:.9rem}
+.map{grid-template-columns:repeat(5,1fr);gap:.6rem .5rem;justify-items:center}
+.stg{display:grid;place-items:center;width:100%;max-width:60px;aspect-ratio:1;padding:0;border-radius:50%;background:var(--ink2);border:3px solid transparent;font-weight:900;font-size:1.3rem;position:relative;text-align:center}
+.stg.m1{background:var(--bronze);color:var(--onpaper)}.stg.m2{background:var(--silver);color:var(--onpaper)}.stg.m3{background:var(--saffron);color:var(--saffron-ink)}
+.stg.sel{border-color:var(--tq);box-shadow:0 0 0 3px rgba(31,200,180,.3)}
+.stg.locked{opacity:.55;color:var(--muted)}
+.stg .lock{position:absolute;inset:auto auto -4px -4px;width:1.15rem;height:1.15rem;background:var(--ink);border-radius:50%;padding:2px}
+.pick{background:var(--ink2);border-radius:18px;padding:.7rem 1rem;display:grid;gap:.1rem}
+.pick b{font-size:1.18rem;font-weight:700;line-height:1.4}
+.pick span{color:var(--muted);font-size:.92rem}
+.pick .pm{display:flex;align-items:center;gap:.4rem;color:var(--saffron);font-weight:700}
+.pick .medal{width:1.4rem;height:1.4rem}
+.homefoot{margin-top:auto;display:grid;gap:.5rem}
+.setrow{display:flex;justify-content:space-between;align-items:center;gap:.8rem}
+.setrow i{font-style:normal;font-size:.88rem;font-weight:700;color:var(--muted)}
+.setrow[aria-pressed="true"]{border-color:var(--tq)}.setrow[aria-pressed="true"] i{color:var(--tq)}
+.dim{position:absolute;inset:0;background:rgba(6,11,30,.62);z-index:4;animation:fadein .2s}
+@keyframes fadein{from{opacity:0}}
+.rtop{border-radius:28px}
+.fx *{transform-box:fill-box}
+.fxhead{transform-origin:50% 90%;animation:fxIdle 3s ease-in-out infinite}
+.fxtail{transform-origin:10% 90%;animation:fxWag 1.6s ease-in-out infinite}
+.fxear{transform-origin:50% 100%}.fxear.r{animation:fxTw 3.4s infinite}
+.fx[data-s=win] .fxhead{animation:fxLaugh .32s ease-in-out infinite}
+.fx[data-s=win] .fxtail{animation:fxWag .35s ease-in-out infinite}
+.fx[data-s=win] .fxbrow{animation:fxBrow .5s ease-in-out infinite}
+.fx[data-s=shock] .fxhead{animation:fxJump .5s cubic-bezier(.2,1.6,.4,1)}
+.fx[data-s=shock] .fxear{animation:none;transform:scaleY(1.15)}
+.fx[data-s=lose] .fxhead{animation:fxDizzy 1.4s ease-in-out infinite}
+.fx[data-s=lose] .fxtail{animation:none;transform:rotate(55deg)}
+.fx[data-s=lose] .fxear.l{animation:none;transform:rotate(-48deg)}
+.fx[data-s=lose] .fxear.r{animation:none;transform:rotate(48deg)}
+.fxorbit{transform-origin:0 0;transform-box:view-box;animation:fxSpin 1.3s linear infinite}
+.fxtear{animation:fxTear 1s ease-in infinite}
+@keyframes fxIdle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes fxWag{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(14deg)}}
+@keyframes fxTw{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(14deg)}94%{transform:rotate(-4deg)}}
+@keyframes fxLaugh{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-7px) rotate(4deg)}}
+@keyframes fxBrow{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes fxJump{0%{transform:translateY(0)}40%{transform:translateY(-14px)}100%{transform:translateY(0)}}
+@keyframes fxDizzy{0%,100%{transform:rotate(-9deg) translateY(6px)}50%{transform:rotate(9deg) translateY(9px)}}
+@keyframes fxSpin{to{transform:rotate(360deg)}}
+@keyframes fxTear{0%{transform:translateY(0);opacity:1}100%{transform:translateY(26px);opacity:0}}
+.daily{display:flex;align-items:center;gap:.7rem;background:var(--ink2);border-radius:18px;padding:.55rem .9rem;text-align:start;width:100%;box-shadow:inset 0 0 0 1.5px var(--saffron);color:var(--fg)}
+.daily .fl{flex:none;width:2.9rem;height:2.9rem;border-radius:50%;background:var(--saffron);color:var(--saffron-ink);display:grid;place-content:center;justify-items:center;font-weight:900;font-size:1.15rem;line-height:1}
+.daily .fl small{display:block;font-size:.62rem;font-weight:700}
+.daily>span:nth-child(2){display:grid;min-width:0}
+.daily b{font-size:1rem}.daily span span{font-size:.85rem;color:var(--muted)}
+.daily.done{box-shadow:none}
+.daily .go{margin-inline-start:auto;flex:none;font-weight:800;color:var(--saffron)}
+.foot2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ixnum{font-size:3rem;font-weight:900;color:var(--saffron);line-height:1;text-align:center}
+.ixnum small{font-size:1rem;color:var(--muted);font-weight:600}
+.ixrow{display:grid;gap:.15rem}.ixrow div:first-child{display:flex;justify-content:space-between;font-size:.92rem;font-weight:600}
+.ixbar{height:.55rem;border-radius:99px;background:var(--ink3);overflow:hidden}.ixbar i{display:block;height:100%;border-radius:99px;background:var(--tq)}
+.ixrow.weak .ixbar i{background:var(--coral)}
+.foeava svg.fx{overflow:hidden}
+.card.sp.call .chead time{display:none}.card.sp.call .cico{width:2.6rem;height:2.6rem}.card.sp.call .chead{padding-top:.6rem;gap:.1rem}
+.spopt.msg{font-size:1.02rem;padding:.85rem .9rem}
+.foe.quiet .bubble{display:none}.foe.quiet{justify-content:center}
+.rfoe{width:7rem;height:7rem;margin:0 auto;animation:drop .5s cubic-bezier(.2,1.5,.4,1)}
+.rfoe svg{width:100%;height:100%;display:block}
+.sticky{position:sticky;bottom:0;margin-top:auto;padding:1.4rem 0 .3rem;background:linear-gradient(rgba(35,44,90,0),var(--ink) 40%);z-index:2}
+.ghost{min-height:48px}
+.ghost.gold{box-shadow:inset 0 0 0 2px var(--saffron);color:var(--saffron);font-weight:700}
+.lgrid{grid-template-columns:repeat(3,1fr);gap:.6rem}
+.lgrid .opt{display:grid;justify-items:center;gap:.25rem;padding:.75rem .3rem .6rem;background:var(--paper);color:var(--onpaper);border:0;border-radius:12px;box-shadow:0 4px 0 #AEB9DE;font-weight:800;font-size:.95rem;position:relative}
+.lgrid .opt svg{width:2rem;height:2rem;color:var(--coral)}
+.lgrid .opt.ok{background:var(--tq);color:var(--tq-ink);box-shadow:0 4px 0 #0E8A7C}.lgrid .opt.ok svg{color:var(--tq-ink)}
+.lgrid .opt.no{background:var(--coral);color:var(--coral-ink);box-shadow:0 4px 0 #C23C3C}.lgrid .opt.no svg{color:var(--coral-ink)}
+.skip{min-height:44px;padding:.3rem 1.1rem}
+/* ---------- interaction types ---------- */
+#play.sp .ctrl{display:none}
+.card.sp{touch-action:auto;user-select:none;overflow-y:auto}
+#play.sp .ctx.coach{font-size:.86rem;line-height:1.45;padding:.3rem .65rem}
+.card.sp .cbody{flex:0 1 auto}
+.seg,.card.sp .tell,.card.sp bdi.url{cursor:pointer;border-bottom:2px dotted rgba(84,90,132,.55);padding:.05rem 0}
+.seg.no{background:#E4E1F4;color:#7C7FA0;text-decoration:line-through;border-bottom-color:transparent;border-radius:.3rem}
+.card.found .tell,.card.found bdi.url{background:var(--tq);color:var(--tq-ink);padding:0 .25rem;border-radius:.3rem;font-weight:700}
+.sphead{padding:.8rem .95rem .2rem;font-weight:800;font-size:1.1rem;line-height:1.5;color:var(--onpaper)}
+.spopts{display:grid;gap:.45rem;padding:0 .7rem .7rem}
+.spopt{display:block;width:100%;min-height:46px;text-align:start;padding:.5rem .8rem;border-radius:12px;background:var(--paper2);color:var(--onpaper);font-weight:700;font-size:.98rem;line-height:1.45;box-shadow:inset 0 0 0 1.5px rgba(84,90,132,.35)}
+.card.pair .spopt,.card.order .spopt{width:auto;margin:.45rem .7rem 0}
+.card.pair .spopt:last-of-type,.card.order .spopt:last-of-type{margin-bottom:.7rem}
+.spopt.msg{font-weight:600;padding:.7rem .85rem;background:#fff;border-radius:18px 18px 18px 4px}
+.spopt.ok{background:var(--tq);color:var(--tq-ink);box-shadow:none}
+.spopt.no{background:var(--coral);color:var(--coral-ink);box-shadow:none;animation:shake2 .35s}
+.spopt.ord{display:flex;align-items:center;gap:.6rem}
+.spopt.ord i{flex:none;width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;background:rgba(84,90,132,.18)}
+.spopt.ord.ok i{background:var(--tq-ink);color:var(--tq)}
+.card.call.sp .spopt{background:rgba(255,255,255,.14);color:#F6F6F0;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
+.card.call.sp .spopt.ok{background:var(--tq);color:var(--tq-ink)}.card.call.sp .spopt.no{background:var(--coral);color:var(--coral-ink)}
+.card.call.sp .chead{padding-top:.7rem;gap:.15rem}.card.call.sp .cico{width:2.6rem;height:2.6rem;animation:none}
+.card.sp .why{margin-top:.1rem}
+#foeSay{height:3.4rem;min-height:0;overflow:hidden;line-height:1.35}
+.big #foeSay{font-size:.8rem}
+.big .card.call .cico{width:2.6rem;height:2.6rem}.big .card.call .chead{padding-top:.5rem;gap:.1rem}.big .card.call .chead time{display:none}.big .card.call .cbody{margin:.1rem .5rem .5rem;padding:.45rem .7rem}.big .card.call .cbody::before{display:none}.big .ctx{font-size:.8rem;padding:.25rem .6rem}
+@media (max-height:700px){.brand h1{font-size:2.8rem}.bell{width:3.4rem;height:3.4rem}.app{padding-block:.5rem}.screen{gap:.5rem}.foe{min-height:2.6rem}.foeava{width:2.6rem;height:2.6rem}.bubble{min-height:2.6rem;font-size:.88rem}.x{width:44px;height:44px}.statusbar{font-size:.82rem}.spopt{min-height:40px;padding:.35rem .7rem;font-size:.9rem;line-height:1.4}.spopts{gap:.35rem;padding:0 .6rem .55rem}.sphead{font-size:1rem;padding:.55rem .8rem .1rem}.card.pair .spopt,.card.order .spopt{margin:.35rem .6rem 0}.spopt.msg{padding:.5rem .7rem}#play.sp .ctx.coach{font-size:.8rem;padding:.2rem .55rem}.card.call .cico{width:2.6rem;height:2.6rem}.card.call .chead{padding-top:.6rem;gap:.1rem}.card.call .chead time{display:none}.card.call .cbody{margin:.1rem .5rem .5rem;padding:.5rem .7rem}.ctrl button{min-height:3rem}.brand h1{font-size:2.6rem}.stg{max-width:54px}#home{gap:.6rem}.wallet{padding:.5rem .9rem}.pick{padding:.5rem .9rem}.stage{padding:.5rem;gap:.4rem;border-radius:1.3rem}.chead{padding:.45rem .7rem}.cico{width:2rem;height:2rem}.cbody{padding:.6rem .8rem;line-height:1.65}.ctx{font-size:.88rem;padding:.25rem .6rem}.ctrl button{padding:.55rem .5rem}.insp,.why{margin:0 .6rem .55rem;font-size:.88rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div class="app" dir="rtl" lang="ar" id="app">
+
+  <!-- HOME -->
+  <section class="screen scroll" id="home">
+    <header class="brand">
+      <div class="bell" id="logoFox" aria-hidden="true"></div>
+      <div>
+        <h1 id="brandName">واعي</h1>
+        <p id="tagline">اكشف بو حيلة قبل ما يصفّر حسابك.</p>
+      </div>
+      <button class="gear" id="gear" aria-label="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></button>
+    </header>
+
+    <div class="challenge" id="challenge" hidden></div>
+
+    <div class="wallet">
+      <div class="wl"><small id="hWl">محفظتك</small><b id="hWallet">500.000</b> <small style="display:inline" class="cur">د.ك</small></div>
+      <div class="ws"><span>الدروع <b id="hShields">0</b></span><span>الأوسمة <b id="hMedals">0</b> / <span id="hTot">10</span></span></div>
+    </div>
+
+    <button class="daily" id="daily" style="display:none"></button>
+
+    <div class="map" id="map" role="group" aria-label="خريطة المراحل"></div>
+    <div class="pick" id="pick"></div>
+    <button class="cta" id="start">ابدأ المرحلة 1</button>
+
+    <div class="homefoot">
+      <div class="foot2"><button class="ghost" id="vault">خزنة الجوائز</button><button class="ghost" id="idx">مؤشر الوعي</button></div>
+      <p class="fine">نموذج توعوي. كل الأسماء والأرقام وهمية.</p>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section class="screen" id="play" hidden>
+    <div class="hud">
+      <div class="bal"><small id="wallet">محفظتك</small><b id="bal">0.000</b> <small style="display:inline" class="cur">د.ك</small></div>
+      <div class="score"><small>جائزة المرحلة <span class="combo" id="combo" hidden></span></small><b id="score">0.000</b></div>
+      <button class="x" id="quit" aria-label="خروج إلى الرئيسية">✕</button>
+    </div>
+    <div class="foe">
+      <span class="foeava" id="foeAva" aria-hidden="true"></span>
+      <span class="foename">بو حيلة<small>حصيلته <b id="foeLoot">0.000</b></small></span>
+      <span class="bubble" id="foeSay" aria-live="polite"></span>
+    </div>
+    <div class="stage" id="stage">
+      <div class="statusbar"><span id="clock">9:41 ص</span><span class="shl">الدروع <b id="shieldN">0</b></span><span id="count">1 / 8</span></div>
+      <div class="ctx" id="ctx" hidden></div>
+      <div class="cardwrap" id="cardwrap"></div>
+      <div class="tbar" id="tbar"><i id="tfill"></i></div>
+    </div>
+    <div class="ctrl">
+      <button class="b-yes" id="bYes">أثق<small id="yesSub">أتجاوب معها</small></button>
+      <button class="b-in" id="bIn" aria-label="تفحّص التفاصيل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>تلميح <b id="lensN">3</b></span></button>
+      <button class="b-no" id="bNo">أشك<small id="noSub">أوقف هنا</small></button>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section class="screen scroll" id="report" hidden></section>
+
+  <!-- FLIP -->
+  <section class="screen scroll" id="flip" hidden></section>
+</div>
+
+<script>
+(function(){
+'use strict';
+document.documentElement.lang='ar'; document.documentElement.dir='rtl';
+var ART_URL='https://claude.ai/artifact/4w3hSVikaTB4jhGH5EBMDG';
+
+var LEVERS={
+ urgency:{n:'الاستعجال',how:'يضيّق الوقت حتى لا تفكّر ولا تسأل أحدًا.',anti:'أي أمر مستعجل يستحق دقيقة تأكّد.'},
+ authority:{n:'الهيبة',how:'يلبس ثوب جهة تحترمها أو تخاف منها: بنك، شرطة، وزارة.',anti:'الجهة الحقيقية لا تمانع أن تغلق الخط وتتصل بها بنفسك.'},
+ fear:{n:'الخوف',how:'يهدد بخسارة قريبة: إيقاف بطاقة، غرامة، حذف حساب.',anti:'التهديد في رسالة ليس دليلًا. افتح القناة الرسمية بنفسك.'},
+ greed:{n:'الطمع',how:'يعرض ربحًا أو هدية أكبر من المعقول.',anti:'ما في ربح مضمون ولا هدية تحتاج بطاقتك.'},
+ trust:{n:'القرابة',how:'ينتحل شخصًا تحبه أو تعرفه، ويطلب السرّية.',anti:'اتصل على رقمه القديم، أو اسأل عن كلمة سر العائلة.'}
+};
+var LICO={
+ urgency:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.500 2M9.500 2.500h5"/></svg>',
+ authority:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.400 9 8 11 4.600-2 8-6 8-11V5zm0 5 1.300 2.700 3 .400-2.200 2.100.500 3L12 13.800 9.400 15.200l.500-3-2.200-2.100 3-.400z"/></svg>',
+ fear:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.500 1.500 21h21zm-1.200 6.500h2.400v6h-2.400zm0 7.500h2.400v2.400h-2.400z"/></svg>',
+ greed:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 8h18v4H3zm1 5.500h7V22H4zm9 0h7V22h-7zM12 8C9 8 6.500 7 6.500 4.800 6.500 2.500 10 2 12 6c2-4 5.500-3.500 5.500-1.200C17.500 7 15 8 12 8z"/></svg>',
+ trust:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21C5 16 2.500 12.500 2.500 8.800a5 5 0 0 1 9.500-2.200 5 5 0 0 1 9.500 2.200C21.500 12.500 19 16 12 21z"/></svg>'
+};
+var CH={sms:'رسالة نصية',wa:'محادثة واتس',call:'مكالمة واردة',notif:'إشعار',game:'دردشة داخل اللعبة',social:'في السوشال',mail:'بريد إلكتروني',life:'موقف أمامك',pop:'على شاشتك'};
+var ICO={
+ sms:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>',
+ wa:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm-4 7h8v2H8zm0 4h5v2H8z"/></svg>',
+ call:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 2.5 9.8 3l1.3 4.6-2.2 1.7a13 13 0 0 0 5.8 5.8l1.7-2.2 4.6 1.3.5 3.2a2 2 0 0 1-2 2.3C10.600 19.700 4.300 13.400 4.300 4.500a2 2 0 0 1 2.300-2z"/></svg>',
+ notif:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 2 8v2h20V8zM4 12h3v6H4zm6.5 0h3v6h-3zM17 12h3v6h-3zM2 20h20v2H2z"/></svg>',
+ game:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 6h10a5 5 0 0 1 5 5v2a5 5 0 0 1-9 3h-2a5 5 0 0 1-9-3v-2a5 5 0 0 1 5-5zm-1 4v2H4v2h2v2h2v-2h2v-2H8v-2zm10 0a1.500 1.500 0 1 0 0 3 1.500 1.500 0 0 0 0-3zm3 3a1.500 1.500 0 1 0 0 3 1.500 1.500 0 0 0 0-3z"/></svg>',
+ social:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9h3l9-5v16l-9-5H3zm15 0a4 4 0 0 1 0 6zM6 16h3l1 5H7z"/></svg>'
+};
+
+/* acts: [text, quality 2|1|0, comment, loss?] */
+ICO.mail=ICO.sms;ICO.pop=ICO.social;ICO.life='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg>';
+var ITEMS=[
+/* ===== حمّودي ===== */
+{id:'k1',t:'k',ch:'game',from:'FreeGems_Official',sub:'لاعب في «بلوكس لاند»',body:'مبروك 🎉 فزت بـ 10,000 جوهرة مجانية! بس [[عطني اسم حسابك وكلمة السر]] وأحوّلها لك خلال دقيقة.',insp:'الحساب عمره 3 أيام وليس من أصدقائك. اللعبة الرسمية لا تراسل اللاعبين من حساب لاعب.',scam:1,lever:'greed',loss:15,tell:'لا أحد يحتاج كلمة السر ليعطيك هدية. من يأخذها يأخذ الحساب وكل ما اشتريته.',right:'بلوك وتبليغ داخل اللعبة، وكلمة السر لا تُعطى لأي أحد.',acts:[['أسوي له بلوك وأبلّغ عنه داخل اللعبة',2,'بالضبط. البلوك يقطع المحاولة والتبليغ يحمي غيرك.'],['أرد عليه: جذّاب!',1,'كشفته، لكن الرد يخليه يكمّل المحاولة. البلوك أسرع.'],['أعطيه اسم الحساب بس، بدون كلمة السر',0,'اسم الحساب نصف المفتاح، وبعدها يبدأ يضغط للباقي.']]},
+{id:'k2',t:'k',ch:'game',from:'faisa1_09',sub:'يقول إنه صديقك فيصل',body:'بسرعة!! في عرض [[ينتهي بعد 5 دقايق]]، ادخل الرابط وسجّل بحسابك وتاخذ سكن نادر: [[{{blokslnd-gift.xyz}}]]',insp:'اسم الحساب faisa1_09 فيه الرقم 1 بدل حرف l. حساب صديقك الحقيقي faisal_09.',scam:1,lever:'urgency',loss:15,tell:'اسم مقلَّد بحرف واحد، ورابط خارج اللعبة يطلب تسجيل الدخول، ووقت ضيق حتى لا تدقق.',right:'لا تسجّل دخولك إلا داخل اللعبة نفسها، واسأل فيصل الحقيقي.',acts:[['أكلّم فيصل الحقيقي وأسأله، وأبلّغ عن الحساب المقلَّد',2,'ممتاز. التأكد من الشخص نفسه يكشف المنتحل فورًا.'],['أتجاهل الرسالة',1,'آمن، لكن فيصل وباقي الربع ممكن توصلهم نفس الرسالة. نبّههم.'],['أدخل الرابط بس أشوف شكل السكن',0,'صفحة مزيفة تشبه اللعبة، وأول ما تكتب بياناتك تنسرق.',15]]},
+{id:'k3',t:'k',ch:'wa',from:'+965 6••• ••27',sub:'رقم غير محفوظ',body:'هلا حمّودي، أنا خالك بو سعود وهذا رقمي اليديد. [[صوّر لي بطاقة البنك مال أبوك من الجهتين]] و[[لا تقول لأحد]] 🤫',insp:'رقم جديد لا تعرفه، والصورة الشخصية منسوخة. خالك رقمه محفوظ عندك من زمان.',scam:1,lever:'trust',loss:40,tell:'طلب صورة البطاقة مع «لا تقول لأحد». السرّية هي العلامة: الكبار الحقيقيون لا يطلبون منك تخبّي شيئًا عن أهلك.',right:'قل لأمك أو أبوك فورًا، وصور البطاقات لا تُرسل لأحد.',acts:[['أقول لأمي أو أبوي الحين',2,'أحسن تصرف. أي طلب فيه «لا تقول لأحد» يروح للأهل فورًا.'],['أمسح الرسالة وأسكت',1,'ما انخدعت، لكن أهلك لازم يدرون عشان يحذرون.'],['أسأله: شنو اسم ولدك؟',1,'سؤال ذكي، لكن المحتال ممكن يعرف الجواب من السوشال. الأضمن تقول لأهلك.']]},
+{id:'k4',t:'k',ch:'social',from:'هدايا_الخليج_الرسمي',sub:'حساب مموَّل',body:'🎁 آيفون ببلاش لأول 100 مشترك! [[ادفع بس 1.000 د.ك رسوم توصيل]] ببطاقة الوالد واستلم باجر.',insp:'الحساب أُنشئ هذا الأسبوع، والتعليقات مقفلة، وما له موقع ولا عنوان.',scam:1,lever:'greed',loss:25,tell:'هدية غالية مقابل «رسوم بسيطة» بالبطاقة. الدينار ليس الهدف، الهدف بيانات البطاقة.',right:'ما في هدية تحتاج بطاقة. تجاهل وبلّغ عن الإعلان.',acts:[['أبلّغ عن الإعلان وأكمل طريقي',2,'صح. الهدية اللي تحتاج بطاقة ليست هدية.'],['أسأل أبوي إذا يدفع الدينار',1,'زين إنك سألت قبل ما تدفع. أبوك بيقول لك نفس الشيء: لا.'],['أسجّل اسمي ورقمي بس، بدون دفع',0,'رقمك صار عندهم، وبتوصلك محاولات أكثر.']]},
+{id:'k5',t:'k',ch:'sms',from:'BLOKS-SUPPORT',sub:'رسالة نصية',body:'تنبيه: حسابك في بلوكس لاند [[سيُحذف خلال 24 ساعة]] بسبب مخالفة. للاستئناف سجّل دخولك هنا: [[{{blokslnd-support.help}}]]',insp:'مرسلة من رقم جوال دولي، والرابط ليس موقع اللعبة الرسمي.',scam:1,lever:'fear',loss:15,tell:'تهديد بالحذف مع رابط غريب. اللعبة تنبّهك من داخل التطبيق، وليس برسالة فيها رابط.',right:'افتح اللعبة نفسها وشوف الإشعارات هناك.',acts:[['أفتح اللعبة بنفسي وأشوف إذا في تنبيه',2,'ممتاز. التأكد من المصدر نفسه يكشف الكذبة.'],['أحذف الرسالة',1,'آمن. والأحسن بعد تتأكد من داخل اللعبة عشان يرتاح بالك.'],['أدخل الرابط وأشرح لهم إني ما خالفت',0,'الصفحة مزيفة وتسرق كلمة السر أول ما تكتبها.',15]]},
+{id:'k6',t:'k',ch:'call',from:'شركة الاتصالات',sub:'+965 2••• ••08',body:'ألو، معاك شركة الاتصالات. خط أبوك راح ينقطع اليوم. [[بيوصلك رمز على هالجوال، اقراه لي]] عشان نجدد الباقة.',insp:'الشركة تتصل بصاحب الخط نفسه، ولا تطلب من أحد يقرأ لها رمزًا.',scam:1,lever:'authority',loss:35,tell:'أي أحد يطلب تقرأ له رمزًا وصلك برسالة فهو محتال، حتى لو صوته رسمي.',right:'الرمز لا يُقرأ لأحد. سكّر وقل لأبوك.',acts:[['أسكّر وأقول لأبوي',2,'صح. الرمز مثل مفتاح البيت، ما ينعطى على التلفون.'],['أسكّر وبس',1,'آمن، لكن أبوك لازم يدري لأنهم ممكن يتصلون فيه.'],['أقول له: دقيقة أشوف الرمز',0,'لا تبقى على الخط. كل ثانية يحاول يضغط عليك أكثر.']]},
+{id:'k7',t:'k',ch:'wa',from:'أمي ❤️',sub:'رقم محفوظ',body:'حمّودي لا تنسى عندك تمرين السباحة الساعة 5، جهّز شنطتك.',insp:'نفس رقم أمك المحفوظ عندك، وكلامها المعتاد.',scam:0,ok:'رقم محفوظ وطلب عادي، بدون فلوس ولا روابط ولا أسرار.'},
+{id:'k8',t:'k',ch:'game',from:'faisal_09',sub:'صديق منذ سنتين',body:'ادخل الروم، نبي نكمل المرحلة 12 🎮',insp:'الحساب الصحيح لصديقك، وبينكم سجل لعب طويل.',scam:0,ok:'صديق حقيقي ودعوة لعب داخل اللعبة، بدون رابط ولا طلب.'},
+{id:'k9',t:'k',ch:'sms',from:'المدرسة',sub:'رسالة نصية',body:'أولياء الأمور الكرام: اختبار الرياضيات للصف السابع يوم الأحد. بالتوفيق لأبنائنا.',insp:'نفس المرسل الذي تصلكم منه رسائل المدرسة طول السنة.',scam:0,ok:'خبر فقط. لا رابط، لا دفع، لا طلب بيانات.'},
+{id:'k10',t:'k',ch:'notif',from:'متجر التطبيقات',sub:'إشعار من النظام',ctx:'<b>الموقف:</b> طلبت قبل دقيقة شراء باقة في اللعبة.',body:'طلب شراء بقيمة 0.750 د.ك بانتظار موافقة ولي الأمر.',insp:'إشعار من نظام الجوال نفسه، ويطابق ما طلبته قبل دقيقة.',scam:0,yes:'أنتظر موافقة أبوي',ok:'يطابق شيئًا فعلته أنت، والقرار عند ولي الأمر. هذا هو الطريق الصحيح للشراء.'},
+
+/* ===== نورة ===== */
+{id:'y1',t:'y',ch:'sms',from:'TardExpress',sub:'رسالة نصية',body:'عزيزي العميل، شحنتك رقم KW48213 معلّقة لعدم سداد رسوم الجمارك 1.250 د.ك. [[ادفع خلال 12 ساعة]] لتفادي الإرجاع: [[{{tard-express.kw-pay.info}}]]',insp:'مرسلة من رقم دولي يبدأ بـ ‎+44، والنطاق ليس موقع شركة الشحن.',scam:1,lever:'urgency',loss:320,tell:'المبلغ صغير عمدًا. الهدف بيانات البطاقة، ثم تُسحب مبالغ أكبر. والرابط لا يخص شركة الشحن.',right:'افتح تطبيق شركة الشحن بنفسك وابحث برقم الشحنة.',acts:[['أفتح تطبيق شركة الشحن بنفسي وأتأكد برقم الشحنة',2,'هذا هو التصرف الذهبي: تحقّق من القناة الرسمية، لا من الرابط.'],['أحذف الرسالة',1,'آمن. ولو كنت تنتظر شحنة فعلًا، تأكد من التطبيق الرسمي.'],['أدخل الرابط بس أشوف، وما أدفع',0,'الصفحة المقلَّدة مصممة لتقنعك. مجرد الدخول يقرّبك من الخطأ.']]},
+{id:'y2',t:'y',ch:'call',from:'البنك · قسم الحماية',sub:'+965 2••• ••40',body:'معاك أحمد من قسم الحماية في البنك. رصدنا عملية مشبوهة على بطاقتك. عشان نوقفها [[بيوصلك رمز من ست أرقام، عطيني إياه]].',insp:'رقم المتصل يمكن تزويره ليشبه رقم البنك. المهم هو ما يطلبه منك.',scam:1,lever:'authority',loss:480,tell:'البنك لا يطلب رمز التحقق أبدًا. الرمز الذي يصلك هو نفسه الذي يُكمل عملية السحب.',right:'أغلق الخط واتصل برقم البنك المكتوب خلف بطاقتك.',acts:[['أسكّر وأتصل برقم البنك المكتوب خلف بطاقتي',2,'بالضبط. أنت من يتصل بالبنك، وليس العكس.'],['أسكّر وبس',1,'حميت نفسك. والأفضل تتصل بالبنك لتتأكد من بطاقتك وتبلّغ.'],['أطلب اسمه ورقمه الوظيفي أول',0,'أي محتال عنده اسم ورقم جاهزان. الأسئلة لا تكشفه، إغلاق الخط يكشفه.']]},
+{id:'y3',t:'y',ch:'wa',from:'+965 5••• ••61',sub:'رقم جديد بصورة أخيك فهد',body:'هلا، أنا فهد أخوك. جوالي طاح بالماي وهذا رقمي المؤقت. محتاج [[150 د.ك الحين ضروري]]، حوّلهم على هالرابط وأرجعهم لك باجر 🙏',insp:'الرقم غير محفوظ، والصورة مأخوذة من حساب فهد العام. رقم فهد القديم ما زال عندك.',scam:1,lever:'trust',loss:150,tell:'رقم جديد مع طلب مال مستعجل. الصورة والاسم يُنسخان في ثوانٍ.',right:'اتصل على الرقم القديم المحفوظ قبل أي تحويل.',acts:[['أتصل على رقم فهد القديم المحفوظ عندي',2,'ممتاز. مكالمة واحدة على الرقم المعروف تنهي القصة.'],['أطلب منه يرسل مقطع صوتي',1,'أحسن من لا شيء، لكن الصوت صار يُقلَّد. الرقم القديم أضمن.'],['أحوّل نص المبلغ احتياط',0,'نصف المبلغ خسارة كاملة. ما في تحويل قبل التأكد.',75]]},
+{id:'y4',t:'y',ch:'social',from:'منصة الخليج للتداول الذكي',sub:'إعلان مموَّل',body:'📈 [[أرباح مضمونة 30% أسبوعيًا]] بالذكاء الاصطناعي. ابدأ بـ 100 د.ك فقط وشوف تحويلات عملائنا 👇 [[المقاعد محدودة]].',insp:'لا يوجد رقم ترخيص، والشركة غير مدرجة في قائمة الجهة الرقابية على الاستثمار.',scam:1,lever:'greed',loss:100,tell:'كلمة «مضمونة» تكفي. لا يوجد استثمار حقيقي يضمن ربحًا، وصور التحويلات تُفبرك.',right:'تجاهل وبلّغ. ولا تستثمر إلا عند جهة مرخّصة تتأكد منها بنفسك.',acts:[['أتجاهل وأبلّغ عن الإعلان: ما في ربح مضمون',2,'صح. الوعد بربح مضمون علامة احتيال كافية وحدها.'],['أسألهم بالخاص عن الترخيص',1,'بيرسلون شهادة مزوّرة. التأكد يكون من موقع الجهة الرقابية نفسها.'],['أجرّب بمبلغ صغير 20 د.ك',0,'يتركونك تربح أول مرة لتضع أكثر، ثم يختفي الكل.',20]]},
+{id:'y5',t:'y',ch:'wa',from:'مشتري من تطبيق المستعمل',sub:'+965 9••• ••15',ctx:'<b>الموقف:</b> عارض كنبة للبيع بـ 90 د.ك.',body:'أبيها بدون مفاصل. بدفع لك أونلاين الحين، ادخل هالرابط و[[حط بيانات بطاقتك عشان تستلم المبلغ]]: {{pay-receive-kw.link}}',insp:'استلام المال لا يحتاج رقم البطاقة ولا تاريخها ولا الرمز الخلفي. يكفي الآيبان.',scam:1,lever:'trust',loss:260,tell:'من يستلم المال لا يُدخل بيانات بطاقته. هذه صفحة سحب متنكرة في شكل صفحة إيداع.',right:'كاش عند الاستلام، أو تحويل على الآيبان فقط.',acts:[['أقول له: كاش عند الاستلام أو تحويل على الآيبان',2,'صح. المشتري الجاد يقبل، والمحتال يختفي.'],['أتجاهله وأنتظر مشتري ثاني',1,'آمن. وتذكّر القاعدة مع المشتري القادم.'],['أدخل رقم البطاقة بس، بدون الرمز السري',0,'رقم البطاقة وتاريخها والرمز الخلفي تكفي للسحب.',260]]},
+{id:'y6',t:'y',ch:'sms',from:'TRAFFIC-KW',sub:'رسالة نصية',body:'لديك مخالفة مرورية غير مسددة. [[سيتم حجز المركبة ومنع السفر]] إن لم تُسدَّد اليوم: [[{{fines-kw-pay.site}}]]',insp:'مرسلة من رقم جوال عادي، والرابط ليس نطاقًا حكوميًا.',scam:1,lever:'fear',loss:210,tell:'تهديد كبير ومهلة قصيرة ورابط غير حكومي. المخالفات تظهر في التطبيق الحكومي الرسمي.',right:'افتح التطبيق الحكومي الرسمي بنفسك وتحقق من المخالفات.',acts:[['أفتح التطبيق الحكومي الرسمي بنفسي وأشوف المخالفات',2,'ممتاز. إن كانت هناك مخالفة فستجدها هناك.'],['أحذف الرسالة',1,'آمن. والتأكد من التطبيق الرسمي يريح بالك.'],['أتصل على الرقم المرسِل وأستفسر',0,'الرقم للمحتال نفسه، وسيكمل الضغط بصوته.']]},
+{id:'y7',t:'y',ch:'wa',from:'شركة توظيف عن بُعد',sub:'+44 7••• ••3981',body:'مرحبًا 👋 وظيفة من البيت: [[5 د.ك عن كل لايك]] وتقييم. أول مهمة تُدفع فورًا! بعدها [[تدفع 30 د.ك لفتح المهام الذهبية]].',insp:'رقم دولي، ولا يوجد اسم شركة ولا عقد ولا مقابلة.',scam:1,lever:'greed',loss:30,tell:'الوظيفة الحقيقية تدفع لك ولا تطلب منك أن تدفع. الدفعة الأولى الصغيرة طُعم.',right:'بلوك وتبليغ. أي عمل يطلب منك مالًا لتبدأ ليس عملًا.',acts:[['بلوك وتبليغ',2,'صح. من يطلب مالًا لتشتغل عنده ليس صاحب عمل.'],['آخذ أول مهمة مجانية وأوقف',0,'المهمة الأولى تسحب منك بياناتك ورقم حسابك، وتبدأ سلسلة الضغط.'],['أسأل عن اسم الشركة وسجلها',1,'بيعطونك أي اسم. العلامة الكافية أنهم يطلبون مالًا.']]},
+{id:'y8',t:'y',ch:'call',from:'الدعم الفني للبنك',sub:'+965 2••• ••77',body:'معاك الدعم الفني. تطبيق البنك عندك فيه خلل أمني. [[نزّل برنامج المساعدة عن بُعد]] و[[عطني الرقم اللي يطلع لك]] ونصلحه خلال دقيقتين.',insp:'البنك لا يطلب تنزيل أي برنامج تحكم. هذا البرنامج يعطي المتصل شاشة جوالك كاملة.',scam:1,lever:'authority',loss:600,tell:'برنامج التحكم عن بُعد يجعل المحتال يرى شاشتك ويفتح تطبيق البنك بيدك.',right:'لا تنزّل أي برنامج بطلب متصل. أغلق واتصل بالبنك.',acts:[['أسكّر وأتصل بالبنك من الرقم خلف البطاقة',2,'صح. وأي خلل حقيقي يُحلّ من التطبيق الرسمي أو الفرع.'],['أسكّر وبس',1,'حميت نفسك. بلّغ البنك حتى يحذّر غيرك.'],['أنزّل البرنامج بس ما أعطيه الرقم',0,'مجرد وجود البرنامج خطر. احذفه فورًا.']]},
+{id:'y9',t:'y',ch:'notif',from:'تطبيق البنك',sub:'إشعار من التطبيق',body:'تم إيداع راتب بمبلغ 850.000 د.ك في حسابك المنتهي بـ 4410.',insp:'إشعار من التطبيق المثبّت على جوالك، بدون رابط ولا طلب.',scam:0,ok:'خبر فقط من التطبيق نفسه. لا رابط، لا طلب، لا استعجال.'},
+{id:'y10',t:'y',ch:'sms',from:'البنك',sub:'رسالة نصية',ctx:'<b>الموقف:</b> أنت الآن تدفع 23.500 د.ك في موقع الجمعية.',body:'رمز التحقق 482913 لعملية شراء بمبلغ 23.500 د.ك لدى COOP-ONLINE. لا تشارك الرمز مع أحد.',insp:'المبلغ والتاجر يطابقان ما تفعله الآن، ولم يطلب أحد منك الرمز.',scam:0,yes:'أُدخل الرمز بنفسي',ok:'أنت من بدأ العملية، والمبلغ والتاجر مطابقان، والرمز تُدخله أنت ولا تقوله لأحد.'},
+{id:'y11',t:'y',ch:'call',from:'البنك',sub:'الرقم المحفوظ في جهات الاتصال',ctx:'<b>الموقف:</b> اشتريت قبل دقيقة من متجر إلكتروني بـ 64 د.ك.',body:'معاك البنك. في عملية بـ 64.000 د.ك من متجر إلكتروني قبل دقيقة. أنت من قام بها؟ ما نحتاج أي رمز أو بيانات.',insp:'لم يطلب رمزًا ولا رقمًا سريًا ولا تحويلًا، والعملية تطابق ما فعلته.',scam:0,soft:1,yes:'أجاوب: نعم أنا',ok:'الفرق في الطلب وليس في القناة: لم يطلب أي سر. ولو أغلقت واتصلت بالبنك بنفسك فهذا مقبول دائمًا.'},
+{id:'y12',t:'y',ch:'sms',from:'طرد إكسبرس',sub:'رسالة نصية',ctx:'<b>الموقف:</b> تنتظر طلبية منذ أسبوع.',body:'شحنتك KW48213 خرجت للتوصيل اليوم. المندوب سيتصل بك قبل الوصول. الدفع عند الاستلام.',insp:'نفس المرسل الذي أكّد طلبك قبل أسبوع. لا رابط ولا مبلغ مطلوب الآن.',scam:0,ok:'خبر يطابق طلبًا تنتظره، بدون رابط ولا دفع مسبق.'},
+{id:'y13',t:'y',ch:'wa',from:'أمي',sub:'رقم محفوظ',body:'لا تنسون تمرّون الجمعية وإنتوا راجعين، نبي خبز ولبن.',insp:'رقم أمك المحفوظ، وطلب عادي.',scam:0,ok:'رقم محفوظ وطلب يومي عادي. ليس كل طلب احتيالًا.'},
+
+/* ===== بو فهد ===== */
+{id:'e1',t:'e',ch:'call',from:'المباحث الإلكترونية',sub:'+965 2••• ••99',body:'معاك النقيب خالد. حسابك مستخدم في قضية غسيل أموال. [[حوّل رصيدك الحين على حساب آمن]] و[[لا تخبر أحد]]، القضية سرّية.',insp:'لا توجد جهة أمنية تطلب تحويل أموال بالهاتف. الاستدعاء الرسمي يكون بكتاب أو عبر القنوات الحكومية.',scam:1,lever:'authority',loss:1200,tell:'لا يوجد شيء اسمه «حساب آمن». وطلب السرّية يعزلك عن أهلك الذين سيكشفون الخدعة.',right:'أغلق الخط وكلّم أحد أبنائك، ثم اتصل بالبنك.',acts:[['أسكّر وأكلّم ولدي أو بنتي، وبعدها أتصل بالبنك',2,'بالضبط. المحتال يخاف من شخص ثانٍ يسمع القصة.'],['أسكّر وبس',1,'حميت مالك. خبّر أهلك والبنك لأنه سيعاود الاتصال.'],['أقول له: بروح المخفر وأتأكد',1,'فكرة سليمة، لكن لا تكمل الكلام معه. أغلق أولًا.']]},
+{id:'e2',t:'e',ch:'call',from:'البنك · خدمة العملاء',sub:'+965 2••• ••40',body:'مساك الله بالخير يا عم. بطاقتك راح تتجدد اليوم. [[بيوصلك رمز برسالة، قوله لي]] عشان نفعّل البطاقة اليديدة.',insp:'رقم المتصل يمكن تزويره. البنك لا يطلب الرمز من أي عميل.',scam:1,lever:'authority',loss:650,tell:'الرمز الذي يصلك هو توقيعك على عملية سحب. البنك لا يطلبه أبدًا.',right:'الرمز لا يُقال لأحد. أغلق واتصل بالرقم المكتوب خلف البطاقة.',acts:[['أسكّر وأتصل بالرقم المكتوب خلف البطاقة',2,'صح. أنت من يتصل بالبنك.'],['أسكّر وبس',1,'آمن. والأفضل تبلّغ البنك.'],['أسأله: شنو اسمك ومن أي فرع؟',0,'عنده جواب جاهز لكل سؤال. لا تبقَ على الخط.']]},
+{id:'e3',t:'e',ch:'wa',from:'+965 5••• ••61',sub:'رقم جديد بصورة ولدك فهد',body:'يبه أنا فهد، هذا رقمي اليديد. [[محتاج 300 د.ك ضروري الحين]] وما أقدر أتكلم، حوّلهم على هالرقم وأفهّمك بعدين.',insp:'رقم غير محفوظ. رقم فهد المعروف ما زال في جوالك.',scam:1,lever:'trust',loss:300,tell:'رقم جديد، وطلب مال مستعجل، و«ما أقدر أتكلم». الثلاثة معًا علامة انتحال.',right:'اتصل على رقم فهد القديم قبل أي تحويل.',acts:[['أتصل على رقم فهد القديم',2,'ممتاز. مكالمة واحدة تكفي.'],['أسأله عن كلمة سر العائلة',2,'ممتاز. كلمة سر متفق عليها بين العائلة تهزم المنتحل.'],['أحوّل له، ما أخلّي ولدي محتاج',0,'عاطفتك هي ما يراهن عليه المحتال.',300]]},
+{id:'e4',t:'e',ch:'sms',from:'BANK-ALERT',sub:'رسالة نصية',body:'عزيزنا العميل، [[سيتم إيقاف بطاقتك البنكية اليوم]] لعدم تحديث البيانات. للتحديث فورًا: [[{{bank-update-kw.info}}]]',insp:'ليست من نفس المرسل الذي تصلك منه رسائل بنكك، والرابط ليس موقع البنك.',scam:1,lever:'fear',loss:450,tell:'البنك لا يرسل رابطًا لتحديث البيانات. التحديث يكون في الفرع أو داخل التطبيق.',right:'تجاهل الرابط. وإن قلقت فاتصل بالبنك أو زُر الفرع.',acts:[['أتصل بالبنك من الرقم خلف البطاقة وأسأل',2,'صح. سيؤكدون لك أن بطاقتك سليمة.'],['أحذف الرسالة',1,'آمن.'],['أدخل الرابط وأحدّث بياناتي',0,'الصفحة تنسخ رقم بطاقتك ورمزك.',450]]},
+{id:'e5',t:'e',ch:'sms',from:'ID-RENEW',sub:'رسالة نصية',body:'الهوية الرقمية: انتهت صلاحية بياناتك. جدّدها خلال 24 ساعة لتفادي [[غرامة 100 د.ك]]: [[{{id-renew-kw.site}}]]',insp:'الرابط ليس نطاقًا حكوميًا، والمرسل رقم جوال.',scam:1,lever:'fear',loss:180,tell:'الجهات الحكومية تنبّهك داخل تطبيقها الرسمي، لا برابط غريب في رسالة.',right:'افتح التطبيق الحكومي الرسمي بنفسك، أو اسأل أحد أبنائك.',acts:[['أفتح التطبيق الحكومي الرسمي بنفسي',2,'صح.'],['أسأل ولدي يشوفها لي',2,'ممتاز. سؤال شخص تثق به من أقوى الحمايات.'],['أدخل الرابط قبل ما تنتهي المهلة',0,'المهلة مختلقة لتستعجل.',180]]},
+{id:'e6',t:'e',ch:'call',from:'سحب الجوائز الكبرى',sub:'+965 6••• ••33',body:'مبروك يا عم! رقمك فاز معانا بـ [[10,000 د.ك]]. بس نحتاج [[رقم بطاقتك عشان نحوّل الجائزة]] ورسوم بسيطة 20 د.ك.',insp:'لم تشترك في أي سحب. والجوائز الحقيقية لا رسوم عليها.',scam:1,lever:'greed',loss:220,tell:'جائزة من سحب لم تدخله، مع طلب رقم البطاقة ورسوم. الجائزة الحقيقية لا تكلّفك شيئًا.',right:'أغلق الخط. ما في جائزة تحتاج بطاقتك.',acts:[['أسكّر الخط',2,'صح، ببساطة.'],['أقول له: خصموا الرسوم من الجائزة',1,'رد ذكي يكشفه، لكن لا تطوّل معه.'],['أعطيه رقم البطاقة بدون الرمز السري',0,'رقم البطاقة وحده يكفي لكثير من العمليات.',220]]},
+{id:'e7',t:'e',ch:'wa',from:'قروب «استثمار الذهب»',sub:'أُضفت للقروب من رقم غريب',body:'الدكتور ماجد: مبروك للأعضاء أرباح هالأسبوع 🟡 [[ضاعف معاشك التقاعدي خلال شهر]]. التحويل على حساب المدير، و[[باقي 3 مقاعد]].',insp:'كل «الأعضاء» أرقام غريبة تمدح. لا يوجد ترخيص ولا عقد.',scam:1,lever:'greed',loss:500,tell:'شهادات الأعضاء في القروب مفبركة، والتحويل لحساب شخصي. لا استثمار حقيقي يضاعف المال في شهر.',right:'اخرج من القروب وبلّغ عنه. واستشر أبناءك أو بنكك قبل أي استثمار.',acts:[['أطلع من القروب وأبلّغ عنه',2,'صح.'],['أسأل البنك عن استثمار مرخّص',2,'ممتاز. الاستثمار يكون عبر جهة مرخّصة فقط.'],['أجرّب بـ 50 د.ك',0,'يردّون لك ربحًا صغيرًا أول مرة لتضع المبلغ الكبير.',50]]},
+{id:'e8',t:'e',ch:'notif',from:'تطبيق البنك',sub:'إشعار من التطبيق',body:'تم إيداع المعاش التقاعدي بمبلغ 1,150.000 د.ك في حسابك.',insp:'إشعار من تطبيق البنك نفسه، بدون رابط ولا طلب.',scam:0,ok:'خبر فقط. لا رابط، لا طلب.'},
+{id:'e9',t:'e',ch:'sms',from:'مستوصف المنطقة',sub:'رسالة نصية',body:'نذكّركم بموعد عيادة السكر غدًا الساعة 9:30 صباحًا. يرجى إحضار البطاقة المدنية.',insp:'موعد حجزته أنت الشهر الماضي، من نفس المرسل.',scam:0,ok:'تذكير بموعد تعرفه. لا رابط ولا دفع.'},
+{id:'e10',t:'e',ch:'wa',from:'بنتي مريم',sub:'رقم محفوظ',body:'يبه باجر الغدا عندنا، أمرّك الساعة 12؟ العيال مشتاقين لك.',insp:'رقم مريم المحفوظ من سنين.',scam:0,ok:'رقم محفوظ وكلام عادي، بدون مال ولا أسرار.'},
+{id:'e11',t:'e',ch:'sms',from:'البنك',sub:'رسالة نصية',body:'تذكير: لن نطلب منك أبدًا الرقم السري أو رمز التحقق عبر الهاتف أو الرسائل. حملة «لنكن على دراية».',insp:'من نفس المرسل الذي تصلك منه رسائل بنكك. لا رابط ولا طلب.',scam:0,ok:'رسالة توعية لا تطلب شيئًا. وهي القاعدة الأهم في اللعبة كلها.'},
+{id:'e12',t:'e',ch:'call',from:'البنك',sub:'الرقم المحفوظ في جهات الاتصال',ctx:'<b>الموقف:</b> دفعت قبل دقائق 38 د.ك في الصيدلية.',body:'معاك البنك. في عملية بـ 38.000 د.ك في صيدلية قبل دقائق. أنت من قام بها؟ ما نحتاج أي رمز أو بيانات.',insp:'لم يطلب رمزًا ولا رقمًا سريًا، والعملية تطابق ما فعلته.',scam:0,soft:1,yes:'أجاوب: نعم أنا',ok:'الفرق في الطلب: لم يطلب أي سر. ولو أغلقت واتصلت بالبنك بنفسك فهذا مقبول دائمًا.'}
+];
+
+
+/* ===== مواقف المراحل الجديدة ===== */
+ITEMS.push(
+/* -- الروابط والطرود -- */
+{id:'n1',ch:'sms',from:'FilmBox',sub:'رسالة نصية',body:'اشتراكك في منصة الأفلام [[سيتوقف اليوم]]. حدّث بطاقة الدفع من هنا: [[{{filmbox-renew.co}}]]',insp:'اشتراكك يتجدد تلقائيًا من متجر التطبيقات، وليس من رابط في رسالة.',scam:1,lever:'fear',tell:'تهديد بإيقاف خدمة مع رابط لتحديث البطاقة. التحديث يكون داخل التطبيق نفسه.',right:'افتح التطبيق نفسه وتحقق من الاشتراك.'},
+{id:'n2',ch:'life',from:'ملصق على عداد المواقف',sub:'رمز QR',body:'ملصق مطبوع فوق العداد: «ادفع رسوم الموقف بسرعة من هنا» مع [[رمز QR ملصوق فوق الرمز الأصلي]].',insp:'أطراف الملصق مرفوعة وتحته رمز آخر، والصفحة تطلب بيانات البطاقة كاملة.',scam:1,lever:'urgency',tell:'رمز QR ملصوق فوق الأصلي يأخذك إلى صفحة دفع مزيفة.',right:'ادفع من التطبيق الرسمي أو من العداد نفسه.'},
+{id:'n3',ch:'notif',from:'التطبيق الحكومي الرسمي',sub:'إشعار من التطبيق',ctx:'<b>الموقف:</b> جدّدت دفتر السيارة أمس من التطبيق.',body:'تم تجديد دفتر المركبة بنجاح. يمكنك عرضه في قسم المستندات.',insp:'إشعار داخل التطبيق الرسمي المثبّت عندك، ويطابق معاملة قمت بها.',scam:0,ok:'إشعار داخل التطبيق الرسمي يطابق معاملة أنت قمت بها، بلا رابط ولا دفع.'},
+/* -- واتساب والأقارب -- */
+{id:'n4',ch:'wa',from:'أم عبدالله (جارتكم)',sub:'رقم محفوظ',body:'هلا، وصلك [[رمز من 6 أرقام]] بالغلط على رقمك، [[ممكن ترسله لي]]؟ مستعجلة 🙏',insp:'الرمز الذي وصلك هو رمز تفعيل الواتس لحسابك أنت. حساب الجارة نفسه مسروق.',scam:1,lever:'trust',tell:'رمز تفعيل الواتس لا يُرسل لأحد. من يأخذه يسرق حسابك ويراسل أهلك باسمك.',right:'لا ترسل الرمز، واتصل بالجارة هاتفيًا لتنبيهها.'},
+{id:'n5',ch:'social',from:'بوتيك_العطور_الأصلي',sub:'حساب متجر',body:'تصفية! عطر أصلي بـ 12 د.ك بدل 85. [[التحويل مقدمًا على رقم شخصي]] والتوصيل خلال ساعة. [[باقي 3 حبات]].',insp:'الحساب عمره أسبوعان، والمتابعون وهميون، ولا يوجد دفع عند الاستلام.',scam:1,lever:'greed',tell:'سعر خيالي وتحويل مسبق لرقم شخصي بدون دفع عند الاستلام.',right:'اشترِ من متجر معروف يقبل الدفع عند الاستلام أو عبر بوابة دفع رسمية.'},
+{id:'n7',ch:'wa',from:'المدير العام',sub:'رقم جديد',ctx:'<b>الموقف:</b> أنت محاسب في شركة.',body:'أنا في اجتماع وما أقدر أرد. [[حوّل 1,800 د.ك للمورّد الحين]] على هالآيبان و[[لا تكلم أحد]]، أشرح لك بعدين.',insp:'ليس رقم المدير المعروف، والآيبان لمورّد لم تتعامل معه الشركة من قبل.',scam:1,lever:'authority',tell:'أمر تحويل عاجل وسرّي من رقم جديد. هذا احتيال «المدير المزيف».',right:'تأكد من المدير بمكالمة على رقمه المعروف، واتبع إجراءات الشركة.'},
+{id:'n6',ch:'wa',from:'سالم (ربيع الدوام)',sub:'رقم محفوظ',ctx:'<b>الموقف:</b> دفعت أمس قطية العشا عن الشباب.',body:'عطني رقم الآيبان مالك أحوّل لك نصيبي من القطية 🍽',insp:'الآيبان يُستخدم للإيداع فقط، وسالم رقمه محفوظ والسياق معروف.',scam:0,ok:'الآيبان وحده لا يسمح بالسحب، والطلب من شخص معروف في سياق مفهوم.'},
+/* -- أمن المعلومات -- */
+{id:'i1',ch:'life',from:'زميلك في الدوام',sub:'عند مكتبك',body:'«أنا مستعجل وإنت طالع. [[عطني الباسورد مالك]] أخلّص المعاملة من جهازك وأسكّره.»',insp:'أي عملية بحسابك تُسجَّل باسمك أنت، حتى لو نفّذها غيرك.',scam:1,lever:'trust',tell:'كلمة السر لا تُعطى لأحد، حتى لزميل تثق به. ما يُفعل بحسابك يُحسب عليك.',right:'اعتذر، وليدخل بحسابه هو أو يطلب صلاحية رسمية.'},
+{id:'i2',ch:'notif',from:'تطبيق البنك',sub:'داخل التطبيق',body:'احمِ حسابك: فعّل الدخول ببصمة الوجه والتحقق بخطوتين من الإعدادات.',insp:'اقتراح داخل التطبيق الرسمي نفسه، والتفعيل من إعداداته.',scam:0,yes:'أفعّلها',ok:'التحقق بخطوتين من داخل التطبيق الرسمي يصعّب سرقة حسابك حتى لو تسرّبت كلمة السر.'},
+{id:'i3',ch:'pop',from:'تحذير أمني!',sub:'نافذة ظهرت في المتصفح',body:'[[جهازك مصاب بـ 5 فيروسات!]] نزّل برنامج التنظيف خلال [[60 ثانية]] قبل فقدان بياناتك.',insp:'النافذة من موقع إعلانات، وليست من نظام الجوال ولا من متجر التطبيقات.',scam:1,lever:'fear',tell:'المواقع لا تستطيع فحص جهازك. النافذة تريدك أن تنزّل برنامجًا خبيثًا.',right:'أغلق الصفحة، ولا تنزّل تطبيقات إلا من المتجر الرسمي.'},
+{id:'i4',ch:'pop',from:'Free_Mall_WiFi',sub:'شبكة واي فاي مفتوحة',body:'للاتصال بالإنترنت المجاني [[سجّل الدخول ببريدك وكلمة السر]] أو بحساب البنك.',insp:'شبكة بلا قفل، واسمها لا يطابق اسم شبكة المجمّع المعلن عند الاستعلامات.',scam:1,lever:'greed',tell:'شبكة مجانية تطلب كلمة سر بريدك أو بنكك. الشبكة الحقيقية لا تحتاجهما.',right:'استخدم بيانات جوالك للعمليات البنكية، ولا تُدخل كلمات السر في شبكة عامة.'},
+{id:'i5',ch:'notif',from:'نظام الجوال',sub:'الإعدادات',body:'تحديث أمني جديد للنظام متوفر. يمكنك تثبيته من الإعدادات > تحديث النظام.',insp:'إشعار من النظام نفسه، والتحديث من الإعدادات وليس من رابط.',scam:0,yes:'أحدّث',ok:'تحديثات النظام من الإعدادات تسد الثغرات. تأجيلها يترك جهازك مكشوفًا.'},
+{id:'i6',ch:'pop',from:'تطبيق «كشّاف برو»',sub:'طلب صلاحيات',body:'ليعمل الكشّاف يحتاج التطبيق إلى: [[قراءة الرسائل النصية]]، [[جهات الاتصال]]، والميكروفون.',insp:'كشّاف لا يحتاج إلا الكاميرا. قراءة الرسائل تعني قراءة رموز التحقق.',scam:1,lever:'trust',tell:'صلاحيات لا علاقة لها بوظيفة التطبيق. من يقرأ رسائلك يقرأ رموز البنك.',right:'ارفض الصلاحيات واحذف التطبيق.'},
+{id:'i7',ch:'mail',from:'الدعم التقني',sub:'it-support@mail-secure.co',body:'كلمة سر بريدك [[ستنتهي خلال ساعتين]]. للاحتفاظ بها سجّل دخولك هنا: [[{{mail-login-secure.co}}]]',insp:'عنوان المرسل ليس نطاق جهة عملك، والرابط يقود إلى صفحة دخول مقلَّدة.',scam:1,lever:'urgency',tell:'مهلة قصيرة ورابط دخول من نطاق غريب. هذا تصيّد لكلمة السر.',right:'لا تدخل من الرابط. غيّر كلمة السر من الموقع الرسمي إن أردت، وبلّغ قسم التقنية.'},
+{id:'i8',ch:'notif',from:'مدير كلمات المرور',sub:'في جوالك',body:'اقتراح: كلمة سر قوية ومختلفة لهذا الموقع، تُحفظ عندك تلقائيًا.',insp:'ميزة مدمجة في نظام الجوال، محمية ببصمتك.',scam:0,yes:'أستخدمها',ok:'كلمة سر مختلفة لكل موقع تمنع تسرّب واحد من فتح كل حساباتك.'},
+{id:'i9',ch:'life',from:'فلاش في المواقف',sub:'مكتوب عليه «رواتب 2026»',body:'لقيت فلاش USB عند سيارتك في مواقف الدوام. [[فضولك يقول: شبكه بالكمبيوتر وشوف]].',insp:'رمي فلاشات ملغومة في المواقف حيلة معروفة لاختراق الشركات.',scam:1,lever:'greed',tell:'الفلاش المجهول قد يحمل برنامجًا يشتغل فور توصيله.',right:'لا توصله بأي جهاز، وسلّمه لقسم التقنية.'},
+/* -- الثراء السريع -- */
+{id:'n8',ch:'social',from:'عملة «دانة كوين»',sub:'فيديو ترويجي',body:'🚀 العملة الكويتية الجديدة! [[اشترِ قبل الإدراج وتضاعف 50 مرة]]. المشاهير كلهم دخلوا، [[الفرصة تنتهي الليلة]].',insp:'لا يوجد فريق معروف ولا ترخيص، والموقع أُنشئ قبل أسبوع.',scam:1,lever:'greed',tell:'وعد بمضاعفة خيالية ومهلة تنتهي الليلة. أصحاب العملة يبيعون ويختفون.',right:'تجاهل. لا تضع مالًا في شيء لا تفهمه ولا ترخّصه جهة رقابية.'},
+{id:'n9',ch:'wa',from:'بنت خالتك',sub:'رقم محفوظ',body:'مشروع يغير حياتك! [[ادفع 50 د.ك اشتراك وييب 3 أشخاص]] وكل واحد ييب 3، وتوصل 1,000 بالشهر 🤑',insp:'لا يوجد منتج حقيقي. الربح كله من اشتراكات القادمين الجدد.',scam:1,lever:'greed',tell:'الربح يأتي من جلب مشتركين لا من بيع منتج. هذا تسويق هرمي ينهار على آخر الداخلين.',right:'اعتذر ونبّه قريبتك. حتى القريب قد يكون ضحية يروّج دون علم.'},
+{id:'n12',ch:'call',from:'مكتب استرداد الأموال',sub:'+965 2••• ••12',ctx:'<b>الموقف:</b> خسرت قبل شهر 200 د.ك في موقع وهمي.',body:'عرفنا إنك تعرضت للاحتيال. نقدر [[نرجّع لك فلوسك كاملة]]، بس [[ادفع 40 د.ك رسوم فتح الملف]] أول.',insp:'لا جهة رسمية تطلب رسومًا لاسترداد أموالك. قائمة الضحايا تُباع بين المحتالين.',scam:1,lever:'greed',tell:'من وقع مرة يُستهدف مرة ثانية بوعد «استرداد» مقابل رسوم.',right:'الاسترداد يكون عبر بنكك والجهات الرسمية فقط، وبلا رسوم مسبقة.'},
+{id:'n10',ch:'notif',from:'تطبيق البنك',sub:'داخل التطبيق',body:'وديعة ثابتة لمدة سنة بعائد سنوي 4%. الشروط كاملة في التطبيق أو في أقرب فرع.',insp:'عرض داخل التطبيق الرسمي، بعائد واقعي وشروط مكتوبة.',scam:0,ok:'عائد واقعي من جهة مرخّصة وبشروط مكتوبة، بلا استعجال ولا وعد بثراء.'},
+{id:'n11',ch:'wa',from:'أخوك الكبير',sub:'رقم محفوظ',body:'قبل ما تحط فلوسك بأي مكان، اسأل البنك عن الصناديق المرخّصة واقرأ النشرة. لا تستعجل.',insp:'نصيحة بلا رابط ولا طلب تحويل.',scam:0,ok:'نصيحة تدعوك للتأكد والتمهّل، وهذا عكس ما يفعله المحتال.'},
+/* -- غسيل الأموال -- */
+{id:'m1',ch:'wa',from:'وكيل تحويلات دولية',sub:'+44 7••• ••2210',body:'شغل سهل من البيت: نحوّل لحسابك 2,000 د.ك، [[تاخذ 100 عمولة وتحوّل الباقي]] على حساب ثاني. بدون خبرة.',insp:'لا عقد ولا شركة. المال الذي سيدخل حسابك مسروق من ضحية أخرى.',scam:1,lever:'greed',tell:'استقبال مال وتمريره مقابل عمولة يجعلك «ناقل أموال» في غسيل أموال، حتى لو لم تكن تعلم.',right:'ارفض وبلّغ. حسابك لك وحدك.'},
+{id:'m2',ch:'life',from:'ربيعك',sub:'في الديوانية',body:'«[[أجّر لي حسابك البنكي شهر واحد]] وأعطيك 150 د.ك. حسابي موقوف وعندي شغل بسيط بس.»',insp:'كل ما يمر في حسابك مسؤوليتك القانونية أنت.',scam:1,lever:'trust',tell:'تأجير الحساب جريمة. إن مرّت فيه أموال مشبوهة فأنت المتهم الأول.',right:'ارفض بوضوح، حتى مع صديق.'},
+{id:'m3',ch:'wa',from:'+965 6••• ••84',sub:'رقم غير محفوظ',ctx:'<b>الموقف:</b> وصلك للتو تحويل 300 د.ك من مجهول.',body:'السلام عليكم، حوّلت لك 300 بالغلط 😢 [[رجّعهم لي على هالحساب الثاني]] الله يخليك، مستعجل.',insp:'يطلب الإرجاع إلى حساب غير الحساب الذي جاء منه التحويل.',scam:1,lever:'urgency',tell:'الإرجاع إلى حساب مختلف يجعلك حلقة في تمرير أموال مسروقة.',right:'لا تحوّل بنفسك. بلّغ بنكك وهو يعيد المبلغ لمصدره.'},
+{id:'m4',ch:'life',from:'موظف الفرع',sub:'وأنت داخل البنك',body:'«نحتاج نحدّث بياناتك: جهة العمل ومصدر الدخل. هذا إجراء دوري لكل العملاء.»',insp:'أنت داخل الفرع الرسمي، والأسئلة عن العمل والدخل وليست عن أرقام سرية.',scam:0,yes:'أحدّث بياناتي',ok:'تحديث «اعرف عميلك» داخل الفرع واجب على البنك لمكافحة غسيل الأموال، ولا يُطلب فيه أي رقم سري.'},
+{id:'m5',ch:'call',from:'رجل أعمال',sub:'تعرّفت عليه أونلاين',body:'أبي أفتح شركة بالكويت. [[افتح حساب باسمك وأنا أديره]]، مجرد توقيع ولك 500 د.ك شهريًا.',insp:'لا تعرف نشاطه الحقيقي، والحساب سيكون باسمك أنت أمام القانون.',scam:1,lever:'greed',tell:'حساب باسمك يديره غيرك غطاء معروف لغسيل الأموال.',right:'ارفض. لا تفتح حسابًا لغيرك ولا توقّع عن أحد.'},
+{id:'m6',ch:'notif',from:'تطبيق البنك',sub:'إشعار من التطبيق',ctx:'<b>الموقف:</b> أخوك وعدك يرجّع لك قطية الغدا.',body:'وصلك تحويل بمبلغ 12.000 د.ك من أخيك. الملاحظة: «قطية الغدا».',insp:'مبلغ متوقع من شخص تعرفه ولسبب تعرفه.',scam:0,ok:'تحويل متوقع، من شخص معروف، ولسبب واضح. هذا هو الاستخدام الطبيعي للحساب.'},
+{id:'m7',ch:'social',from:'نشتري_بطاقات',sub:'رسالة خاصة',body:'نشتري [[بطاقة الصراف مع الرقم السري]] بـ 50 د.ك، وشريحة باسمك بـ 20. استلام فوري 💵',insp:'البطاقة والشريحة ستُستخدمان في جرائم مسجّلة باسمك.',scam:1,lever:'greed',tell:'بيع بطاقتك أو شريحتك يعني أن كل جريمة تُرتكب بهما تُنسب إليك.',right:'تجاهل وبلّغ عن الحساب.'},
+{id:'m8',ch:'call',from:'البنك',sub:'الرقم المحفوظ في جهات الاتصال',ctx:'<b>الموقف:</b> بعت سيارتك أمس ووصلك ثمنها 5,000 د.ك.',body:'معاك البنك. وصل حسابك تحويل كبير أمس، ممكن نعرف مصدره؟ يكفي تجاوب، وما نحتاج أي رمز أو رقم سري.',insp:'يسأل عن مصدر مبلغ وصلك فعلًا، ولا يطلب أي سر.',scam:0,soft:1,yes:'أوضّح المصدر',ok:'سؤال البنك عن مصدر مبلغ كبير إجراء قانوني لمكافحة غسيل الأموال. ولو شككت، أغلق واتصل بالبنك بنفسك.'},
+/* -- الذكاء الاصطناعي -- */
+{id:'a1',ch:'wa',from:'+965 5••• ••09',sub:'مقطع صوتي بصوت ولدك',body:'🎤 «يبه سويت حادث وجوالي انكسر. [[محتاج 400 د.ك الحين]] على هالحساب، [[لا تقول لأمي]].» الصوت صوته تمامًا.',insp:'رقم غير محفوظ. عشر ثوانٍ من صوته في مقطع منشور تكفي لتقليده.',scam:1,lever:'trust',tell:'الصوت لم يعد دليلًا. الذكاء الاصطناعي يقلّده من مقطع قصير.',right:'اتصل على رقمه المعروف، أو اسأله عن كلمة سر العائلة.'},
+{id:'a2',ch:'social',from:'مقطع متداول',sub:'فيديو لشخصية مشهورة',body:'شخصية معروفة تقول بالفيديو: «[[استثمرت بهالمنصة وربحت 20 ألف بشهر]]، سجّلوا من الرابط». حركة الشفايف [[ما تطابق الكلام]] تمامًا.',insp:'الحساب الرسمي للشخصية لم ينشر المقطع، والرابط لموقع عمره أيام.',scam:1,lever:'authority',tell:'فيديو مزيّف بوجه مشهور للترويج لمنصة وهمية.',right:'تحقق من الحساب الرسمي للشخصية، ولا تسجّل من روابط المقاطع.'},
+{id:'a3',ch:'call',from:'مكالمة فيديو · موظف البنك',sub:'رقم غير محفوظ',body:'يظهر وجه بزيّ رسمي وخلفه شعار. الصورة [[تتقطع والوجه ثابت بشكل غريب]]. يقول: «[[شارك شاشتك]] عشان نأمّن حسابك.»',insp:'البنك لا يتصل بالفيديو ولا يطلب مشاركة الشاشة.',scam:1,lever:'authority',tell:'وجه مولَّد بالذكاء الاصطناعي، وطلب مشاركة الشاشة يكشف تطبيق البنك ورموزك.',right:'أغلق المكالمة واتصل بالبنك من الرقم خلف البطاقة.'},
+{id:'a4',ch:'social',from:'مها ✨',sub:'تعرّفت عليها قبل أسبوعين',body:'حبيبي اشتريت لك هدية بس [[حجزوها بالجمارك]] 😢 [[حوّل لي 120 د.ك]] أطلّعها وأرجّعهم لك أول ما نتقابل.',insp:'صورها مثالية بلا أي صورة عفوية، وترفض مكالمة الفيديو دائمًا.',scam:1,lever:'trust',tell:'شخصية بصور مولَّدة تبني علاقة ثم تطلب مالًا. لم تلتقِ بها أبدًا.',right:'لا ترسل مالًا لمن لم تقابله، واقطع التواصل.'},
+{id:'a5',ch:'sms',from:'البنـك',sub:'رسالة نصية',body:'حرصًا على أمان حسابك، نرجو [[توثيق بصمة الوجه]] خلال 24 ساعة عبر الرابط: [[{{face-verify-kw.app}}]]',insp:'صياغة متقنة بلا أي خطأ، لكن اسم المرسل فيه مدّة زائدة والرابط ليس للبنك.',scam:1,lever:'fear',tell:'الإتقان اللغوي لم يعد علامة أمان. المحتال يكتب بالذكاء الاصطناعي. انظر إلى الرابط والطلب.',right:'توثيق الوجه يكون داخل تطبيق البنك فقط.'},
+{id:'a6',ch:'pop',from:'المساعد الذكي للبنك',sub:'دردشة في موقع ظهر لك بالبحث',body:'أهلًا! أنا المساعد الذكي 🤖 للتحقق من هويتك [[أدخل رقم البطاقة ورمز التحقق]] الذي سيصلك الآن.',insp:'الموقع ظهر كإعلان في نتائج البحث، وعنوانه ليس عنوان البنك.',scam:1,lever:'authority',tell:'روبوت دردشة في موقع مقلَّد. حتى الآلة لا يحق لها طلب رمز التحقق.',right:'ادخل موقع البنك من التطبيق أو بكتابة العنوان بنفسك.'},
+{id:'a9',ch:'pop',from:'تطبيق «جمّل صورتك AI»',sub:'شاشة التسجيل',body:'للتأكد من عمرك [[ارفع صورة بطاقتك المدنية وسيلفي]] ثم استمتع بالفلاتر مجانًا.',insp:'تطبيق صور لا يحتاج هويتك. الصورة والهوية تكفيان لفتح حسابات باسمك.',scam:1,lever:'greed',tell:'الهوية مع السيلفي تُستخدمان لانتحال شخصيتك وفتح حسابات باسمك.',right:'لا ترفع هويتك إلا لجهة رسمية تعرفها.'},
+{id:'a7',ch:'call',from:'أخوك',sub:'مكالمة فيديو من رقمه المحفوظ',ctx:'<b>الموقف:</b> سألته عن كلمة سر العائلة فأجاب صح.',body:'«تطمّن، أنا. أبي منك رقم المطعم اللي رحنا له الأسبوع اللي طاف.»',insp:'رقمه المحفوظ، وأجاب عن كلمة السر، والطلب عادي بلا مال.',scam:0,ok:'رقم معروف، وكلمة سر العائلة صحيحة، وطلب عادي. كلمة السر العائلية تهزم الصوت والوجه المقلَّدين.'},
+{id:'a8',ch:'notif',from:'تطبيق البنك',sub:'عند فتح التطبيق',body:'انظر إلى الكاميرا لتسجيل الدخول ببصمة الوجه.',insp:'يحدث داخل التطبيق الرسمي على جوالك عند فتحه.',scam:0,yes:'أسجّل الدخول',ok:'بصمة الوجه داخل التطبيق الرسمي على جهازك آمنة. الخطر حين يُطلب وجهك عبر رابط.'},
+{id:'a10',ch:'social',from:'حساب البنك الموثّق',sub:'منشور',body:'تنبيه: تنتشر مقاطع مزيفة بالذكاء الاصطناعي تنتحل البنك. لا نطلب بياناتك عبر المقاطع أو الروابط.',insp:'الحساب الموثّق الذي تتابعه من سنوات، والمنشور لا يطلب شيئًا.',scam:0,ok:'منشور توعوي من الحساب الرسمي، لا يطلب شيئًا ولا يحمل رابطًا.'},
+/* -- سرية العملاء والإفصاح -- */
+{id:'c1',ch:'call',from:'خدمة العملاء',sub:'+965 2••• ••51',body:'معاك البنك. للتأكد من هويتك [[كم رصيدك الحالي وآخر ثلاث عمليات]]؟ و[[شنو الرقم السري]] للخدمة الهاتفية؟',insp:'البنك يعرف رصيدك وعملياتك، ولا يسألك عنها حين يتصل هو.',scam:1,lever:'authority',tell:'من يتصل بك لا يحق له أن يسألك عن رصيدك أو رقمك السري. هذه معلوماتك السرية.',right:'أغلق واتصل أنت بالبنك.'},
+{id:'c2',ch:'life',from:'معرفة يشتغل في بنك',sub:'في جمعة',body:'«إذا تبي، [[أطلّع لك كشف حساب شريكك]] وتشوف وين يصرف. ما أحد راح يدري.»',insp:'إفشاء بيانات عميل جريمة على الموظف ومن يطلبها.',scam:1,lever:'trust',tell:'سرية حسابات العملاء محمية بالقانون. كما لا تريد أن يُكشف حسابك، لا تطلب كشف حساب غيرك.',right:'ارفض. وإن فعلها معك فسيفعلها بك.'},
+{id:'c3',ch:'life',from:'موظف الفرع',sub:'وأنت داخل البنك',ctx:'<b>الموقف:</b> طلبت كشف حسابك.',body:'«قبل ما أطبع الكشف، ممكن البطاقة المدنية الأصلية؟»',insp:'التحقق من هويتك قبل تسليم بياناتك يحميك أنت.',scam:0,yes:'أعطيه البطاقة',ok:'التحقق من الهوية داخل الفرع قبل الإفصاح عن بياناتك هو تطبيق السرية لمصلحتك.'},
+{id:'c4',ch:'life',from:'موظف معرض سيارات',sub:'عند توقيع التقسيط',body:'«عشان نسرّع الموافقة، [[سجّل دخولك بتطبيق البنك على جهازنا]] ونصوّر كشف الحساب.»',insp:'جهاز لا تملكه قد يحفظ اسم المستخدم وكلمة السر.',scam:1,lever:'urgency',tell:'تسجيل الدخول على جهاز غيرك يكشف حسابك كله ويترك بياناتك عندهم.',right:'اطلب كشفًا رسميًا من بنكك وسلّمه بنفسك.'},
+{id:'c5',ch:'notif',from:'تطبيق البنك',sub:'طلب موافقة',ctx:'<b>الموقف:</b> قدّمت على تمويل من شركة.',body:'شركة التمويل تطلب الاطلاع على بياناتك الائتمانية. هل توافق؟ يمكنك الرفض.',insp:'طلب موافقة داخل التطبيق الرسمي، مرتبط بطلب قدّمته أنت.',scam:0,yes:'أوافق',ok:'لا تُشارك بياناتك مع طرف ثالث إلا بموافقتك. طلب الموافقة هو السرية وهي تعمل.'},
+{id:'c6',ch:'wa',from:'استبيان رضا العملاء',sub:'+965 9••• ••70',body:'شاركنا رأيك واربح قسيمة 10 د.ك 🎁 فقط أكّد: [[الرقم المدني، رقم الحساب، تاريخ الميلاد]].',insp:'الاستبيان الحقيقي يسأل عن رأيك، لا عن بياناتك.',scam:1,lever:'greed',tell:'بياناتك الشخصية هي المطلوب، والقسيمة طُعم. بهذه البيانات يُنتحل اسمك عند البنك.',right:'لا تعطِ بياناتك عبر الرسائل.'},
+{id:'c7',ch:'social',from:'ستوري جاهزة للنشر',sub:'حسابك أنت',body:'صوّرت بطاقتك البنكية اليديدة 💳 والكاميرا [[طالع فيها رقم البطاقة وتاريخها]]. تنشر؟',insp:'رقم البطاقة والتاريخ يكفيان للشراء من كثير من المواقع.',scam:1,lever:'trust',tell:'أنت أول من يحفظ سرية بياناتك. صورة واحدة تكفي لاستخدام بطاقتك.',right:'لا تنشر صور البطاقات ولا كشوف الحساب ولا تذاكر السفر.'},
+{id:'c8',ch:'mail',from:'البنك',sub:'كتاب رسمي',body:'نحيطكم علمًا بأنه تم تزويد المحكمة ببيانات حسابكم بناءً على أمر قضائي رقم 1482. للاستفسار راجعوا الفرع.',insp:'إشعار بلا رابط ولا طلب، ويدعوك لمراجعة الفرع.',scam:0,ok:'السرية المصرفية لها استثناءات قانونية محددة، منها أمر القضاء. والبنك يبلغك ولا يطلب منك شيئًا.'},
+{id:'c9',ch:'call',from:'شركة المعلومات الائتمانية',sub:'+965 2••• ••63',body:'تصنيفك الائتماني نزل. نقدر نرفعه اليوم، بس [[عطنا اسم المستخدم وكلمة السر لتطبيق البنك]] نراجع حسابك.',insp:'لا جهة رسمية تطلب كلمة سر تطبيقك لأي سبب.',scam:1,lever:'fear',tell:'لا أحد غيرك يحق له معرفة كلمة سر تطبيق البنك، مهما كانت الجهة.',right:'أغلق، وراجع تصنيفك من القنوات الرسمية بنفسك.'},
+/* -- المواجهة الأخيرة -- */
+{id:'b1',ch:'call',from:'+965 5••• ••38',sub:'رقم غير محفوظ',ctx:'<b>الموقف:</b> وصلك للتو رمز تحقق لعملية 399 د.ك لم تقم بها.',body:'ألو، آسف! كتبت رقمك بالغلط و[[وصلك رمزي]]. [[ممكن تقراه لي]]؟ ثواني بس.',insp:'الرمز مربوط ببطاقتك أنت، والعملية شراء بـ 399 د.ك.',scam:1,lever:'urgency',tell:'الرمز لم يصلك بالغلط. هو يملك رقم بطاقتك وينقصه الرمز فقط.',right:'لا تقرأ الرمز لأحد، واتصل بالبنك فورًا لإيقاف البطاقة.'},
+{id:'b2',ch:'call',from:'مندوب التوصيل',sub:'+965 6••• ••91',ctx:'<b>الموقف:</b> تنتظر طلبية اليوم.',body:'أنا تحت البيت. النظام يطلب تأكيد: [[بيوصلك رمز، عطني إياه]] وأسلّمك الطلب.',insp:'رمز الاستلام يظهر في تطبيق المتجر، ولا يصل من البنك.',scam:1,lever:'urgency',tell:'استغل أنك تنتظر طلبية فعلًا. الرمز الذي سيصلك رمز بنكي وليس رمز استلام.',right:'اقرأ الرسالة جيدًا: إن كانت من البنك فلا تُعطِ الرمز لأحد.'},
+{id:'b4',ch:'sms',from:'البنـك',sub:'رسالة نصية',body:'ضمن حملة لنكن على دراية: [[فعّل خدمة الحماية من الاحتيال]] الآن عبر: [[{{daraya-protect.kw-secure.net}}]]',insp:'اسم المرسل فيه مدّة زائدة، والرابط ليس موقع البنك.',scam:1,lever:'authority',tell:'المحتال يلبس ثوب حملة التوعية نفسها. العلامة هي الرابط والمرسل المقلَّد.',right:'أي خدمة حماية تُفعَّل من داخل تطبيق البنك.'},
+{id:'b8',ch:'wa',from:'مسابقة لنكن على دراية',sub:'+965 9••• ••02',body:'جاوب على 3 أسئلة عن الاحتيال واربح 50 د.ك 🎉 [[أدخل بيانات بطاقتك لاستلام الجائزة]].',insp:'الجائزة تُحوَّل على الآيبان، ولا تحتاج بيانات البطاقة.',scam:1,lever:'greed',tell:'استلام أي مبلغ لا يحتاج بيانات بطاقتك، حتى لو كان الاسم اسم حملة توعية.',right:'تجاهل وبلّغ. الجوائز الحقيقية تُعلن في القنوات الرسمية.'},
+{id:'b9',ch:'sms',from:'البنك',sub:'رسالة نصية',ctx:'<b>الموقف:</b> دفعت قبل دقيقة في الجمعية.',body:'تم خصم 4.250 د.ك من بطاقتك المنتهية بـ 4410 لدى الجمعية التعاونية.',insp:'يطابق مشترياتك قبل دقيقة، بلا رابط ولا طلب.',scam:0,ok:'إشعار يطابق عملية قمت بها أنت، ولا يطلب شيئًا.'}
+);
+
+ITEMS.push(
+{id:'j1',ch:'game',from:'SkinMaster_KW',sub:'لاعب في «بلوكس لاند»',body:'عندي سكن نادر 🔥 أعطيك إياه ببلاش، بس [[سجّل دخولك من هالرابط]] {{blox-skins-free.co}}',insp:'الرابط ليس موقع اللعبة الرسمي، والحساب أُنشئ أمس.',scam:1,lever:'greed',tell:'صفحة دخول مزيفة تسرق حسابك. الهدايا الحقيقية تصل داخل اللعبة بلا روابط.',right:'لا تفتح الرابط. بلوك وتبليغ، وأخبر أهلك.'},
+{id:'j2',ch:'game',from:'سعود_77',sub:'صديق في اللعبة من شهر',body:'خلنا نتبادل الحسابات يوم واحد بس 😁 [[عطني كلمة السر مالك]] وأعطيك مالي.',insp:'لا أحد يحتاج كلمة سرك ليلعب معك.',scam:1,lever:'trust',tell:'كلمة السر مثل مفتاح البيت، لا تُعطى حتى للأصدقاء.',right:'ارفض بلطف، وغيّر كلمة السر إذا أعطيتها لأحد.'},
+{id:'j3',ch:'social',from:'يوتيوبر الألعاب',sub:'تعليق مثبّت',body:'سحب على جهاز ألعاب 🎮 [[اكتب رقم جوال أمك وتاريخ ميلادها]] في التعليقات!',insp:'الحساب نسخة من حساب مشهور، واسمه فيه حرف زيادة.',scam:1,lever:'greed',tell:'بيانات أهلك تُستخدم لسرقة حساباتهم. لا سحب يحتاجها.',right:'لا تكتب أي بيانات، وبلّغ عن التعليق.'},
+{id:'j4',ch:'social',from:'حساب مجهول',sub:'رسالة خاصة',body:'عندي صورك 😈 [[أرسل لي كود بطاقة هدايا]] وإلا بنشرها للكل.',insp:'حساب بلا صور ولا متابعين، أُنشئ اليوم.',scam:1,lever:'fear',tell:'التهديد هدفه يخوّفك فتسكت، والدفع يجيب طلبات أكثر.',right:'لا ترد ولا تدفع. صوّر الرسالة وأخبر أهلك فورًا.'},
+{id:'j5',ch:'pop',from:'مبروك!',sub:'نافذة ظهرت فجأة',body:'أنت الزائر رقم 1,000,000 🎉 [[اكتب اسمك وعنوان بيتكم]] لتستلم جوالًا جديدًا.',insp:'النافذة ظهرت في موقع ألعاب لا علاقة له بأي مسابقة.',scam:1,lever:'greed',tell:'لا جائزة تطلب عنوان بيتك من نافذة منبثقة.',right:'سكّر النافذة ولا تكتب شيئًا.'},
+{id:'j6',ch:'game',from:'Moderator_Team',sub:'رسالة داخل اللعبة',body:'حسابك مبلّغ عليه ⚠️ [[أرسل لنا رمز التحقق اللي بيوصلك]] عشان ما ينحذف.',insp:'فريق اللعبة الرسمي لا يراسلك من حساب لاعب.',scam:1,lever:'authority',tell:'رمز التحقق يفتح حسابك لمن يأخذه. لا أحد رسمي يطلبه.',right:'لا ترسل الرمز، وبلّغ عن الحساب.'},
+{id:'j7',ch:'wa',from:'+965 6••• ••45',sub:'يقول إنه يوسف من صفك',body:'هلا، وصلك كود من 6 أرقام بالغلط على رقمك، [[ممكن ترسله لي؟]] 🙏',insp:'رقم غير محفوظ، ويوسف رقمه عندك.',scam:1,lever:'trust',tell:'الكود وصلك أنت لأن أحدًا يحاول يدخل حسابك.',right:'لا ترسله. اتصل بيوسف على رقمه المحفوظ.'},
+{id:'j8',ch:'social',from:'لولو_13',sub:'تقول إن عمرها 13',body:'شكلك لطيف 😊 خلنا [[نكلم بعض بتطبيق ثاني ولا تقول لأهلك]].',insp:'صور الحساب منسوخة من الإنترنت.',scam:1,lever:'trust',tell:'«لا تقول لأهلك» أكبر علامة. الصديق الحقيقي لا يطلب أسرارًا.',right:'لا تنتقل لتطبيق آخر. أخبر أهلك وبلّغ عن الحساب.'},
+{id:'j9',ch:'game',from:'GemHacker',sub:'رسالة في الدردشة',body:'جواهر بلا حدود 💎 [[نزّل البرنامج المساعد]] {{gem-hack.apk}}',insp:'الملف ليس من المتجر الرسمي.',scam:1,lever:'greed',tell:'برامج «الهاك» تسرق حسابك أو تتجسس على الجهاز.',right:'لا تنزّل أي ملف من خارج المتجر.'},
+{id:'j10',ch:'call',from:'المدرسة',sub:'+965 2••• ••31',body:'معاك المدرسة. أبوك طلب نأكد بياناته، [[قول لي الأرقام اللي على بطاقة البنك]].',insp:'المدرسة لا تحتاج بطاقة البنك، وتتصل بأهلك لا بك.',scam:1,lever:'authority',tell:'لا جهة تطلب أرقام البطاقة من طفل.',right:'سكّر وأخبر أهلك.'},
+{id:'j11',ch:'sms',from:'GameStore',sub:'رسالة نصية',body:'فزت بقسيمة 20 د.ك لمتجر الألعاب 🎁 [[ادخل رقم بطاقة الوالد]] للتفعيل: {{gamestore-gift.co}}',insp:'الرابط ليس المتجر الرسمي.',scam:1,lever:'greed',tell:'القسيمة المجانية لا تحتاج بطاقة أحد.',right:'لا تفتح الرابط، وأرِ الرسالة لأهلك.'},
+{id:'j12',ch:'life',from:'شخص في المجمّع',sub:'غريب',body:'«عطني جوالك أكلم أمي، جوالي خلص شحن» [[ويبي يبعد فيه شوي]].',insp:'يريد أن يأخذ الجوال بعيدًا عنك.',scam:1,lever:'trust',tell:'جوالك فيه حساباتك وصور أهلك، ولا يُعطى لغريب.',right:'دلّه على الأمن أو المحل، أو اتصل أنت وهو بجانبك.'},
+{id:'j13',ch:'social',from:'#تحدي_البطاقة',sub:'ترند',body:'التحدي الجديد 🔥 [[صوّر بطاقة البنك مال أهلك وانشرها]] قبل نص الليل!',insp:'أرقام البطاقة تظهر واضحة في الصور.',scam:1,lever:'urgency',tell:'أي صورة لبطاقة بنك يمكن أن يستخدمها أحد للشراء.',right:'لا تشارك. بعض التحديات فخ.'},
+{id:'j14',ch:'wa',from:'+965 5••• ••52',sub:'مقطع صوتي بصوت أمك',body:'🎤 «حبيبي أنا ماما، جوالي ضاع. [[صوّر لي بطاقة البنك اللي بالدرج]] بسرعة.»',insp:'رقم جديد، والصوت يشبه صوتها لكن بلا اسم الدلع الذي تعرفه.',scam:1,lever:'trust',tell:'الذكاء الاصطناعي يقلّد الأصوات. تأكد قبل أي طلب.',right:'اتصل على رقم أمك المحفوظ أو اسأل أحدًا في البيت.'},
+{id:'j15',ch:'social',from:'فيديو لمشهور',sub:'مقطع متداول',body:'يوتيوبر مشهور يقول: «[[ادخلوا الرابط واربحوا 1000 جوهرة]]». فمه يتحرك بشكل غريب.',insp:'الحساب ليس الحساب الموثّق للمشهور.',scam:1,lever:'authority',tell:'فيديوهات مزيفة بالذكاء الاصطناعي تستخدم وجوه المشاهير.',right:'لا تدخل الرابط. تأكد من حسابه الرسمي.'},
+{id:'j16',ch:'pop',from:'تطبيق «كرتوني AI»',sub:'طلب صلاحيات',body:'حوّل صورتك لشخصية كرتون 🎨 يحتاج [[الوصول لكل صورك وجهات الاتصال]].',insp:'تطبيق فلتر لا يحتاج جهات الاتصال.',scam:1,lever:'greed',tell:'صلاحيات أكثر من اللازم تعني تطبيقًا يجمع بياناتك.',right:'ارفض، واختر تطبيقًا معروفًا مع أهلك.'},
+{id:'j17',ch:'notif',from:'متجر التطبيقات',sub:'إشعار من النظام',body:'تم تحديث «بلوكس لاند» إلى الإصدار الجديد.',insp:'إشعار من المتجر الرسمي، بلا رابط ولا طلب.',scam:0,ok:'تحديث من المتجر الرسمي، وهذا آمن ومفيد.'},
+{id:'j18',ch:'wa',from:'بابا',sub:'رقم محفوظ',body:'وصلت تحت البيت، انزل 🚗',insp:'رقمه المحفوظ، ولا يطلب شيئًا.',scam:0,ok:'رسالة عادية من رقم أبيك المحفوظ.'},
+{id:'j19',ch:'notif',from:'بلوكس لاند',sub:'إشعار من التطبيق',body:'تم تفعيل الحماية بخطوتين لحسابك. لن نطلب رمزك أبدًا.',insp:'إشعار داخل التطبيق الرسمي، بلا رابط.',scam:0,ok:'تأكيد حماية من التطبيق الرسمي، ولا يطلب شيئًا.'},
+{id:'j20',ch:'sms',from:'المدرسة',sub:'رسالة نصية',body:'غدًا رحلة المركز العلمي. لا تنسوا الغدا والماي 🎒',insp:'رسالة تذكير بلا رابط ولا طلب.',scam:0,ok:'تذكير عادي لا يطلب شيئًا.'},
+{id:'j21',ch:'sms',from:'بلوكس لاند',sub:'رسالة نصية',ctx:'<b>الموقف:</b> سجّلت دخولك للعبة قبل لحظة.',body:'رمز الدخول: 7741. لا تعطه لأحد، حتى لو قال إنه من فريق اللعبة.',insp:'وصلك لأنك أنت من سجّل الدخول.',scam:0,ok:'رسالة رمز طبيعية لأنك أنت من طلبه. المهم ألا ترسله لأحد.'},
+{id:'j22',ch:'life',from:'معلمتك',sub:'في الفصل',body:'«قبل ما تنزّلون أي تطبيق جديد، ارجعوا لأهلكم.»',insp:'نصيحة بلا أي طلب.',scam:0,ok:'نصيحة صحيحة من معلمتك.'},
+{id:'j23',ch:'social',from:'حساب اللعبة الموثّق',sub:'منشور',body:'تنبيه: مواقع «الجواهر المجانية» احتيال. الجواهر فقط من داخل اللعبة.',insp:'حساب موثّق بعلامة رسمية، ولا يطلب شيئًا.',scam:0,ok:'تحذير رسمي بلا رابط ولا طلب.'},
+{id:'j24',ch:'game',from:'عرض محدود',sub:'لعبة من خارج المتجر',body:'سلسلتك 30 يوم بتضيع! ⏰ [[ادفع 1 د.ك ببطاقة أهلك خلال دقيقة]] عشان تحفظها.',insp:'اللعبة ليست من المتجر الرسمي.',scam:1,lever:'urgency',tell:'العدّاد التنازلي يريدك أن تدفع قبل أن تفكر.',right:'لا تدفع شيئًا بدون أهلك، حتى لو كان قليلًا.'},
+{id:'j25',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'لا تشتري شي باللعبة قبل ما تسألني ❤️',insp:'رقمها المحفوظ، ونصيحة بلا طلب.',scam:0,ok:'نصيحة من أمك من رقمها المحفوظ.'},
+{id:'j26',ch:'social',from:'نشتري_حسابات',sub:'رسالة خاصة',body:'نعطيك 5 د.ك و[[تعطينا حسابك في اللعبة وكلمة سره]]. فلوس سهلة 💵',insp:'حساب مجهول يشتري حسابات.',scam:1,lever:'greed',tell:'حسابك يُستخدم في الاحتيال على غيرك، وأنت المسؤول.',right:'لا تبع حسابك ولا تعطِ كلمة سرك.'},
+{id:'o1',ch:'sms',from:'PENSION-KW',sub:'رسالة نصية',body:'سيُوقف صرف معاشك لعدم تحديث بيانات إثبات الحياة. [[حدّث خلال 24 ساعة]]: {{pension-update-kw.co}}',insp:'الرابط ليس موقعًا حكوميًا رسميًا.',scam:1,lever:'fear',tell:'تهديد بإيقاف المعاش مع رابط ومهلة قصيرة.',right:'لا تفتح الرابط. اتصل بالجهة من رقمها الرسمي أو راجعها بنفسك.'},
+{id:'o2',ch:'call',from:'+965 9••• ••18',sub:'رقم غير محفوظ',body:'عرفتني؟ أنا ولد أختك! بموقف محرج و[[أحتاج 200 د.ك الحين]]، و[[لا تقول لأمي]].',insp:'لم يذكر اسمه، وينتظر أن تقوله أنت.',scam:1,lever:'trust',tell:'«عرفتني؟» حيلة تجعلك تقول الاسم بنفسك.',right:'اسأله عن اسمه، ثم اتصل بأخته أو برقمه المحفوظ.'},
+{id:'o3',ch:'wa',from:'حفيدك علي',sub:'رقم محفوظ',body:'ركّبت لك تطبيق البنك من المتجر الرسمي. ولا تعطي أحد الرقم السري، حتى أنا 😄',insp:'رقمه المحفوظ، ونصيحة بلا طلب.',scam:0,ok:'رسالة من حفيدك على رقمه المحفوظ، ولا تطلب شيئًا.'},
+{id:'o4',ch:'life',from:'رجل بزي رسمي',sub:'عند باب البيت',body:'«من شركة الكهرباء. فاتورتكم متأخرة، [[ادفع لي كاش الحين]] وإلا نقطع.»',insp:'لا يحمل بطاقة، والجهات لا تحصّل نقدًا عند الباب.',scam:1,lever:'authority',tell:'الدفع عبر القنوات الرسمية فقط، لا نقدًا لمن يطرق الباب.',right:'لا تدفع. تأكد من الفاتورة من التطبيق الرسمي أو اتصل بالجهة.'},
+{id:'o5',ch:'call',from:'حملة حج وعمرة',sub:'+965 2••• ••56',body:'[[عرض ينتهي اليوم]]: عمرة بنص السعر. حوّل العربون على [[حساب شخصي]] ونحجز لك.',insp:'الحملات المرخّصة تقبض على حساب الشركة لا حساب شخص.',scam:1,lever:'urgency',tell:'سعر أقل بكثير، ومهلة قصيرة، وحساب شخصي: ثلاث علامات.',right:'تأكد من ترخيص الحملة وادفع في مكتبها.'},
+{id:'o6',ch:'call',from:'+965 5••• ••77',sub:'صوت حفيدك يبكي',body:'«[[يدّه انمسكت]]، المحامي بيكلمك. [[حوّل الكفالة بسرعة]] ولا تقول لأبوي.»',insp:'رقم جديد، والصوت يشبه حفيدك تمامًا.',scam:1,lever:'trust',tell:'الذكاء الاصطناعي يقلّد صوت الأحفاد، والسرية والاستعجال علامتان.',right:'سكّر واتصل بحفيدك أو بأبيه على الرقم المحفوظ.'},
+{id:'o7',ch:'life',from:'شخص عند الصراف',sub:'يعرض المساعدة',body:'«البطاقة علقت؟ [[دخّل الرقم السري مرة ثانية]] وأنا أساعدك.» وهو [[واقف وراك]].',insp:'يقف قريبًا جدًا ويرى الشاشة.',scam:1,lever:'trust',tell:'يحفظ رقمك السري ثم يسحب البطاقة العالقة.',right:'لا تدخل الرقم أمام أحد. اتصل بالبنك من الرقم خلف البطاقة.'},
+{id:'o8',ch:'sms',from:'البنك',sub:'رسالة نصية',ctx:'<b>الموقف:</b> سحبت قبل دقائق من الصراف.',body:'سحب نقدي 40.000 د.ك من بطاقتك المنتهية بـ 2271.',insp:'يطابق سحبك، بلا رابط ولا طلب.',scam:0,ok:'إشعار يطابق ما فعلته، ولا يطلب شيئًا.'}
+);
+
+var SLOTS=[['7:12 ص','#F9C784','#8FD3E8',0],['9:41 ص','#9ADCF0','#5BB4E5',0],['11:05 ص','#7CCBF2','#4A9BE0',0],['1:30 م','#6BBDF0','#3F8FDA',0],['4:18 م','#8FBDEB','#F2B66D',0],['6:02 م','#F29E6D','#A9549A',0],['8:20 م','#4E4396','#222B66',1],['10:56 م','#222B66','#0B1430',1]];
+var STAGES_Y=[
+ {n:'لنكن على دراية',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','y11','e11'],secs:15,loss:30,bonus:50},
+ {n:'الروابط والطرود',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','y12','e9','n3'],secs:14,loss:35,bonus:60},
+ {n:'واتساب والأقارب',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6'],secs:13,loss:40,bonus:70},
+ {n:'أمن المعلومات',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9'],secs:12.5,loss:45,bonus:80},
+ {n:'الثراء السريع',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11'],secs:12,loss:55,bonus:90},
+ {n:'غسيل الأموال',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:65,bonus:100},
+ {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:75,bonus:120},
+ {n:'سرية العملاء والإفصاح',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:85,bonus:140},
+ {n:'عالم الألعاب',d:'جواهر مجانية وحسابات مقلَّدة',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:60,bonus:120},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','y3','e2','e12','e8','b9'],secs:8.5,loss:120,bonus:300}
+];
+var STAGES=STAGES_Y;
+var STAGES_K=[
+ {n:'عالم الألعاب',d:'جواهر وسكنات وحسابات',ids:['k1','k2','k5','j1','j6','j9','k8','j19','j17'],loss:20,bonus:40},
+ {n:'روابط وجوائز',d:'سحوبات ونوافذ وتحديات',ids:['k4','j3','j5','j11','j13','k9','j20','j21'],loss:25,bonus:50},
+ {n:'العائلة والأصدقاء',d:'من يطلب منك باسم أهلك',ids:['k3','k6','j7','j10','j12','k7','j18','j25'],loss:30,bonus:60},
+ {n:'الغرباء وأمان حسابك',d:'كلمات السر والتطبيقات',ids:['j2','j4','j8','i4','i6','i2','i8','j22'],loss:30,bonus:70},
+ {n:'الذكاء الاصطناعي',d:'أصوات وفيديوهات مزيفة',ids:['j14','j15','j16','a9','i3','a8','j23','k10'],loss:35,bonus:80},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','n1','j24','j26','i5','y12','j19'],loss:40,bonus:150}
+];
+var STAGES_E=[
+ {n:'لنكن على دراية',d:'البنك لا يطلب الرمز أبدًا',ids:['e2','e4','y8','y10','e11','e8','b9','o8'],loss:40,bonus:60},
+ {n:'الأبناء والأحفاد',d:'«أنا ولدك وهذا رقمي اليديد»',ids:['e3','y3','o2','n4','o3','e10','a7','y13'],loss:50,bonus:70},
+ {n:'الجهات الرسمية',d:'مباحث ومعاشات وفواتير',ids:['e1','e5','y6','o1','o4','n3','e9','c8'],loss:60,bonus:90},
+ {n:'الجوائز والاستثمار',d:'أرباح مضمونة وسحوبات',ids:['e6','e7','y4','n12','o5','n10','n11'],loss:70,bonus:100},
+ {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','o6','a2','a3','a5','a10','a8'],loss:80,bonus:120},
+ {n:'بياناتك وسرّيتها',d:'من يسأل عنها ومن يراها',ids:['c1','c4','c6','c9','o7','c3','c5','i2'],loss:80,bonus:140},
+ {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','m3','e12','y11','m8'],loss:110,bonus:300}
+];
+var TRACKS={kid:STAGES_K,youth:STAGES_Y,elder:STAGES_E};
+var AGE={kid:{n:'صغار',s:'حتى 14 سنة',pw:1.35,lens:4,loss:1,start:300},youth:{n:'شباب',s:'من 15 إلى 40',pw:1,lens:3,loss:1,start:500},elder:{n:'كبار',s:'فوق 40',pw:1.4,lens:4,loss:.8,start:500}};
+var REW={
+ kid:[{at:2,t:'ملصقات واعي الرقمية',s:'تزيّن بها محادثاتك'},{at:4,t:'شهادة «{واعي الصغير|واعية الصغيرة}»',s:'تطبعها وتعلّقها'},{at:6,t:'دخول سحب على لعبة',s:'لمن هزم بو حيلة'}],
+ youth:[{at:3,t:'كوب قهوة مجاني',s:'من مقهى شريك'},{at:6,t:'خصم 20% على مشترياتك',s:'لدى متجر شريك'},{at:10,t:'دخول السحب الكبير',s:'لمن هزم بو حيلة'}],
+ elder:[{at:2,t:'كوب قهوة مجاني',s:'من مقهى شريك'},{at:4,t:'خصم 20% على مشترياتك',s:'لدى متجر شريك'},{at:7,t:'دخول السحب الكبير',s:'لمن هزم بو حيلة'}]
+};
+var TAUNTS={
+ youth:{fell:['تسلم {إيدك|إيدج} 😎','هذا اللي أبيه!','أسهل من شربة ماي','{كمّل كمّل|كمّلي كمّلي}، أنا مستانس'],
+  caught:['أفا! {كشفتني|كشفتيني}','زين.. عندي غيرها','شلون {دريت|دريتي}؟!','لا {تفرح|تفرحين}، راجع {لك|لج}','{صاحي|صاحية} اليوم؟'],
+  combo:['وقّف خلّني أتنفس!','منو {مدرّبك|مدرّبج}؟!','خلاص خلاص، {ارحمني|ارحميني}','يا ساتر، ما ينلعب {عليك|عليج}'],
+  legit:['هاها، هذي كانت سليمة!','{خوّفتك|خوّفتج}؟ ما كانت مني','{شكّيت|شكّيتي} حتى في الصج؟'],
+  slow:['{نايم|نايمة}؟ فاتتك','{وينك|وينج}؟ الوقت يمشي'],shield:['منو {عطاك|عطاج} هالدرع؟!','الدرع {أنقذك|أنقذج}.. هالمرة'],
+  start:'هلا والله.. {جاهز|جاهزة}؟',last:'{وصلت|وصلتي} لي؟ الحين اللعب الصج',tut:'أول مرة؟ خلني أشوف {شطارتك|شطارتج}'},
+ kid:{fell:['هههه {صدّقتني|صدّقتيني}! 😜','يا سلام، نجومك صارت لي ⭐','أسهل من الغميضة','مرة ثانية؟ 😁'],
+  caught:['أوووه! {كشفتني|كشفتيني} 😮','{شاطر|شاطرة}! بس عندي غيرها','شلون {عرفت|عرفتي}؟!','زين.. المرة الياية {بتشوف|بتشوفين}'],
+  combo:['{بطل|بطلة}! ما ينلعب {عليك|عليج} 🏆','وقّف وقّف، بنسحب!','يا {ذكي|ذكية}!'],
+  legit:['هاها، هذي كانت سليمة!','لا {تخاف|تخافين} من كل شي 😄'],
+  slow:['{وينك|وينج}؟ 😴','الوقت خلص!'],shield:['الدرع {حماك|حماج}! 😤'],
+  start:'هلا {بالبطل|بالبطلة}! {جاهز|جاهزة}؟',last:'آخر مرحلة.. {ركّز|ركّزي}!',tut:'هلا! خلني أشوف {شطارتك|شطارتج} 😄'},
+ elder:{fell:['الله يعطيك العافية يا {الغالي|الغالية} 😏','{تسلم يدك|تسلمين يدج}.. رزق وجاني','ما {قصّرت|قصّرتي} يا {الطيّب|الطيبة}'],
+  caught:['{كشفتني|كشفتيني} يا {الحبيب|الحبيبة}','{حريف|حريفة}.. عندي غيرها','الله يحفظك، {صاحي|صاحية}'],
+  combo:['لا والله {أستاذ|أستاذة}!','خلني أرتاح شوي 😅','ما شاء الله تبارك الله'],
+  legit:['هذي سليمة يا {الغالي|الغالية}، ما كانت مني','الحذر زين، بس هذي صج'],
+  slow:['على راحتك.. بس فاتتك','الوقت راح يا {الغالي|الغالية}'],shield:['الدرع {حماك|حماج} هالمرة'],
+  start:'مسّاك الله بالخير.. {جاهز|جاهزة}؟',last:'آخر مرحلة يا {الغالي|الغالية}.. الحين الجد',tut:'أول مرة؟ {تفضّل|تفضّلي}، خلني أشوف'}
+};
+var BYID={};ITEMS.forEach(function(x){BYID[x.id]=x});
+var START_WALLET=500,MEDAL=['','برونزي','فضي','ذهبي'];
+
+/* ---------- storage ---------- */
+var KEY='ranna.v2';
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+var store=load();
+store.prof=store.prof||{};
+if(!store.prof.youth&&typeof store.wallet==='number'){store.prof.youth={wallet:store.wallet,shields:store.shields||0,done:store.done||{},pdone:store.pdone||{},unlocked:store.unlocked||1,adapt:1}}
+['wallet','shields','done','pdone','unlocked'].forEach(function(k){delete store[k]});
+var PR=null,TAUNT=TAUNTS.youth,REWARDS=REW.youth;
+function setProfile(){var a=store.age||'youth';STAGES=TRACKS[a];TAUNT=TAUNTS[a];REWARDS=REW[a];var p=store.prof[a];if(!p)p=store.prof[a]={wallet:AGE[a].start,shields:0,done:{},pdone:{},unlocked:1,adapt:1};PR=p;S.age=a;S.fem=store.fem===1;S.sel=0}
+
+/* ---------- helpers ---------- */
+function $(id){return document.getElementById(id)}
+function kid(){return S&&S.age==='kid'}
+function fmt(n){return kid()?Math.round(n).toLocaleString('en-US'):n.toLocaleString('en-US',{minimumFractionDigits:3,maximumFractionDigits:3})}
+function CUR(){return kid()?'نجمة':'د.ك'}
+function G(m,f){return S.fem?f:m}
+function gx(t){return String(t).replace(/\{([^{}|]*)\|([^{}|]*)\}/g,function(_,m,f){return S.fem?f:m})}
+var FX=[['يبه','يمه'],['يا عم','يا خالة'],['حبيبي اشتريت لك','حبيبتي اشتريت لج'],['مها ✨','سالم ✨'],['تعرّفت عليها','تعرّفتي عليه'],['أنت محاسب','أنتِ محاسبة'],['حمّودي','نوري'],['لا تنسى','لا تنسين'],['جهّز شنطتك','جهّزي شنطتج'],['حبيبي أنا ماما','حبيبتي أنا ماما'],['انزل 🚗','انزلي 🚗'],['لا تشتري شي','لا تشترين شي'],['يدّه انمسكت','يدّتي انمسكت'],['خالي؟','خالتي؟'],['ولد أختك','ولد أختج']];
+function fx(t){if(!S.fem||!t)return t;FX.forEach(function(r){t=t.split(r[0]).join(r[1])});return t}
+function mk(s){return s.replace(/\{\{(.+?)\}\}/g,'<bdi dir="ltr" class="url">$1</bdi>').replace(/\[\[(.+?)\]\]/g,'<span class="tell">$1</span>')}
+function bd(s){return '<bdi'+(/^[+\w]/.test(s)?' dir="ltr"':'')+'>'+s+'</bdi>'}
+function plain(s){return s.replace(/\{\{|\}\}|\[\[|\]\]/g,'')}
+function words(it){return plain(it.body+' '+(it.ctx||'').replace(/<[^>]+>/g,'')).trim().split(/\s+/).length}
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
+function show(id){['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});closeSheet()}
+function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=gx(msg);$('app').appendChild(t);setTimeout(function(){t.remove()},1900)}
+function medalSvg(m){var c=['','var(--bronze)','var(--silver)','var(--saffron)'][m];return '<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h4l1 6H9zM13 2h4l-2 6h-3z" fill="var(--tq)"/><circle cx="12" cy="15" r="7" fill="'+c+'"/><circle cx="12" cy="15" r="4.300" fill="none" stroke="rgba(15,27,61,.35)" stroke-width="1.400"/></svg>'}
+var SHIELD='<svg class="shd" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.400 9 8 11 4.600-2 8-6 8-11V5z" fill="var(--tq)"/><path d="m8.500 12 2.500 2.500 4.500-5" fill="none" stroke="var(--tq-ink)" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ---------- sound ---------- */
+var S={sound:store.sound!==false,voice:!!store.voice,big:!!store.big,pro:false};
+var AC=null,ringT=null;
+function ac(){if(!S.sound)return null;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}catch(e){return null}}
+function tone(f,t0,d,type,g){var a=ac();if(!a)return;try{var o=a.createOscillator(),v=a.createGain(),t=a.currentTime+t0;o.type=type||'sine';o.frequency.value=f;v.gain.setValueAtTime(0.0001,t);v.gain.linearRampToValueAtTime(g||.09,t+.015);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(a.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
+var sfx={
+ ding:function(){tone(988,0,.1,'triangle',.05);tone(1319,.08,.18,'triangle',.05)},
+ ringOnce:function(){for(var i=0;i<4;i++){tone(784,i*.11,.09,'square',.04);tone(988,i*.11+.055,.05,'square',.035)}},
+ ring:function(){sfx.stop();sfx.ringOnce();ringT=setInterval(sfx.ringOnce,1500)},
+ stop:function(){if(ringT){clearInterval(ringT);ringT=null}},
+ hit:function(c){var f=440*Math.pow(2,Math.min(c,8)/6);tone(f,0,.09,'triangle');tone(f*1.5,.07,.16,'triangle')},
+ good:function(){tone(523,0,.12,'triangle');tone(659,.09,.12,'triangle');tone(784,.18,.25,'triangle');tone(1047,.3,.35,'triangle')},
+ mid:function(){tone(523,0,.14,'triangle');tone(494,.12,.22,'triangle')},
+ bad:function(){tone(196,0,.22,'sawtooth',.07);tone(139,.16,.4,'sawtooth',.07)},
+ tick:function(){tone(1200,0,.04,'square',.03)}
+};
+function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
+function speak(txt){if(!S.voice)return;try{var sy=window.speechSynthesis;if(!sy)return;sy.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='ar-SA';u.rate=1;sy.speak(u)}catch(e){}}
+function hush(){try{if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}
+function applyBig(){document.documentElement.classList.toggle('big',!!S.big);document.documentElement.style.fontSize=S.big?(innerHeight<700?'18px':'20px'):''}
+
+/* ---------- home / map ---------- */
+var challenge=null;
+function parseHash(){var m=/^#?tahaddi-(\d+)-(\d+)$/.exec(location.hash||'');if(m)challenge={stage:+m[1],wallet:+m[2]}}
+function doneMap(){return S.pro?PR.pdone:PR.done}
+function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:PR.unlocked)}return STAGES.length}
+function renderHome(keep){logoFox();
+ applyBig();
+ var d=doneMap(),medals=Object.keys(PR.done).length;
+ $('brandName').textContent=G('واعي','واعية');$('hTot').textContent=STAGES.length;
+ $('tagline').textContent=gx(kid()?'{اكشف|اكشفي} بو حيلة قبل ما ياخذ نجومك!':S.age==='elder'?'بو حيلة يتربّص بحسابك. {خلك واعي|خلج واعية}.':'{اكشف|اكشفي} بو حيلة قبل ما يصفّر حسابك.');
+ $('hWl').textContent=$('wallet').textContent=kid()?'نجومك':'محفظتك';
+ [].forEach.call(document.querySelectorAll('.cur'),function(e){e.textContent=CUR()});
+ $('hWallet').textContent=fmt(PR.wallet);$('hShields').textContent=PR.shields;$('hMedals').textContent=medals;
+ var ns=nextStage();if(!keep||!S.sel)S.sel=ns;var sel=S.sel,st=STAGES[sel-1];
+ $('start').textContent=gx(d[sel]?'{أعد|أعيدي} المرحلة ':'{ابدأ|ابدئي} المرحلة ')+sel;
+ $('start').onclick=function(){startStage(sel)};
+ $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+' · '+st.ids.length+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
+ var box=$('map');box.innerHTML='';
+ STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=PR.unlocked,b=document.createElement('button');
+  b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
+  b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
+  b.innerHTML=n+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>');
+  b.onclick=function(){S.sel=n;renderHome(true)};box.appendChild(b)});
+ renderDaily();var c=$('challenge');
+ if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
+}
+function openSettings(){
+ var all=Object.keys(PR.done).length>=STAGES.length;
+ function row(id,t,on){return '<button class="opt setrow" id="'+id+'" aria-pressed="'+on+'"><span>'+t+'</span><i>'+(on?'مفعّل':'متوقف')+'</i></button>'}
+ var s=sheet('<h3>الإعدادات</h3>'+row('tgSound','الأصوات',S.sound)+row('tgVoice','قراءة صوتية للبطاقات',S.voice)+row('tgBig','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','دوري المحترفين: وقت أقل وبلا تلميح',S.pro):'')+'<button class="opt setrow" id="tgWho"><span>الفئة وصيغة الخطاب</span><i>'+G('واعي','واعية')+' · '+AGE[S.age].n+'</i></button><button class="ghost" id="closeS">تم</button>');
+ s.querySelector('#closeS').onclick=closeSheet;
+ $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);openSettings();if(S.sound)sfx.ding()};
+ $('tgVoice').onclick=function(){S.voice=!S.voice;store.voice=S.voice;save(store);openSettings();if(S.voice)speak('القراءة الصوتية تعمل');else hush()};
+ $('tgBig').onclick=function(){S.big=!S.big;store.big=S.big;save(store);renderHome();openSettings()};
+ $('tgWho').onclick=function(){openWho(false)};
+ if(all)$('tgPro').onclick=function(){S.pro=!S.pro;renderHome();openSettings()};
+}
+$('gear').onclick=openSettings;
+$('quit').onclick=function(){$('play').classList.remove('sp');$('tbar').style.visibility='';var sk=$('skipTut');if(sk)sk.remove();$('stage').classList.remove('tut');S.tut=false;stopAll();renderHome();show('home')};
+
+function openVault(){
+ var h='<h3>خزنة الجوائز<small>أمثلة توضيحية في هذا النموذج، بدون أكواد حقيقية</small></h3>'+REWARDS.map(function(r){var open=!!PR.done[r.at];return '<div class="rw'+(open?' open':'')+'"><b>'+r.t+'</b><span>'+r.s+' · '+(open?'مفتوحة':'تُفتح بعبور المرحلة '+r.at)+'</span></div>'}).join('')+
+  '<div class="fact"><small>قاعدة الجوائز</small>'+(kid()?'يستلمها أهلك من تطبيق البنك الرسمي فقط.':'جائزتك الحقيقية تظهر داخل تطبيق البنك الرسمي فقط.')+' لا رابط، لا رسالة، ولا طلب بيانات بطاقة. أي «جائزة» تطلب بياناتك احتيال.</div><button class="ghost" id="closeS">تم</button>';
+ var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;
+}
+$('vault').onclick=openVault;$('idx').onclick=function(){openIndex()};
+
+/* ---------- index, daily, drill ---------- */
+var GRP={msg:'الرسائل والروابط',call:'المكالمات',chat:'المحادثات والسوشال',life:'المواقف المباشرة',safe:'تمييز السليم من الاحتيال'};
+var CHG={sms:'msg',mail:'msg',notif:'msg',pop:'msg',call:'call',wa:'chat',social:'chat',game:'chat',life:'life'};
+function grpOf(it){if(it.kind==='call')return 'call';if(it.kind==='pair')return 'safe';if(it.kind==='order')return null;if(!it.scam)return 'safe';return CHG[it.ch]||null}
+function track(it,kind){var g=grpOf(it);if(!g)return;var x=PR.ix=PR.ix||{},a=x[g]=x[g]||[0,0];a[1]++;if(kind==='perfect')a[0]++;if(a[1]>40){a[0]*=.8;a[1]*=.8}}
+function ixCalc(){var x=PR.ix||{},ok=0,n=0,rows=[],weak=null,best=null;Object.keys(GRP).forEach(function(g){var a=x[g];if(!a||a[1]<1)return;ok+=a[0];n+=a[1];var p=Math.round(a[0]/a[1]*100),r={g:g,p:p};rows.push(r);if(a[1]>=3&&(!weak||p<weak.p))weak=r;if(a[1]>=3&&(!best||p>best.p))best=r});return {n:n,p:n?Math.round(ok/n*100):0,rows:rows,weak:weak,best:best}}
+function pool(){var ids=[];STAGES.forEach(function(st){st.ids.forEach(function(id){if(ids.indexOf(id)<0)ids.push(id)})});return ids.map(function(id){return BYID[id]})}
+function today(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function dayNum(t){var p=t.split('-');return Math.round(Date.UTC(+p[0],+p[1]-1,+p[2])/864e5)}
+function seeded(arr,seed){var a=arr.slice(),z=seed;function r(){z=(z*1103515245+12345)&0x7fffffff;return z/0x7fffffff}for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
+function startDaily(){var k=dayNum(today()),p=seeded(pool(),k),sc=p.filter(function(x){return x.scam}).slice(0,4),ok=p.filter(function(x){return !x.scam}).slice(0,2);
+ startStage(0,{kind:'daily',n:'تحدي اليوم',d:'',ids:seeded(sc.concat(ok),k+7).map(function(x){return x.id}),loss:kid()?10:20,bonus:kid()?30:40})}
+function startDrill(g){var p=shuffle(pool()),a=p.filter(function(x){return g==='safe'?!x.scam:(x.scam&&CHG[x.ch]===g)}).slice(0,g==='safe'?4:5),b=p.filter(function(x){return g==='safe'?x.scam:!x.scam}).slice(0,2);
+ startStage(0,{kind:'drill',n:'تمرين: '+GRP[g],d:'',ids:shuffle(a.concat(b)).map(function(x){return x.id}),loss:5,bonus:kid()?20:30})}
+function certText(){var x=ixCalc();return (S.fem?'شهادة واعية':'شهادة واعي')+' · لنكن على دراية\nمؤشر الوعي: '+x.p+' من 100\nالأوسمة: '+Object.keys(PR.done).length+' من '+STAGES.length+(x.best?'\nأقوى شي عندي: '+GRP[x.best.g]:'')+'\nجرّب وشوف مؤشرك'+(ART_URL?'\n'+ART_URL:'')}
+function openIndex(){var x=ixCalc(),h='<h3>مؤشر الوعي<small>يُحسب من إجاباتك على هذا الجهاز فقط</small></h3>';
+ if(x.n<8)h+='<div class="fact">{العب|العبي} مرحلة واحدة على الأقل ليظهر مؤشرك.</div>';
+ else{h+='<div class="ixnum">'+x.p+'<small> من 100</small></div><div class="fact">'+(x.p>=85?'{واعي|واعية} جدًا. بو حيلة يتعب معك.':x.p>=65?'مستواك زين، وباقي نقاط تحتاج تقوية.':'بو حيلة يلقى ثغرات. التمرين يسدّها.')+'</div>';
+  x.rows.forEach(function(r){h+='<div class="ixrow'+(x.weak&&x.weak.g===r.g&&r.p<85?' weak':'')+'"><div><span>'+GRP[r.g]+'</span><b>'+r.p+'%</b></div><div class="ixbar"><i style="width:'+r.p+'%"></i></div></div>'});
+  if(x.weak&&x.weak.p<85)h+='<button class="cta" id="ixDrill">{تمرّن|تمرّني} على: '+GRP[x.weak.g]+'</button>';
+  h+='<button class="ghost" id="ixShare">{شارك|شاركي} شهادتك</button>'}
+ h+='<button class="ghost" id="closeS">تم</button>';
+ var sh=sheet(gx(h)),b;sh.querySelector('#closeS').onclick=closeSheet;
+ if((b=sh.querySelector('#ixDrill')))b.onclick=function(){closeSheet();startDrill(x.weak.g)};
+ if((b=sh.querySelector('#ixShare')))b.onclick=function(){closeSheet();doShare(certText())}}
+function renderDaily(){var dc=$('daily'),D=PR.daily||{},t=today(),td=D.d===t,sk=(D.d&&dayNum(t)-dayNum(D.d)<=1)?(D.streak||0):0;
+ dc.style.display=(store.tut&&!S.pro)?'':'none';dc.className='daily'+(td?' done':'');
+ dc.innerHTML=gx('<span class="fl">'+sk+'<small>يوم</small></span><span><b>'+(td?'أنجزت تحدي اليوم':'تحدي اليوم · دقيقة واحدة')+'</b><span>'+(td?'كشفت '+D.ok+' من '+D.n+'. {ارجع|ارجعي} بكرة لتكمل السلسلة':'6 بطاقات، نفسها عند أهلك اليوم')+'</span></span>'+(td?'':'<span class="go">{ابدأ|ابدئي}</span>'));
+ dc.onclick=function(){if(td){toast('تحدي بكرة يفتح بعد منتصف الليل');return}startDaily()}}
+
+/* ---------- stage ---------- */
+function pickT(a){return a[Math.floor(Math.random()*a.length)]}
+function startStage(n,cu){
+ ac();applyBig();
+ if(n===1&&!store.tut&&!S.pro){startTut();return}
+ if(PR.wallet<=0){PR.wallet=60;save(store);toast(kid()?'عوّضناك 60 نجمة لأنك {أخبرت|أخبرتي} أهلك بسرعة':'البنك عوّضك 60 د.ك لأنك {بلّغت|بلّغتي} بسرعة')}
+ var st=cu||STAGES[n-1],items=st.ids.map(function(id){return BYID[id]});if(!cu||cu.kind!=='daily')items=shuffle(items);
+ if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
+ if(!cu)items=addSpecials(items,n);
+ S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
+ S.shields=PR.shields;S.lens=S.pro?0:AGE[S.age].lens+((PR.adapt||1)>1.1?1:0);S.phase='idle';
+ S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:(PR.adapt||1));S.perWord=.62-.22*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
+ $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;
+ $('cardwrap').innerHTML='';say(n===STAGES.length?TAUNT.last:TAUNT.start,'');$('foeLoot').textContent=fmt(0);
+ setCtrl(false);$('ctx').hidden=true;$('tfill').style.transform='';$('count').textContent='1 / '+items.length;
+ show('play');banner(cu?{n:st.n,s:cu.kind==='daily'?'نفس البطاقات للجميع اليوم':'ركّز على نقطة ضعفك'}:{n:'المرحلة '+n+(S.pro?' · محترفين':''),s:st.n});var tk=++timer.id;setTimeout(function(){if(timer.id===tk)nextCard()},1250);
+}
+
+/* ---------- play ---------- */
+var timer={left:0,max:0,last:0,run:false,lastTick:9,id:0};
+function stopAll(){timer.run=false;timer.id++;sfx.stop();hush();S.phase='idle'}
+function foeSvg(m,full){
+ var L=' fill="none" stroke="#2A1A12" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"',st=m==='gloat'?'win':m==='defeat'?'lose':m==='shock'?'shock':'idle',f;
+ if(st==='win')f='<path class="fxbrow"'+L+' d="M64 88 L86 92"/><path class="fxbrow"'+L+' d="M136 88 L114 92"/><path'+L+' d="M66 104 Q76 92 86 104"/><path'+L+' d="M114 104 Q124 92 134 104"/><path d="M86 142 Q100 164 114 142Z" fill="#2A1A12"/><path d="M94 151 Q100 158 106 151Z" fill="#FF6B6B"/>';
+ else if(st==='lose')f='<path'+L+' d="M68 94 L84 108 M84 94 L68 108"/><path'+L+' d="M116 94 L132 108 M132 94 L116 108"/><path'+L+' d="M88 148 Q94 142 100 148 Q106 154 112 148"/><path d="M103 150 Q110 152 108 162 Q102 164 100 152Z" fill="#FF6B6B"/><path class="fxtear" d="M62 112 q-4 8 0 10 q4 -2 0 -10Z" fill="#8FD8FF"/>';
+ else if(st==='shock')f='<path'+L+' d="M66 84 L86 80"/><path'+L+' d="M134 84 L114 80"/><circle cx="76" cy="101" r="11" fill="#fff"/><circle cx="76" cy="102" r="3.500" fill="#2A1A12"/><circle cx="124" cy="101" r="11" fill="#fff"/><circle cx="124" cy="102" r="3.500" fill="#2A1A12"/><ellipse cx="100" cy="150" rx="5" ry="6" fill="#2A1A12"/>';
+ else f='<ellipse cx="76" cy="101" rx="10" ry="7" fill="#fff"/><circle cx="79" cy="102" r="4" fill="#2A1A12"/><path'+L+' d="M64 95 L88 99"/><ellipse cx="124" cy="101" rx="10" ry="7" fill="#fff"/><circle cx="121" cy="102" r="4" fill="#2A1A12"/><path'+L+' d="M136 95 L112 99"/><path'+L+' d="M90 146 Q100 152 112 142"/>';
+ var h='<svg class="fx" data-s="'+st+'" viewBox="'+(full?'0 0 200 200':'12 14 176 176')+'">';
+ h+='<g class="fxtail"><path d="M136 176 Q196 166 184 108 Q180 92 168 98 Q176 132 128 152Z" fill="#F08A3C"/><path d="M184 108 Q180 92 168 98 Q170 112 176 124Z" fill="#FFF1DC"/></g><ellipse cx="100" cy="190" rx="46" ry="38" fill="#F08A3C"/><ellipse cx="100" cy="198" rx="24" ry="28" fill="#FFF1DC"/>';
+ h+='<g class="fxhead"><g class="fxear l"><path d="M58 88 L46 32 L92 66Z" fill="#F08A3C"/><path d="M60 78 L54 48 L78 66Z" fill="#2A1A12"/></g><g class="fxear r"><path d="M142 88 L154 32 L108 66Z" fill="#F08A3C"/><path d="M140 78 L146 48 L122 66Z" fill="#2A1A12"/></g><path d="M42 92 Q100 50 158 92 Q152 130 100 158 Q48 130 42 92Z" fill="#F08A3C"/><path d="M42 92 Q70 114 100 158 Q54 136 42 92Z" fill="#FFF1DC"/><path d="M158 92 Q130 114 100 158 Q146 136 158 92Z" fill="#FFF1DC"/>'+f+'<ellipse cx="100" cy="137" rx="7" ry="5" fill="#2A1A12"/></g>';
+ if(st==='lose')h+='<g transform="translate(100 46) scale(1 .38)"><g class="fxorbit"><path d="M30 0 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#F5B942"/><path d="M-18 24 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#F5B942"/><path d="M-18 -30 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#fff"/></g></g>';
+ return h+'</svg>'}
+function logoFox(){var l=$('logoFox');if(l&&!l.firstChild)l.innerHTML=foeSvg('conf')}
+function face(m){var a=$('foeAva');if(a.getAttribute('data-m')===m)return;a.setAttribute('data-m',m);a.innerHTML=foeSvg(m);a.classList.remove('in');void a.offsetWidth;a.classList.add('in')}
+function say(txt,cls,m){var b=$('foeSay');b.parentNode.classList.toggle('quiet',!S.tut);b.textContent=gx(txt);b.className='bubble '+(cls||'');void b.offsetWidth;b.classList.add('in');face(m||(cls==='bad'?'gloat':cls==='good'?'shock':'conf'))}
+function banner(w){var el=document.createElement('div');el.className='wave';el.innerHTML='<b>'+w.n+'</b><span>'+w.s+'</span>';$('stage').appendChild(el);setTimeout(function(){el.remove()},1300)}
+function pop(txt,cls){var el=document.createElement('div');el.className='gpop '+cls;el.textContent=txt;$('stage').appendChild(el);setTimeout(function(){el.remove()},900)}
+function coins(){var st=$('stage');for(var i=0;i<9;i++){var c=document.createElement('i');c.className='coin';c.style.setProperty('--dx',(Math.random()*240-120)+'px');c.style.setProperty('--dy',(-60-Math.random()*160)+'px');st.appendChild(c);(function(c){setTimeout(function(){c.remove()},700)})(c)}}
+function nextCard(){
+ if(S.i>=S.items.length||S.bal<=0){S.phase='idle';setCtrl(false);setTimeout(rest,750);return}
+ var it=S.items[S.i],total=S.items.length;
+ var sl=SLOTS[Math.min(7,Math.floor(S.i/total*8))],st=$('stage');
+ st.style.setProperty('--w1',sl[1]);st.style.setProperty('--w2',sl[2]);st.classList.toggle('night',!!sl[3]);
+ $('clock').textContent=sl[0];$('count').textContent=(S.i+1)+' / '+total;
+ var cx=$('ctx');if(it.ctx){cx.hidden=false;cx.innerHTML=fx(it.ctx)}else cx.hidden=true;cx.className='ctx';
+ $('play').classList.remove('sp');$('tbar').style.visibility='';
+ if(it.kind){renderSpecial(it,sl);return}
+ var body=it.ch==='wa'?'<span class="bub">'+mk(fx(it.body))+'</span>':mk(fx(it.body));
+ var card=document.createElement('article');card.className='card '+it.ch;card.id='card';card.style.setProperty('--cc','var(--c-'+it.ch+')');
+ card.innerHTML='<span class="stamp y">أثق</span><span class="stamp n">أشك</span>'+
+  '<header class="chead"><span class="cico">'+ICO[it.ch]+'</span><span class="f"><b>'+bd(fx(it.from))+'</b><span>'+bd(fx(it.sub))+(it.sub.indexOf(CH[it.ch].split(' ')[0])>=0?'':' · '+CH[it.ch])+'</span></span><time>'+sl[0]+'</time></header>'+
+  '<div class="cbody">'+body+'</div><div class="insp" id="insp" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><span>'+it.insp+'</span></div>';
+ $('cardwrap').appendChild(card);fit(card);
+ var call=it.ch==='call';
+ $('bYes').firstChild.nodeValue=call?'أتجاوب':'أثق';$('yesSub').textContent=it.yes||(call?'أكمل المكالمة':G('اسحب يمين','اسحبي يمين'));
+ $('bNo').firstChild.nodeValue=call?'أسكّر':'أشك';$('noSub').textContent=call?'أنهي المكالمة':G('اسحب يسار','اسحبي يسار');
+ $('lensN').textContent=S.lens;setCtrl(true);bindSwipe(card);fit(card);
+ if(call){sfx.ring();buzz([200,100,200])}else{sfx.ding();buzz(40)}
+ if(S.voice)speak((call?'':fx(it.from)+'. ')+plain(fx(it.body)));
+ if(S.tut){S.phase='judge';timer.run=false;sfx.stop();cx.hidden=false;cx.className='ctx coach';cx.innerHTML=gx(it.coach);
+  if(it.hand!==undefined){var hd=document.createElement('i');hd.className='hand '+it.hand;card.appendChild(hd)}
+  if(it.lens){$('bYes').disabled=$('bNo').disabled=true;$('bIn').classList.add('glow')}
+  if(!$('skipTut')){var sk=document.createElement('button');sk.className='skip';sk.id='skipTut';sk.textContent='تخطَّ التمرين';sk.onclick=function(){endTut(true)};$('stage').appendChild(sk)}
+  return}
+ S.phase='judge';timer.max=timer.left=(2.5+words(it)*S.perWord+(call?2:0))*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;
+ $('tbar').classList.remove('low');var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)});
+}
+/* ---------- extra interaction types ---------- */
+var PAIRS=[
+ {a:'all',q:'أي رسالة من البنك فعلًا؟',real:'رمز التحقق 482913 لعملية شراء. لا تشاركه مع أحد.',fake:'وصلك رمز تحقق؟ أرسله لنا الآن لإلغاء العملية.',why:'البنك يرسل الرمز ويحذّرك من مشاركته، ولا يطلبه منك أبدًا.',lever:'authority'},
+ {a:'all',q:'أي رابط هو موقع البنك الرسمي؟',real:'{{mybank.com.kw}}',fake:'{{mybank-kw.secure-login.co}}',why:'اسم الجهة يجب أن يكون قبل النطاق مباشرة. الشرطات والكلمات الزائدة علامة تقليد.',lever:'authority'},
+ {a:'ye',q:'أي إشعار توصيل حقيقي؟',real:'شحنتك خرجت للتوصيل اليوم. الدفع عند الاستلام.',fake:'شحنتك معلّقة. ادفع 1.250 د.ك خلال ساعة: {{kw-post.pay-fees.co}}',why:'الحقيقي يخبرك فقط، والمزيف يستعجلك ويضع رابط دفع.',lever:'urgency'},
+ {a:'ye',q:'أي عرض استثمار يمكن أن يكون حقيقيًا؟',real:'وديعة سنة بعائد 4%. الشروط في التطبيق أو الفرع.',fake:'ربح مضمون 30% أسبوعيًا. حوّل الآن على حساب المدير.',why:'لا يوجد ربح مضمون، والجهة المرخّصة لا تقبض على حساب شخص.',lever:'greed'},
+ {a:'ye',q:'أي رسالة من ولدك فعلًا؟',real:'يبه وصلت الدوام. أكلمك بعد الصلاة.',fake:'يبه هذا رقمي اليديد، حوّل لي 300 الحين ولا تتصل.',why:'رقم جديد مع طلب مال ومنع الاتصال: ثلاث علامات انتحال.',lever:'trust'},
+ {a:'ye',q:'أي مكالمة من جهة رسمية؟',real:'«راجعنا بنفسك أو عبر التطبيق الحكومي لاستكمال المعاملة.»',fake:'«حوّل رصيدك الآن على حساب آمن حتى ينتهي التحقيق.»',why:'لا توجد جهة رسمية تطلب تحويل أموال بالهاتف.',lever:'authority'},
+ {a:'ye',q:'أي طلب من البنك طبيعي؟',real:'«نحتاج تحديث جهة عملك. تفضّل الفرع أو حدّثها من التطبيق.»',fake:'«حدّث بياناتك الآن وإلا تُوقف البطاقة: {{bank-update.info}}»',why:'التحديث الحقيقي بلا تهديد ولا رابط في رسالة.',lever:'fear'},
+ {a:'ye',q:'أي حساب هو حساب البنك الموثّق؟',real:'حساب بعلامة التوثيق، ينشر تنبيهات ولا يراسلك.',fake:'حساب «البنـك_الدعم» يراسلك في الخاص ويطلب رقم بطاقتك.',why:'الحساب الرسمي لا يبدأ محادثة خاصة ولا يطلب بيانات.',lever:'authority'},
+ {a:'k',q:'أي رسالة من اللعبة فعلًا؟',real:'رمز الدخول 7741. لا تعطه لأحد.',fake:'حسابك سينحذف! أرسل لنا كلمة السر الآن.',why:'اللعبة لا تطلب كلمة سرك أبدًا.',lever:'fear'},
+ {a:'k',q:'أي رابط هو موقع اللعبة الرسمي؟',real:'{{bloxland.com}}',fake:'{{bloxland-free-gems.xyz}}',why:'كلمات مثل free و gems بعد الاسم علامة موقع مزيف.',lever:'greed'},
+ {a:'k',q:'أي صديق حقيقي؟',real:'«تعال نلعب بعد ما تخلّص واجبك.»',fake:'«عطني كلمة السر مالك ولا تقول لأهلك.»',why:'الصديق الحقيقي لا يطلب كلمة سرك ولا يطلب منك أسرارًا عن أهلك.',lever:'trust'},
+ {a:'k',q:'أي جائزة حقيقية؟',real:'«فزت بالمركز الأول في المدرسة. الجائزة عند المعلمة.»',fake:'«فزت بجوال! اكتب عنوان بيتكم ورقم بطاقة أبوك.»',why:'الجائزة الحقيقية لا تطلب عنوانك ولا بطاقة أهلك.',lever:'greed'},
+ {a:'k',q:'أي تطبيق آمن؟',real:'تطبيق من المتجر الرسمي، يطلب الكاميرا فقط لأنه للتصوير.',fake:'تطبيق من رابط في الدردشة، يطلب كل صورك وجهات الاتصال.',why:'حمّل من المتجر الرسمي فقط، واسأل: لماذا يحتاج هذه الصلاحية؟',lever:'greed'}
+];
+var CALLS=[
+ {a:'ye',from:'البنك · قسم الحماية',lever:'authority',why:'البنك لا يطلب رمز التحقق ولا يطلب تنزيل برامج. أغلق واتصل أنت على الرقم خلف بطاقتك.',steps:[
+  {say:'مساك الله بالخير. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك. أنت سويتها؟',o:[['لا، مو أنا',1],['أي بطاقة؟ عطني رقمها وأتأكد',1],['نعم سويتها',1]]},
+  {say:'زين، عشان نوقفها الحين بيوصلك رمز برسالة. اقراه لي.',o:[['أقرأ له الرمز',0],['الرمز ما أعطيه لأحد',1],['أسكّر وأتصل بالبنك بنفسي',2]]},
+  {say:'إذا ما عطيتني الرمز خلال دقيقة بتنسحب فلوسك كلها!',o:[['خلاص هذا الرمز',0],['أسكّر وأتصل بالبنك بنفسي',2]]}]},
+ {a:'ye',from:'المباحث الإلكترونية',lever:'fear',why:'لا توجد جهة أمنية تطلب تحويل أموال بالهاتف. التهديد والسرّية علامتان.',steps:[
+  {say:'معاك النقيب خالد. حسابك مستخدم في قضية غسيل أموال.',o:[['شلون؟ أنا ما سويت شي!',1],['أسكّر وأراجع المخفر بنفسي',2]]},
+  {say:'القضية سرّية. لا تكلم أحد، حتى أهلك.',o:[['حاضر، ما راح أقول لأحد',0],['بسأل ولدي أول',1],['أسكّر الخط',2]]},
+  {say:'حوّل رصيدك الحين على حساب آمن لين يخلص التحقيق.',o:[['أحوّل عشان أبرّئ نفسي',0],['أسكّر الخط وأتصل بالبنك',2]]}]},
+ {a:'ye',from:'+965 5••• ••61',lever:'trust',why:'رقم جديد مع استعجال ومنع الاتصال. تأكد دائمًا على الرقم القديم.',steps:[
+  {say:'{يبه|يمه} أنا فهد. جوالي انكسر وهذا رقم ربيعي.',o:[['سلامتك! شتبي؟',1],['أسكّر وأتصل على رقم فهد',2]]},
+  {say:'محتاج 300 د.ك الحين ضروري. حوّلهم على هالرقم.',o:[['أحوّل له فورًا',0],['شنو اسم أمك؟',1],['أسكّر وأتصل على رقمه المحفوظ',2]]},
+  {say:'ما عندي وقت للأسئلة! حوّل الحين ولا تتصل!',o:[['أحوّل، شكله مضغوط',0],['أسكّر وأتصل على رقمه المحفوظ',2]]}]},
+ {a:'ye',from:'مكتب استرداد الأموال',lever:'greed',why:'من يطلب رسومًا مقدمًا ليرجّع لك مالك يحتال عليك مرة ثانية.',steps:[
+  {say:'عرفنا إنك تعرضت للاحتيال. نقدر نرجّع فلوسك كاملة.',o:[['صج؟ شلون؟',1],['منو عطاكم رقمي؟ أسكّر',2]]},
+  {say:'بس ادفع 40 د.ك رسوم فتح الملف أول.',o:[['أدفع، أهم شي ترجع فلوسي',0],['أسكّر وأبلّغ البنك',2]]}]},
+ {a:'k',from:'شركة الاتصالات',lever:'authority',why:'لا أحد رسمي يطلب رمزًا من طفل. الرمز يفتح حساب أهلك.',steps:[
+  {say:'ألو، خط أبوك راح ينقطع اليوم. أبوك موجود؟',o:[['لا، بس أنا موجود',1],['لحظة أعطي الجوال لأبوي',2]]},
+  {say:'ما يحتاج. بيوصلك رمز على هالجوال، قوله لي.',o:[['أقول له الرمز',0],['ما أعطي الرمز لأحد',1],['أسكّر وأقول لأبوي',2]]},
+  {say:'بسرعة! إذا ما قلته أبوك بيعصّب عليك!',o:[['أقول له الرمز',0],['أسكّر وأقول لأبوي',2]]}]},
+ {a:'k',from:'فريق دعم اللعبة',lever:'fear',why:'فريق اللعبة لا يتصل بك ولا يطلب كلمة السر. من يأخذها يأخذ الحساب.',steps:[
+  {say:'حسابك في اللعبة عليه بلاغ وبينحذف اليوم!',o:[['لا! شلون أحله؟',1],['أسكّر وأقول لأهلي',2]]},
+  {say:'عطني كلمة السر وأنا ألغي البلاغ.',o:[['أعطيه كلمة السر',0],['أسكّر وأقول لأهلي',2]]}]}
+];
+var ORDERS=[
+ {a:'ye',t:'أعطيت رمز التحقق لمتصل، ثم شكّيت.',steps:['أتصل بالبنك من الرقم خلف البطاقة','أطلب إيقاف البطاقة فورًا','أراجع آخر العمليات في التطبيق','أبلّغ الجهات المختصة'],why:'الدقائق الأولى تفرق: اتصل بالبنك وأوقف البطاقة قبل أي شيء.',lever:'urgency'},
+ {a:'ye',t:'ضغطت رابطًا وكتبت بيانات بطاقتك في موقع مزيف.',steps:['أوقف البطاقة من تطبيق البنك','أتصل بالبنك وأخبره','أغيّر كلمة سر التطبيق','أحتفظ بالرسالة كدليل وأبلّغ'],why:'أوقف البطاقة أولًا، ثم أخبر البنك، ثم أمّن حسابك.',lever:'fear'},
+ {a:'ye',t:'حوّلت مالًا لمن انتحل قريبك.',steps:['أتصل بالبنك فورًا لمحاولة إيقاف التحويل','أتصل بقريبي على رقمه المحفوظ','أصوّر المحادثة ورقم الحساب','أبلّغ الجهات المختصة'],why:'كل دقيقة تأخير تصعّب استرجاع التحويل. البنك أولًا.',lever:'trust'},
+ {a:'ye',t:'نزّلت برنامج تحكّم عن بُعد بطلب من «الدعم الفني».',steps:['أفصل الإنترنت عن الجهاز','أحذف البرنامج','أتصل بالبنك وأوقف البطاقات','أغيّر كلمات السر من جهاز آخر'],why:'اقطع وصوله أولًا، ثم احمِ حساباتك من جهاز نظيف.',lever:'authority'},
+ {a:'k',t:'أعطيت كلمة سر حسابك في اللعبة لأحد.',steps:['أخبر أهلي فورًا','أغيّر كلمة السر','أفعّل الحماية بخطوتين','أبلّغ عن الحساب داخل اللعبة'],why:'لا تخف من إخبار أهلك. كلما أسرعت كان الحل أسهل.',lever:'trust'},
+ {a:'k',t:'ضغطت رابط «جواهر مجانية» وكتبت بياناتك.',steps:['أخبر أهلي فورًا','أغيّر كلمة سر اللعبة','أسكّر الصفحة وما أرجع لها','أبلّغ عن اللي أرسل الرابط'],why:'أخبر أهلك أولًا، ثم غيّر كلمة السر قبل أن يستخدمها أحد.',lever:'greed'},
+ {a:'k',t:'شخص غريب يهددك بنشر صورك.',steps:['ما أرد عليه ولا أدفع','أصوّر الرسائل','أخبر أهلي فورًا','بلوك وتبليغ'],why:'لا ترد ولا تدفع. احتفظ بالدليل وأخبر أهلك، فهم معك لا ضدك.',lever:'fear'}
+];
+function poolFor(list){var k=S.age==='kid'?'k':'ye';return list.filter(function(x){return x.a==='all'||x.a===k})}
+function addSpecials(items,n){
+ var out=items.slice(),tapped=-1;
+ for(var i=2;i<out.length;i++){var x=out[i];if(x.scam&&x.ch!=='call'&&/\[\[|\{\{/.test(x.body)){out[i]=spCopy(x,'tap');tapped=i;break}}
+ for(i=out.length-1;i>tapped+1;i--){x=out[i];if(x.scam&&!x.kind&&words(x)<=24){out[i]=spCopy(x,'act');break}}
+ var P=poolFor(PAIRS),p=P[(n-1)%P.length];
+ out.splice(Math.ceil(out.length/2),0,{kind:'pair',id:'pair'+n,d:p,from:'أيهما الحقيقي؟',cap:'أيهما الحقيقي؟',scam:1,lever:p.lever,tell:p.why,right:''});
+ if(n%2){var C=poolFor(CALLS),c=C[((n-1)/2)%C.length];out.push({kind:'call',id:'call'+n,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''})}
+ else{var O=poolFor(ORDERS),o=O[(n/2-1)%O.length];out.push({kind:'order',id:'ord'+n,d:o,from:'رتّب الخطوات',cap:'رتّب الخطوات',scam:1,lever:o.lever,tell:o.why,right:''})}
+ return out;
+}
+function spCopy(x,kind){var o={};for(var k in x)o[k]=x[k];o.kind=kind;return o}
+function spHead(it,sl){return '<header class="chead"><span class="cico">'+ICO[it.ch]+'</span><span class="f"><b>'+bd(fx(it.from))+'</b><span>'+bd(fx(it.sub))+(it.sub.indexOf(CH[it.ch].split(' ')[0])>=0?'':' · '+CH[it.ch])+'</span></span><time>'+sl[0]+'</time></header>'}
+function coach(t){var cx=$('ctx');cx.hidden=false;cx.className='ctx coach';cx.innerHTML=gx(t)}
+function renderSpecial(it,sl){
+ var card=document.createElement('article'),k=it.kind,timed=false;card.id='card';
+ if(k==='tap'||k==='act'){
+  card.className='card sp '+it.ch;card.style.setProperty('--cc','var(--c-'+it.ch+')');
+  var body=it.ch==='wa'?'<span class="bub">'+mk(fx(it.body))+'</span>':mk(fx(it.body));
+  card.innerHTML=spHead(it,sl)+'<div class="cbody">'+body+'</div>';timed=true;
+  if(k==='tap'){coach('<b>المس العلامة.</b> وين الجزء المريب في هالرسالة؟ {المسه|المسيه}.');segment(card.querySelector('.bub')||card.querySelector('.cbody'));
+   var wrong=0;card.querySelector('.cbody').onclick=function(e){if(S.phase!=='judge')return;var t=e.target.closest('.tell,bdi.url'),s=e.target.closest('.seg');
+    if(t){card.classList.add('found');spDone(it,card,wrong?1:2,'')}else if(s&&!s.classList.contains('no')){s.classList.add('no');wrong++;sfx.mid();buzz(40);if(wrong>=2)spDone(it,card,0,'هنا العلامة');else say('مو هذي.. {دوّر|دوّري} زين','mid')}}}
+  else{coach('<b>هذي احتيال.</b> شنو {تسوي|تسوين} الحين؟');
+   var c=it.ch,kd=kid(),right=c==='call'?'أسكّر وأتصل بالجهة بنفسي':(c==='wa'||c==='social'||c==='game')?(kd?'بلوك وتبليغ وأخبر أهلي':'بلوك وتبليغ'):c==='life'?(kd?'أرفض وأخبر أهلي':'أرفض وأتأكد بنفسي'):(kd?'ما أضغط وأخبر أهلي':'ما أضغط، وأفتح التطبيق الرسمي بنفسي');
+   var opts=shuffle([[right,2],[c==='call'?'أكمل معه وأشوف شنو يبي':'أرد عليه وأشوف شنو يبي',0],['أسوي المطلوب بسرعة وأرتاح',0]]);
+   card.insertAdjacentHTML('beforeend',spOpts(opts));spBind(card,function(ok){spDone(it,card,ok,'الصح: '+right)})}
+ }else if(k==='pair'){
+  var d=it.d,ops=shuffle([[d.real,2],[d.fake,0]]);card.className='card sp pair';timed=true;it.body=d.real+' '+d.fake;
+  coach('<b>أيهما الحقيقي؟</b> {اختر|اختاري} الصحيح.');
+  card.innerHTML='<div class="sphead">'+d.q+'</div>'+ops.map(function(o){return '<button class="spopt msg" data-ok="'+o[1]+'">'+mk(o[0])+'</button>'}).join('');
+  spBind(card,function(ok){spDone(it,card,ok,d.why)});
+ }else if(k==='call'){
+  var cd=it.d,si=0,soft=0;card.className='card sp call';coach('<b>مكالمة حية.</b> {أنهِ|أنهي} المكالمة قبل ما ياخذ منك شي.');
+  var draw=function(){var s=cd.steps[si];card.innerHTML='<header class="chead"><span class="cico">'+ICO.call+'</span><span class="f"><b>'+bd(cd.from)+'</b><span>مكالمة واردة · '+(si+1)+' من '+cd.steps.length+'</span></span></header><div class="cbody">'+gx(s.say)+'</div>'+spOpts(shuffle(s.o));
+   spBind(card,function(ok){if(ok===2)spDone(it,card,soft>1?1:2,'');else if(ok===0)spDone(it,card,0,cd.why);else{soft++;si++;if(si>=cd.steps.length)spDone(it,card,1,'');else{sfx.tick();draw()}}});fit(card)};
+  draw();sfx.ring();setTimeout(sfx.stop,1600);
+ }else{
+  var od=it.d,next=0,miss=0,sh=shuffle(od.steps.map(function(t,i){return [t,i]}));card.className='card sp order';
+  coach('<b>وقعت في الفخ!</b> {رتّب|رتّبي} اللي {تسويه|تسوينه}: {المس|المسي} الخطوات بالترتيب.');
+  card.innerHTML='<div class="sphead">'+od.t+'</div>'+sh.map(function(o){return '<button class="spopt ord" data-n="'+o[1]+'"><i></i>'+o[0]+'</button>'}).join('');
+  [].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge'||b.classList.contains('ok'))return;
+   if(+b.getAttribute('data-n')===next){next++;b.classList.add('ok');b.querySelector('i').textContent=next;sfx.hit(next);if(next>=od.steps.length)spDone(it,card,miss===0?2:miss===1?1:0,od.why)}
+   else{miss++;b.classList.remove('no');void b.offsetWidth;b.classList.add('no');sfx.mid();buzz(40)}}});
+ }
+ $('play').classList.add('sp');$('cardwrap').appendChild(card);if(card.querySelector('.cbody'))fit(card);
+ setCtrl(false);sfx.ding();buzz(40);S.phase='judge';
+ var tb=$('tbar');tb.classList.remove('low');tb.style.visibility=timed?'':'hidden';
+ if(timed){timer.max=timer.left=(6+words(it)*S.perWord)*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)})}
+ else{timer.run=false;$('tfill').style.transform=''}
+}
+function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
+function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok)}})}
+function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
+ nodes.forEach(function(n){var parts=n.nodeValue.match(/[^.،!؟:…]+[.،!؟:…]*\s*/g);if(!parts)return;var f=document.createDocumentFragment();parts.forEach(function(p){if(!p.trim()){f.appendChild(document.createTextNode(p));return}var s=document.createElement('span');s.className='seg';s.textContent=p;f.appendChild(s)});el.replaceChild(f,n)})}
+function spDone(it,card,ok,why){
+ if(S.phase!=='judge')return;S.phase='busy';timer.run=false;sfx.stop();
+ var res={id:it.id,kind:ok===2?'perfect':ok===1?'partial':'fell'},hold=0;
+ if(ok===2){S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=10*Math.min(5,S.combo)*(S.pro?2:1);S.pot+=gain;sfx.hit(S.combo);buzz(25);coins();pop('+'+gain+' '+CUR(),'good');say(S.combo>=4?pickT(TAUNT.combo):pickT(TAUNT.caught),'good',S.combo>=4?'defeat':'shock')}
+ else if(ok===1){pop('قريب!','mid');sfx.mid();say('نص نص.. المرة الياية أسرع','mid')}
+ else{S.combo=0;hold=S.big?2600:1900;
+  if(S.shields>0){S.shields--;$('shieldN').textContent=S.shields;sfx.mid();buzz(80);pop('الدرع حماك','mid');say(pickT(TAUNT.shield),'mid','shock')}
+  else{var amt=Math.min(S.bal,S.lossAmt);S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell),'bad');var st=$('stage');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');$('foeLoot').textContent=fmt(S.loot)}}
+ S.res[S.i]=res;track(it,res.kind);$('score').textContent=fmt(S.pot);
+ var cb=$('combo');if(S.combo>=2){cb.hidden=false;cb.textContent='×'+Math.min(5,S.combo);cb.classList.remove('in');void cb.offsetWidth;cb.classList.add('in')}else cb.hidden=true;
+ var fin=function(){$('tbar').style.visibility='';flyOff(card,ok?'doubt':'trust');S.i++;nextCard()};
+ if(it.kind==='tap')card.classList.add('reveal');
+ var gr=card.querySelector('.spopt[data-ok="2"]');if(gr)gr.classList.add('ok');
+ if(hold){if(why){var w=document.createElement('div');w.className='why';w.textContent=gx(why);card.appendChild(w);if(card.querySelector('.cbody'))fit(card)}
+  var tk=++timer.id,done=false,t0=performance.now(),go=function(e){if(done||timer.id!==tk||(e&&performance.now()-t0<500))return;done=true;fin()};card.onclick=go;setTimeout(go,hold);return}
+ var tk2=++timer.id;setTimeout(function(){if(timer.id===tk2)fin()},ok===2&&it.kind==='tap'?450:250);
+}
+
+function fit(card){var b=card.querySelector('.cbody'),f=1.12,k=0;b.style.fontSize='';while(b.scrollHeight>b.clientHeight+6&&k++<9){f-=.05;b.style.fontSize=f+'rem';b.style.lineHeight=k>5?1.45:1.6}}
+function setCtrl(on){$('bYes').disabled=$('bNo').disabled=!on;$('bIn').disabled=!on||S.lens<=0}
+function loop(now){
+ var dt=Math.min(.25,(now-timer.last)/1000);timer.last=now;timer.left-=dt;
+ $('tfill').style.transform='scaleX('+Math.max(0,timer.left/timer.max)+')';
+ if(timer.left<=3){$('tbar').classList.add('low');var s=Math.ceil(timer.left);if(s<timer.lastTick){timer.lastTick=s;sfx.tick()}}
+ if(timer.left<=0)judge('timeout');
+}
+$('bYes').onclick=function(){judge('trust')};
+$('bNo').onclick=function(){judge('doubt')};
+$('bIn').onclick=function(){var c=$('card'),p=c&&c.querySelector('.insp');if(p&&p.hidden&&S.phase==='judge'&&S.lens>0){S.lens--;$('lensN').textContent=S.lens;p.hidden=false;fit(c);p.scrollIntoView({block:'nearest'});setCtrl(true);$('bIn').classList.remove('glow');if(S.tut)say('{شفت|شفتي}؟ التلميح يكشف التفاصيل. الحين {احكم|احكمي}','good')}};
+function bindSwipe(card){
+ var x0=null,dx=0,pid=null,sy=card.querySelector('.stamp.y'),sn=card.querySelector('.stamp.n');
+ card.addEventListener('pointerdown',function(e){if(S.phase!=='judge'||card.id!=='card')return;x0=e.clientX;dx=0;pid=e.pointerId});
+ card.addEventListener('pointermove',function(e){if(x0===null||e.pointerId!==pid)return;dx=e.clientX-x0;if(Math.abs(dx)>8){try{card.setPointerCapture(pid)}catch(_){}
+   card.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80))}});
+ function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70&&S.phase==='judge'&&card.id==='card'){judge(dx>0?'trust':'doubt')}else{card.style.transform='';sy.style.opacity=0;sn.style.opacity=0}}
+ card.addEventListener('pointerup',end);card.addEventListener('pointercancel',end);
+}
+function judge(how){
+ if(S.phase!=='judge')return;if(S.tut){tutJudge(how);return}
+ S.phase='busy';timer.run=false;sfx.stop();hush();
+ var it=S.items[S.i],card=$('card'),res={id:it.id,kind:'miss'},hold=0;
+ if(it.scam&&how==='trust'){
+  res.kind='fell';S.combo=0;hold=S.big?1500:950;
+  if(S.shields>0){S.shields--;$('shieldN').textContent=S.shields;sfx.mid();buzz(80);pop('الدرع حماك','mid');say(pickT(TAUNT.shield),'mid','shock')}
+  else{var amt=Math.min(S.bal,S.lossAmt);S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell)+' لعبت {عليك|عليج} ورقة «'+LEVERS[it.lever].n+'»','bad');
+   var st=$('stage');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');$('foeLoot').textContent=fmt(S.loot)}
+ }else if(how!=='timeout'&&((how==='doubt')===!!it.scam)){
+  S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=5*Math.min(5,S.combo)*(S.pro?2:1);
+  res.kind='perfect';S.pot+=gain;sfx.hit(S.combo);buzz(25);coins();pop('+'+gain+' '+CUR(),'good');
+  say(it.scam?(S.combo>=4?pickT(TAUNT.combo):pickT(TAUNT.caught)):'هذي مو مني.. سليمة',it.scam?'good':'',it.scam?'defeat':'conf');
+ }else if(how==='doubt'){
+  if(it.soft){res.kind='partial';pop('حذر مقبول','mid');say('كانت سليمة، بس {حذرك|حذرج} في محله','mid');sfx.mid()}
+  else{S.combo=0;sfx.mid();pop('سليمة!','mid');say(pickT(TAUNT.legit),'mid','gloat')}
+ }else{res.kind='timeout';S.combo=0;sfx.mid();pop('فاتت','mid');say(pickT(TAUNT.slow),'mid')}
+ S.res[S.i]=res;track(it,res.kind);$('score').textContent=fmt(S.pot);
+ var cb=$('combo');if(S.combo>=2){cb.hidden=false;cb.textContent='×'+Math.min(5,S.combo);cb.classList.remove('in');void cb.offsetWidth;cb.classList.add('in')}else cb.hidden=true;
+ setCtrl(false);
+ if(hold){
+  card.style.transform='';card.querySelectorAll('.stamp').forEach(function(x){x.style.opacity=0});
+  var ip=card.querySelector('.insp');if(ip)ip.hidden=true;
+  var w=document.createElement('div');w.className='why';w.innerHTML='هنا العلامة<small>ورقة «'+LEVERS[it.lever].n+'» · الشرح في الاستراحة</small>';card.appendChild(w);
+  card.classList.add('reveal');fit(card);var tl=card.querySelector('.tell,bdi.url');if(tl)tl.scrollIntoView({block:'nearest'});
+  var tk=++timer.id,done=false,t0=performance.now(),go=function(e){if(done||timer.id!==tk||(e&&performance.now()-t0<350))return;done=true;flyOff(card,'trust');S.i++;nextCard()};
+  card.onclick=go;setTimeout(go,hold);return;
+ }
+ flyOff(card,how);S.i++;nextCard();
+}
+function flyOff(card,how){
+ card.id='';var ip=card.querySelector('.insp');if(ip)ip.id='';card.classList.add('gone');
+ card.style.transform=how==='trust'?'translateX(130%) rotate(14deg)':how==='doubt'?'translateX(-130%) rotate(-14deg)':'translateY(40%) scale(.9)';
+ card.style.opacity=how==='timeout'?0:1;
+ var sm=card.querySelector(how==='trust'?'.stamp.y':'.stamp.n');if(sm&&how!=='timeout')sm.style.opacity=1;
+ setTimeout(function(){card.remove()},330);
+}
+/* ---------- first-run tutorial: 3 cards, no timer, no loss ---------- */
+var TUT=[
+ {id:'t1',ch:'sms',from:'جائزتك وصلت',sub:'رقم غير محفوظ',body:'مبروك! ربحت 500 د.ك. [[أرسل رقم بطاقتك والرمز السري]] الحين لاستلامها.',insp:'لا أحد يحتاج رمزك السري ليعطيك مالًا.',scam:1,lever:'greed',coach:'<b>تمرين 1 من 3.</b> هذي رسالة احتيال واضحة. {اسحب|اسحبي} البطاقة <b>يسار</b> أو {اضغط|اضغطي} «أشك».',hand:''},
+ {id:'t2',ch:'sms',from:'شركة التوصيل',sub:'رسالة نصية',body:'شحنتك متوقفة. ادفع 1 د.ك رسوم التوصيل عبر الرابط {{kw-post.delivery-pay.co}}',insp:'عنوان الرابط ليس الموقع الرسمي للشركة، والاسم مركّب ليشبهه.',scam:1,lever:'urgency',lens:1,coach:'<b>تمرين 2 من 3.</b> مو {متأكد|متأكدة}؟ {اضغط|اضغطي} <b>التلميح</b> تحت ليكشف لك تفصيلة مخفية. عندك 3 في كل مرحلة.'},
+ {id:'t3',ch:'notif',from:'البنك',sub:'إشعار من التطبيق',body:'تم إيداع راتبك في حسابك. لا يلزمك أي إجراء.',insp:'إشعار داخل التطبيق الرسمي، بلا رابط ولا طلب.',scam:0,coach:'<b>تمرين 3 من 3.</b> مو كل شي احتيال. هذي سليمة: {اسحب|اسحبي} <b>يمين</b> أو {اضغط|اضغطي} «أثق».',hand:'r'}
+];
+function startTut(){
+ var st=STAGES[0];S.tut=true;S.stage=1;S.st=st;S.items=TUT.slice();if(kid())S.items[2]={id:'t3',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'الغدا جاهز، '+G('تعال','تعالي')+' تحت 🍽',insp:'رقمها المحفوظ، ولا تطلب شيئًا.',scam:0,coach:TUT[2].coach,hand:'r'};S.i=0;S.res=[];S.bal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;S.shields=PR.shields;S.lens=3;S.mult=1;S.perWord=1;S.phase='idle';
+ $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;$('foeLoot').textContent=fmt(0);
+ $('cardwrap').innerHTML='';$('stage').classList.add('tut');say(TAUNT.tut,'');show('play');nextCard();
+}
+function endTut(skip){
+ timer.id++;store.tut=1;save(store);S.tut=false;$('stage').classList.remove('tut');$('bIn').classList.remove('glow');
+ var sk=$('skipTut');if(sk)sk.remove();
+ if(!skip)toast(kid()?'{جاهز|جاهزة}! الحين الوقت يمشي والخطأ بنجوم':'{جاهز|جاهزة}! الحين الوقت يمشي والخطأ بفلوس');startStage(1);
+}
+function tutJudge(how){
+ var it=S.items[S.i],card=$('card');
+ function back(msg){card.style.transform='';card.querySelectorAll('.stamp').forEach(function(x){x.style.opacity=0});say(msg,'mid');sfx.mid()}
+ if(it.lens&&card.querySelector('.insp').hidden){back('{اضغط|اضغطي} التلميح أول');return}
+ if((how==='doubt')!==!!it.scam){back(it.scam?'لا لا، هذي احتيال. {جرّب|جرّبي} يسار':'هذي سليمة. {جرّب|جرّبي} يمين');return}
+ S.phase='busy';sfx.hit(S.i+1);buzz(25);coins();say(S.i===2?'زين.. والدرع؟ يمتص خطأ واحد، وتكسبه بالوسام الذهبي':'صح {عليك|عليج}','good');
+ flyOff(card,how);S.i++;
+ if(S.i>=TUT.length){var tk=++timer.id;setTimeout(function(){if(timer.id===tk)endTut()},S.i&&900)}else nextCard();
+}
+function lose(amount){
+ sfx.bad();buzz([120,60,220]);var el=$('bal'),from=S.bal,to=S.bal-amount,t0=performance.now();S.bal=to;
+ el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');
+ (function step(n){var k=Math.min(1,(n-t0)/600);el.textContent=fmt(from+(to-from)*k);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to)})(t0);
+}
+function sheet(html){closeSheet();var dm=document.createElement('div');dm.className='dim';dm.id='dim';$('app').appendChild(dm);var s=document.createElement('div');s.className='sheet';s.id='sheet';s.innerHTML=gx(html);$('app').appendChild(s);return s}
+function closeSheet(){var s=$('sheet');if(s)s.remove();s=$('dim');if(s)s.remove()}
+
+/* ---------- rest stop ---------- */
+var R=null;
+function rest(){
+ stopAll();
+ var n=S.items.length,played=S.res.length,ok=0;S.res.forEach(function(r){if(r.kind==='perfect'||r.kind==='partial')ok++});
+ var need=Math.ceil(n*.7),broke=S.bal<=0,pass=!broke&&ok>=need,miss=n-ok,medal=pass?(miss===0?3:miss===1?2:1):0;
+ var reward=pass?S.pot+S.st.bonus*(S.pro?2:1):0,gotShield=false,d=doneMap(),cu=S.custom,first=!cu&&pass&&!d[S.stage],dl=null;
+ PR.wallet=Math.max(0,S.bal)+reward;PR.shields=S.shields;
+ if(pass&&!cu){d[S.stage]=Math.max(d[S.stage]||0,medal);if(!S.pro)PR.unlocked=Math.max(PR.unlocked,Math.min(STAGES.length,S.stage+1));
+  if(medal===3&&PR.shields<3){PR.shields++;gotShield=true}}
+ if(cu&&cu.kind==='daily'){var td=today(),D=PR.daily=PR.daily||{};if(D.d!==td){D.streak=(D.d&&dayNum(td)-dayNum(D.d)===1)?(D.streak||0)+1:1;D.d=td}D.ok=ok;D.n=n;dl=D}
+ var adapt='';if(!S.pro&&!cu){var ad=PR.adapt||1;if(pass&&medal===3){PR.g=(PR.g||0)+1;PR.f=0}else if(!pass){PR.f=(PR.f||0)+1;PR.g=0}else{PR.g=0;PR.f=0}
+  if(PR.g>=2){ad=Math.max(.75,ad*.88);PR.g=0;adapt='up'}if(PR.f>=2){ad=Math.min(1.5,ad*1.15);PR.f=0;adapt='down'}PR.adapt=ad}
+ save(store);
+ R={custom:cu,daily:dl,adapt:adapt,pass:pass,broke:broke,ok:ok,n:n,need:need,medal:medal,reward:reward,gotShield:gotShield,first:first,refilled:false,refillMsg:''};
+ renderRest();show('report');
+ if(pass)sfx.good();else sfx.bad();
+}
+function renderRest(){
+ var st=S.st,last=S.stage===STAGES.length,kc={perfect:'var(--tq)',partial:'var(--saffron)',fell:'var(--coral)',miss:'var(--muted)',timeout:'var(--muted)'};
+ var title=R.custom?(R.custom.kind==='daily'?'{خلّصت|خلّصتي} تحدي اليوم':'{خلّصت|خلّصتي} التمرين'):R.pass?(last?'{هزمت|هزمتي} بو حيلة!':'{عدّيت|عدّيتي} المرحلة '+S.stage):R.broke?(kid()?'بو حيلة أخذ كل نجومك':'بو حيلة صفّر محفظتك'):'ما {عدّيت|عدّيتي} المرحلة';
+ var h='<div class="rtop"><div class="pct">استراحة · '+st.n+'</div>'+
+  (R.custom?'<div class="rfoe">'+foeSvg(R.pass?'defeat':'gloat',1)+'</div>':R.medal?'<div class="bigmedal">'+medalSvg(R.medal)+'</div>':'<div class="rfoe">'+foeSvg('gloat',1)+'</div>')+
+  '<div class="rk"'+(R.pass?'':' style="color:var(--coral)"')+'>'+title+'</div>'+
+  '<div class="pct">'+R.ok+' صح من '+R.n+(R.custom?'':R.pass?' · وسام '+MEDAL[R.medal]:' · {تحتاج|تحتاجين} '+R.need+' {لتعبر|لتعبري}')+' · أعلى كومبو ×'+S.maxCombo+'</div>'+
+  '<div class="grid">'+S.items.map(function(it,i){var r=S.res[i];return '<i class="'+(r?r.kind:'')+'"></i>'}).join('')+'</div>'+
+  '<div class="ledger">'+
+   (R.pass?'<div><span>جائزة المرحلة</span><b class="plus">+'+fmt(R.reward)+'</b></div>':'<div><span>جائزة المرحلة ضاعت</span><b class="minus">'+fmt(S.pot)+'</b></div>')+
+   (S.loot>0?'<div><span>أخذه بو حيلة</span><b class="minus">−'+fmt(S.loot)+'</b></div>':'')+
+   ((R.refillMsg&&R.refillAmt>0)?'<div><span>'+R.refillMsg+'</span><b class="plus">+'+fmt(R.refillAmt)+'</b></div>':'')+
+   '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div></div>'+
+  (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} بكرة لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>خذ راحتك.</b> زدنا الوقت وتلميحًا إضافيًا في المحاولة الجاية.</span></div>':'')+'</div>';
+ var nxt=S.stage+1;
+ if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+(kid()?'ونعوّضك 60 نجمة.':'ويعوّضك البنك 60 د.ك.')+'</p>';
+ var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · ورقة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'?okd:missed).push(row)});
+ missed.sort(function(a,b){return (b.indexOf('احتيال')>0)-(a.indexOf('احتيال')>0)});
+ if(missed.length)h+='<h2 class="lbl">أهم اللي فاتك</h2><div class="recap">'+missed.slice(0,2).join('')+'</div>';
+ if(missed.length>2)h+='<details class="more"><summary>باقي اللي فاتك ('+(missed.length-2)+')</summary><div class="recap">'+missed.slice(2).join('')+'</div></details>';
+ if(okd.length)h+='<details class="more"><summary>اللي {كشفته|كشفتيه} صح ('+okd.length+')</summary><div class="recap">'+okd.join('')+'</div></details>';
+ h+='<div class="btns">'+(!R.refilled?'<button class="ghost gold" id="rRefill">{اشحن|اشحني} رصيدك: {اقرأ|اقرئي} أوراق بو حيلة</button>':'')+(R.pass&&!last&&!R.custom?'<button class="ghost" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>':'')+(R.pass&&!R.custom?'<button class="ghost" id="rRetry">{أعد|أعيدي} المرحلة لوسام أعلى</button>':'')+'<button class="ghost" id="rMap">خريطة المراحل</button></div>';
+ h+='<p class="fine">'+(kid()?'إذا صار لك شي مثل هذا في الواقع، {قول|قولي} لأهلك فورًا.':'إذا {وقعت|وقعتي} فعلًا في الواقع: {اتصل|اتصلي} ببنكك فورًا لإيقاف البطاقة ثم {بلّغ|بلّغي} الجهات المختصة.')+'</p>';
+ h+='<div class="sticky">'+(R.custom?(R.custom.kind==='daily'?'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بتحدي اليوم</button>':'<button class="cta" id="rIdx">مؤشر الوعي</button>'):R.pass&&!last?'<button class="cta" id="rNext">المرحلة '+nxt+': '+STAGES[nxt-1].n+'</button>':!R.pass?'<button class="cta" id="rRetry">{أعد|أعيدي} المرحلة</button>':'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>')+'</div>';
+ var el=$('report');el.innerHTML=gx(h);el.scrollTop=0;
+ (function(){var t=$('rTot'),from=R.shown===undefined?S.startBal:R.shown,to=PR.wallet,t0=performance.now();R.shown=to;if(!t||from===to)return;
+  (function step(n){var k=Math.min(1,(n-t0)/900);t.textContent=fmt(from+(to-from)*k)+' '+CUR();if(k<1)requestAnimationFrame(step)})(t0)})();
+ var b;
+ if((b=$('rNext')))b.onclick=function(){startStage(nxt)};
+ if((b=$('rRetry')))b.onclick=function(){startStage(S.stage)};
+ if((b=$('rRefill')))b.onclick=startFlip;
+ if((b=$('rShare')))b.onclick=function(){doShare()};if((b=$('rIdx')))b.onclick=function(){renderHome();show('home');openIndex()};
+ $('rMap').onclick=function(){renderHome();show('home')};
+}
+function shareText(){
+ if(R&&R.daily&&!$('report').hidden)return 'واعي · تحدي اليوم\nكشفت '+R.ok+' من '+R.n+' · سلسلة '+R.daily.streak+' يوم 🔥\nنفس البطاقات عندك اليوم. تقدر تغلبني؟'+(ART_URL?'\n'+ART_URL:'');
+ var d=PR.done,g=0,s=0,b=0;Object.keys(d).forEach(function(k){if(d[k]===3)g++;else if(d[k]===2)s++;else b++});
+ var top=0;Object.keys(d).forEach(function(k){top=Math.max(top,+k)});
+ var t='واعي · لنكن على دراية\nعدّيت '+Object.keys(d).length+' من '+STAGES.length+' مراحل ضد بو حيلة\n🥇×'+g+' 🥈×'+s+' 🥉×'+b+' · محفظتي '+fmt(PR.wallet)+' '+CUR()+'\nتقدر تغلبني؟';
+ if(ART_URL)t+='\n'+ART_URL+'#tahaddi-'+top+'-'+Math.round(PR.wallet);
+ return t;
+}
+function doShare(tx){
+ var t=typeof tx==='string'?tx:shareText();
+ function fallback(){var s=sheet('<h3>انسخ نتيجتك<small>حدّد النص وانسخه، ثم ألصقه في قروب العائلة</small></h3><textarea class="copybox" id="copybox" readonly></textarea><button class="ghost" id="closeS">تم</button>');var b=s.querySelector('#copybox');b.value=t;b.focus();b.select();s.querySelector('#closeS').onclick=closeSheet}
+ try{navigator.clipboard.writeText(t).then(function(){toast('نُسخت النتيجة. ألصقها في قروب العائلة')},fallback)}catch(e){fallback()}
+}
+
+/* ---------- refill mini-game ---------- */
+var F={};
+function startFlip(){
+ var list=shuffle(S.items.filter(function(it){return it.scam&&!it.cap})).slice(0,3);
+ F={list:list,i:0,ok:0,each:15+5*S.stage,done:false};show('flip');renderFlip();
+}
+function renderFlip(){
+ var el=$('flip');S.flipEl=el;
+ if(F.i>=F.list.length){
+  var amt=F.ok*F.each,msg='تعبئة الاستراحة';
+  if(PR.wallet+amt<60){amt=60-PR.wallet;msg=kid()?'تعويض لأنك {أخبرت|أخبرتي} أهلك بسرعة':'تعويض البنك لأنك {بلّغت|بلّغتي} بسرعة'}
+  PR.wallet+=amt;save(store);R.refilled=true;R.refillMsg=msg;R.refillAmt=amt;
+  el.innerHTML=gx('<div class="rtop"><div class="pct">تعبئة الرصيد</div><div class="rk">{قرأت|قرأتي} '+F.ok+' من '+F.list.length+'</div><div class="big">+'+fmt(amt)+'<small> '+CUR()+'</small></div><div class="pct">بو حيلة لا يملك إلا خمس أوراق. من يعرفها يكشفه مهما غيّر القصة.</div></div>'+
+   '<div class="recap">'+Object.keys(LEVERS).map(function(k){var l=LEVERS[k];return '<div style="--k:var(--saffron)"><b>'+l.n+'</b><span>'+l.how+'<br>الرد: '+l.anti+'</span></div>'}).join('')+'</div>'+
+   '<button class="cta" id="flipBack">رجوع إلى الاستراحة</button>');
+  el.scrollTop=0;if(amt>0)sfx.good();$('flipBack').onclick=function(){renderRest();show('report')};return;
+ }
+ var it=F.list[F.i];
+ el.innerHTML='<div class="fliphead"><b>أي ورقة لعبها بو حيلة هنا؟</b><span>'+(F.i+1)+' من '+F.list.length+' · كل إجابة صحيحة +'+F.each+' '+CUR()+'</span></div>'+
+  '<div class="quote"><small>'+bd(fx(it.from))+' · '+CH[it.ch]+'</small>'+mk(fx(it.body))+'</div>'+
+  '<div class="lgrid">'+Object.keys(LEVERS).map(function(k){return '<button class="opt" data-k="'+k+'" id="lev-'+k+'">'+LICO[k]+LEVERS[k].n+'</button>'}).join('')+'</div><div id="flipFb"></div>';
+ el.scrollTop=0;F.done=false;
+ el.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){
+  if(F.done)return;F.done=true;var k=b.getAttribute('data-k'),right=k===it.lever;
+  if(right){F.ok++;sfx.hit(F.ok+2)}else{sfx.mid();b.classList.add('no')}
+  $('lev-'+it.lever).classList.add('ok');
+  var l=LEVERS[it.lever];
+  $('flipFb').innerHTML='<div class="fact" style="margin-bottom:.7rem"><small>'+(right?'صح، +'+F.each+' '+CUR():'الورقة كانت')+': '+l.n+'</small>'+l.how+'<br><b>الرد عليها:</b> '+l.anti+'</div><button class="cta" id="flipNext">التالي</button>';
+  $('flipNext').onclick=function(){F.i++;renderFlip()};
+  $('flipNext').scrollIntoView({block:'nearest'});
+ }});
+}
+
+/* ---------- boot ---------- */
+window.__ranna=S;window.__face=face;setProfile();parseHash();renderHome();
+function openWho(first){
+ var s=sheet('<h3>أهلًا! كيف نخاطبك؟<small>نستخدمها لصيغة الكلام فقط</small></h3><div class="lgrid" style="grid-template-columns:1fr 1fr"><button class="opt" id="wM">واعي</button><button class="opt" id="wF">واعية</button></div>'+(first?'<button class="ghost" id="wS">تخطَّ</button>':''));
+ function g(f){store.fem=f?1:0;save(store);S.fem=!!f;step2()}
+ s.querySelector('#wM').onclick=function(){g(0)};s.querySelector('#wF').onclick=function(){g(1)};if(first)s.querySelector('#wS').onclick=function(){g(0)};
+ function step2(){
+  var t=sheet('<h3>كم {عمرك|عمرج}؟<small>نختار لك المراحل والصعوبة المناسبة</small></h3>'+['kid','youth','elder'].map(function(k){return '<button class="opt setrow" id="a-'+k+'"><span>'+AGE[k].n+'</span><i>'+AGE[k].s+'</i></button>'}).join('')+'<p class="fine">إجاباتك تبقى في جهازك فقط ولا تُرسل لأي جهة.</p>');
+  ['kid','youth','elder'].forEach(function(k){t.querySelector('#a-'+k).onclick=function(){
+   var was=store.age;store.age=k;if(first&&k==='elder'){S.big=true;store.big=true}store.asked=1;save(store);setProfile();closeSheet();renderHome();
+   if(!first&&was!==k)toast('{انتقلت|انتقلتي} لمراحل '+AGE[k].n+'. تقدّمك في كل فئة محفوظ.')}})
+ }
+}
+if(!store.age)openWho(true);
+window.addEventListener('hashchange',function(){parseHash();if(!$('home').hidden)renderHome()});
+document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.stop();hush()}else if(S.phase==='judge'){timer.last=performance.now()}});
+})();
+</script>
+
+</body></html>
