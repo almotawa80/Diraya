@@ -654,14 +654,14 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .ntab.mid img{width:3.3rem;height:3.3rem;object-fit:contain}.ntab.mid span{color:var(--saffron);font-weight:800;white-space:nowrap}
 @keyframes orbP{50%{box-shadow:0 0 0 5px #1A2149,0 6px 30px rgba(227,190,124,.75)}}
 #gear,#vault{display:none!important}.foot2{grid-template-columns:1fr!important}
-.duel{position:fixed;inset:0;z-index:50;background:linear-gradient(180deg,#151B3E,#232C5A);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + .7rem) 1rem calc(env(safe-area-inset-bottom,0px) + .8rem);max-width:460px;margin:0 auto;color:var(--fg)}
+.duel{position:fixed;inset:0;height:100dvh;z-index:50;background:linear-gradient(180deg,#151B3E,#232C5A);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + .7rem) 1rem calc(env(safe-area-inset-bottom,0px) + .8rem);max-width:460px;margin:0 auto;color:var(--fg)}
 .duel .dtop{display:flex;align-items:center;gap:.6rem}
 .duel .dx{width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:var(--fg);font-size:1.15rem;flex-shrink:0}
 .duel .dms{flex:1;display:grid;gap:.3rem}.duel .dm{font-size:.72rem;color:#B9BCD3;display:flex;align-items:center;gap:.4rem}.duel .dm .db{flex:1;height:.45rem;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}.duel .dm .db i{display:block;height:100%;width:0;transition:width .4s}
 .duel .dm.p i{background:var(--coral)}.duel .dm.c i{background:var(--tq)}
 .duel .dwho{display:flex;align-items:center;gap:.7rem;margin:.8rem 0 .4rem}.duel .dwho img{width:3.5rem;height:3.5rem;object-fit:contain;transition:transform .3s}.duel .dwho b{display:block;font-weight:800}.duel .dwho small{color:#B9BCD3;font-size:.75rem;direction:ltr;display:block;text-align:right}
 .duel .live{margin-inline-start:auto;font-size:.7rem;background:var(--coral);color:#fff;border-radius:99px;padding:.1rem .55rem;font-weight:800}
-.duel .dchat{flex:1;overflow:auto;display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0}
+.duel .dchat{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0}
 .duel .bub{max-width:86%;padding:.6rem .8rem;border-radius:16px;line-height:1.6;font-size:.95rem;animation:dIn .25s}
 .duel .bub.f{background:#2E3870;align-self:flex-start;border-top-right-radius:4px}
 .duel .bub.u{background:var(--tq);color:#0E2B33;align-self:flex-end;border-top-left-radius:4px;font-weight:600}
@@ -670,8 +670,8 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .duel .dwarn{align-self:center;text-align:center;font-size:.8rem;background:rgba(255,107,107,.13);color:#FFB0B0;border-radius:12px;padding:.3rem .7rem}
 .duel .dtyping{align-self:flex-start;color:#B9BCD3;font-size:.8rem}
 @keyframes dIn{from{opacity:0;transform:translateY(8px)}}
-.duel .dopts{display:grid;gap:.45rem;margin-top:.5rem}
-.duel .dopt{border:0;border-radius:14px;background:var(--fg);color:#232C5A;font:700 .95rem var(--body,Cairo);padding:.75rem .85rem;text-align:right;min-height:48px}
+.duel .dopts{display:grid;gap:.4rem;margin-top:.5rem;flex-shrink:0}.duel .dopts:empty{margin:0}.duel .dhang,.duel .dtop,.duel .dwho{flex-shrink:0}
+.duel .dopt{border:0;border-radius:14px;background:var(--fg);color:#232C5A;font:700 .92rem var(--body,Cairo);padding:.6rem .85rem;text-align:right;min-height:46px;line-height:1.45}
 .duel .dhang{margin-top:.5rem;border:0;border-radius:14px;background:var(--coral);color:#fff;font:800 1rem var(--body,Cairo);padding:.8rem;min-height:50px}
 .duel .dring{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center}
 .duel .dring img{width:9rem;animation:dShake 1s infinite}.duel .dring h2{margin:0;font-weight:900}
@@ -1788,7 +1788,7 @@ function dPush(c,h){var c2=$('dChat');if(!c2)return;var e=document.createElement
 function duelTurn(){var my=DU&&DU.id;if(!my)return;var T=DU.sc.turns[DU.t];$('dOpts').innerHTML='';dPush('dtyping','بو حيلة يتكلم…');
  setTimeout(function(){if(!DU||DU.id!==my)return;var ty=document.querySelector('.dtyping');if(ty)ty.remove();dPush('bub f','<span class="tac">'+T.tac+'</span><br>'+T.say);sfx.ding();
   var o=shuffle(T.o.map(function(x,i){return i}));$('dOpts').innerHTML=o.map(function(i){return '<button class="dopt" data-i="'+i+'">'+T.o[i][0]+'</button>'}).join('');
-  [].forEach.call($('dOpts').querySelectorAll('.dopt'),function(b){b.onclick=function(){duelPick(T.o[+b.dataset.i])}})},900)}
+  [].forEach.call($('dOpts').querySelectorAll('.dopt'),function(b){b.onclick=function(){duelPick(T.o[+b.dataset.i])}});var c2=$('dChat');if(c2)requestAnimationFrame(function(){c2.scrollTop=c2.scrollHeight})},900)}
 function dMeters(){$('dMc').style.width=(DU.clues.length/4*100)+'%';$('dNc').textContent=DU.clues.length+'/4';$('dMp').style.width=Math.min(100,DU.p/2*100)+'%'}
 function duelPick(x){var my=DU.id;$('dOpts').innerHTML='';dPush('bub u',x[0]);var later=function(f,ms){setTimeout(function(){if(DU&&DU.id===my)f()},ms)};
  if(x[1]==='x'){dFace('laugh');sfx.bad();buzz([120,60,220]);later(function(){duelEnd('lose')},900);return}
@@ -1811,7 +1811,7 @@ function duelEnd(r){if(!DU)return;var win=r!=='lose',pts=win?Math.max(50,(r==='w
  '<button class="cta" id="dAgain">مكالمة ثانية</button><button class="ghost" id="dBack">رجوع</button></div>');
  DU={id:0,sc:DU.sc,clues:[],miss:[],p:0,t:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26d';
+var BUILD='2026-11-26e';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel'))return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 setTimeout(checkUpdate,800);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();

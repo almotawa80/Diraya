@@ -645,6 +645,45 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .brand .gear{width:38px;height:38px;align-self:flex-start;margin-top:.5rem}.brand .gear svg{width:1.15rem;height:1.15rem}
 .brand p#tagline{white-space:nowrap;font-weight:600!important;color:var(--fg)!important;opacity:.85;font-size:clamp(.6rem,3.25vw,.9rem)!important;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:360px){.brand{gap:.6rem!important}.brand .bell{width:3.1rem!important;height:3.1rem!important}}
+/* Bottom bar + «واجه بو حيلة» call duel (Khalid approved 2026-11-26) */
+.nav{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px))) -.75rem;padding:.35rem 0 calc(.45rem + env(safe-area-inset-bottom,0px));background:#1A2149;border-top:1px solid rgba(246,246,240,.08)}
+.nav[hidden]{display:none!important}
+.ntab{background:none;border:0;color:#B9BCD3;font:600 .68rem var(--body,Cairo);display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.2rem 0;min-height:44px;justify-content:flex-end}
+.ntab svg{width:1.4rem;height:1.4rem}.ntab.on{color:var(--saffron)}
+.ntab.mid{margin-top:-1.15rem}.ntab.mid .orb{width:4.1rem;height:4.1rem;border-radius:50%;background:radial-gradient(circle at 50% 35%,#F2D39A,var(--saffron));display:grid;place-items:center;box-shadow:0 0 0 5px #1A2149,0 6px 20px rgba(227,190,124,.4);animation:orbP 2.2s infinite}
+.ntab.mid img{width:3.3rem;height:3.3rem;object-fit:contain}.ntab.mid span{color:var(--saffron);font-weight:800;white-space:nowrap}
+@keyframes orbP{50%{box-shadow:0 0 0 5px #1A2149,0 6px 30px rgba(227,190,124,.75)}}
+#gear,#vault{display:none!important}.foot2{grid-template-columns:1fr!important}
+.duel{position:fixed;inset:0;height:100dvh;z-index:50;background:linear-gradient(180deg,#151B3E,#232C5A);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + .7rem) 1rem calc(env(safe-area-inset-bottom,0px) + .8rem);max-width:460px;margin:0 auto;color:var(--fg)}
+.duel .dtop{display:flex;align-items:center;gap:.6rem}
+.duel .dx{width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:var(--fg);font-size:1.15rem;flex-shrink:0}
+.duel .dms{flex:1;display:grid;gap:.3rem}.duel .dm{font-size:.72rem;color:#B9BCD3;display:flex;align-items:center;gap:.4rem}.duel .dm .db{flex:1;height:.45rem;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}.duel .dm .db i{display:block;height:100%;width:0;transition:width .4s}
+.duel .dm.p i{background:var(--coral)}.duel .dm.c i{background:var(--tq)}
+.duel .dwho{display:flex;align-items:center;gap:.7rem;margin:.8rem 0 .4rem}.duel .dwho img{width:3.5rem;height:3.5rem;object-fit:contain;transition:transform .3s}.duel .dwho b{display:block;font-weight:800}.duel .dwho small{color:#B9BCD3;font-size:.75rem;direction:ltr;display:block;text-align:right}
+.duel .live{margin-inline-start:auto;font-size:.7rem;background:var(--coral);color:#fff;border-radius:99px;padding:.1rem .55rem;font-weight:800}
+.duel .dchat{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0}
+.duel .bub{max-width:86%;padding:.6rem .8rem;border-radius:16px;line-height:1.6;font-size:.95rem;animation:dIn .25s}
+.duel .bub.f{background:#2E3870;align-self:flex-start;border-top-right-radius:4px}
+.duel .bub.u{background:var(--tq);color:#0E2B33;align-self:flex-end;border-top-left-radius:4px;font-weight:600}
+.duel .tac{display:inline-block;font-size:.66rem;font-weight:800;background:rgba(255,107,107,.2);color:#FFB0B0;border-radius:99px;padding:0 .5rem;margin-bottom:.2rem}
+.duel .dclue{align-self:center;text-align:center;font-size:.8rem;background:rgba(31,200,180,.13);color:#9FF2E6;border:1px dashed rgba(31,200,180,.55);border-radius:12px;padding:.3rem .7rem;animation:dIn .3s}
+.duel .dwarn{align-self:center;text-align:center;font-size:.8rem;background:rgba(255,107,107,.13);color:#FFB0B0;border-radius:12px;padding:.3rem .7rem}
+.duel .dtyping{align-self:flex-start;color:#B9BCD3;font-size:.8rem}
+@keyframes dIn{from{opacity:0;transform:translateY(8px)}}
+.duel .dopts{display:grid;gap:.4rem;margin-top:.5rem;flex-shrink:0}.duel .dopts:empty{margin:0}.duel .dhang,.duel .dtop,.duel .dwho{flex-shrink:0}
+.duel .dopt{border:0;border-radius:14px;background:var(--fg);color:#232C5A;font:700 .92rem var(--body,Cairo);padding:.6rem .85rem;text-align:right;min-height:46px;line-height:1.45}
+.duel .dhang{margin-top:.5rem;border:0;border-radius:14px;background:var(--coral);color:#fff;font:800 1rem var(--body,Cairo);padding:.8rem;min-height:50px}
+.duel .dring{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center}
+.duel .dring img{width:9rem;animation:dShake 1s infinite}.duel .dring h2{margin:0;font-weight:900}
+@keyframes dShake{0%,50%,100%{transform:rotate(0)}10%,30%{transform:rotate(-6deg)}20%,40%{transform:rotate(6deg)}}
+.duel .dans{display:flex;gap:2.8rem;margin-top:1.4rem}.duel .dans button{width:4.4rem;height:4.4rem;border-radius:50%;border:0;color:#fff;font:800 .8rem var(--body,Cairo)}
+.duel .dend{flex:1;overflow:auto;text-align:center;padding-top:.6rem}.duel .dend img{width:7.5rem}.duel .dend h2{margin:.3rem 0;font-weight:900}
+.duel .dsc{font-size:2.4rem;font-weight:900;color:var(--saffron);line-height:1.2}
+.duel .dend ul{list-style:none;padding:0;text-align:right;margin:.7rem 0}.duel .dend li{background:#2E3870;border-radius:12px;padding:.5rem .7rem;margin:.35rem 0;font-size:.86rem;line-height:1.5}
+.duel .dend .cta,.duel .dend .ghost{width:100%;margin-top:.5rem}
+.duel .muted{color:#B9BCD3;font-size:.88rem;line-height:1.6}
+.lbrow{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.06);border-radius:12px;padding:.6rem .8rem;margin:.35rem 0}.lbrow b{color:var(--saffron)}
+.mdgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin:.3rem 0 .6rem}.mdgrid div{background:rgba(255,255,255,.06);border-radius:10px;text-align:center;padding:.35rem 0;font-size:.7rem}.mdgrid div i{display:block;font-style:normal;font-size:1.25rem}.mdgrid .off{opacity:.35}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -710,6 +749,13 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 
   <!-- FLIP -->
   <section class="screen scroll" id="flip" hidden></section>
+  <nav class="nav" id="nav" aria-label="القائمة">
+    <button class="ntab on" data-t="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>الرئيسية</button>
+    <button class="ntab" data-t="prize"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg>الجوائز</button>
+    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/fox-sneaky.png" alt=""></div><span>واجه بو حيلة</span></button>
+    <button class="ntab" data-t="lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>المتصدرين</button>
+    <button class="ntab" data-t="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>الإعدادات</button>
+  </nav>
 </div>
 
 <script>
@@ -991,7 +1037,7 @@ function bd(s){return '<bdi'+(/^[+\w]/.test(s)?' dir="ltr"':'')+'>'+s+'</bdi>'}
 function plain(s){return s.replace(/\{\{|\}\}|\[\[|\]\]/g,'')}
 function words(it){return plain(it.body+' '+(it.ctx||'').replace(/<[^>]+>/g,'')).trim().split(/\s+/).length}
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
-function show(id){if(id!=='home'){try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}document.documentElement.scrollTop=0;document.body.scrollTop=0}['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});if(id!=='home'){$(id).scrollTop=0;window.scrollTo(0,0)}closeSheet()}
+function show(id){if(id!=='home'){try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}document.documentElement.scrollTop=0;document.body.scrollTop=0}['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});var nv=$('nav');if(nv)nv.hidden=(id!=='home');if(id!=='home'){$(id).scrollTop=0;window.scrollTo(0,0)}closeSheet()}
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=gx(msg);$('app').appendChild(t);setTimeout(function(){t.remove()},1900)}
 function medalSvg(m){var c=['','var(--bronze)','var(--silver)','var(--saffron)'][m];return '<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h4l1 6H9zM13 2h4l-2 6h-3z" fill="var(--tq)"/><circle cx="12" cy="15" r="7" fill="'+c+'"/><circle cx="12" cy="15" r="4.300" fill="none" stroke="rgba(15,27,61,.35)" stroke-width="1.400"/></svg>'}
 var SHIELD='<svg class="shd" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.400 9 8 11 4.600-2 8-6 8-11V5z" fill="var(--tq)"/><path d="m8.500 12 2.500 2.500 4.500-5" fill="none" stroke="var(--tq-ink)" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1557,7 +1603,7 @@ function lose(amount){
  (function step(n){var k=Math.min(1,(n-t0)/600);el.textContent=fmt(from+(to-from)*k);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to)})(t0);
 }
 function sheet(html){closeSheet();var dm=document.createElement('div');dm.className='dim';dm.id='dim';$('app').appendChild(dm);var s=document.createElement('div');s.className='sheet';s.id='sheet';s.innerHTML=gx(html);$('app').appendChild(s);return s}
-function closeSheet(){var s=$('sheet');if(s)s.remove();s=$('dim');if(s)s.remove()}
+function closeSheet(){var s=$('sheet');if(s)s.remove();s=$('dim');if(s)s.remove();navOn('home')}
 
 /* ---------- rest stop ---------- */
 var R=null;
@@ -1670,9 +1716,103 @@ function openWho(first){
 if(!store.age)openWho(true);
 window.addEventListener('hashchange',function(){parseHash();if(!$('home').hidden)renderHome()});
 document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.stop();hush()}else if(S.phase==='judge'){timer.last=performance.now()}});
+/* ===== Bottom bar + «واجه بو حيلة» (Khalid approved 2026-11-26) ===== */
+function navOn(t){[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.classList.toggle('on',b.dataset.t===t)})}
+function openPrizes(){var d=PR.done||{},h='<h3>الجوائز والأوسمة<small>أوسمتك في المراحل، والجوائز اللي تنفتح لك</small></h3><div class="mdgrid">';
+ for(var n=1;n<=STAGES.length;n++){var m=d[n]||0;h+='<div class="'+(m?'':'off')+'"><i>'+(['🔒','🥉','🥈','🥇'][m])+'</i>'+n+'</div>'}
+ var du=store.duel||{};h+='</div>'+(du.wins?'<div class="lbrow"><span>🦊 كشفت بو حيلة في المكالمات</span><b>'+du.wins+' مرة</b></div>':'');
+ h+=REWARDS.map(function(r){var open=!!d[r.at];return '<div class="rw'+(open?' open':'')+'"><b>'+r.t+'</b><span>'+r.s+' · '+(open?'مفتوحة':'تُفتح بعبور المرحلة '+r.at)+'</span></div>'}).join('')+
+  '<div class="fact"><small>قاعدة الجوائز</small>جائزتك الحقيقية تظهر داخل تطبيق البنك الرسمي فقط. لا رابط، لا رسالة، ولا طلب بيانات بطاقة. أي «جائزة» تطلب بياناتك احتيال.</div><button class="ghost" id="closeS">تم</button>';
+ var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;$('dim').onclick=closeSheet}
+function openLead(){var d=PR.done||{},med=0,du=store.duel||{};for(var k in d)if(d[k])med++;
+ var h='<h3>المتصدرين<small>ترتيب اللاعبين بالألقاب يجي قريبًا. هذي أرقامك أنت.</small></h3>'+
+ '<div class="lbrow"><span>محفظتك</span><b>'+fmt(PR.wallet)+' '+CUR()+'</b></div>'+
+ '<div class="lbrow"><span>الأوسمة</span><b>'+med+' / '+STAGES.length+'</b></div>'+
+ '<div class="lbrow"><span>أعلى نقاط في «واجه بو حيلة»</span><b>'+(du.best||0)+'</b></div>'+
+ '<div class="lbrow"><span>مكالمات كشفتها / لعبتها</span><b>'+(du.wins||0)+' / '+(du.plays||0)+'</b></div>'+
+ '<div class="lbrow"><span>أيام تحدي اليوم المتتالية</span><b>'+((PR.daily&&PR.daily.streak)||0)+'</b></div>'+
+ '<button class="ghost" id="closeS">تم</button>';
+ var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;$('dim').onclick=closeSheet}
+[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.onclick=function(){var t=b.dataset.t;
+ if(t==='home'){closeSheet();navOn('home');$('home').scrollTo?$('home').scrollTo({top:0,behavior:'smooth'}):($('home').scrollTop=0);return}
+ if(t==='duel'){closeSheet();duelRing();return}
+ if(t==='prize')openPrizes();else if(t==='lead')openLead();else if(t==='set')openSettings();navOn(t)}});
+var DUEL=[
+{who:'فيصل · قسم الحماية',num:'+965 6••• ••41',turns:[
+ {say:'مساك الله بالخير، معاك فيصل من قسم الحماية في البنك. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك.',tac:'انتحال صفة',o:[
+  ['أي بنك بالضبط؟ وشنو رقمك الوظيفي؟','s','ما ذكر اسم البنك، وتهرّب من رقمه الوظيفي'],
+  ['يا ساتر! شنو أسوي الحين؟','r','الخوف يخليك تسلّمه القيادة'],
+  ['ما سويت شي، أوقفها لي','r','طلبت منه هو يتصرف بدل ما تتأكد بنفسك']]},
+ {say:'ما عندنا وقت للأسئلة! العملية بتتم خلال 3 دقايق إذا ما تحركنا.',tac:'استعجال',o:[
+  ['ليش تتصل من رقم جوال عادي مو رقم البنك؟','s','يتصل من رقم جوال شخصي'],
+  ['زين قول بسرعة شنو المطلوب','r','الاستعجال نجح معك'],
+  ['أقدر أوقف البطاقة من التطبيق بنفسي','s','يستعجلك عشان ما تفكر']]},
+ {say:'بيوصلك الحين رمز برسالة. قوله لي عشان أوقف العملية.',tac:'طلب الرمز',o:[
+  ['الرسالة مكتوب فيها: لا تشارك الرمز مع أحد','s','يطلب الرمز السري، والبنك ما يطلبه أبدًا'],
+  ['تمام، الرمز هو 4 8 1…','x'],
+  ['أرسله لك واتساب أسهل؟','x']]},
+ {say:'إذا ما عطيتني الرمز خلال دقيقة، بتنسحب فلوسك كلها وأنت المسؤول!',tac:'تخويف',o:[
+  ['بسكّر وأتصل على الرقم اللي ورا بطاقتي','w','يهددك ويحمّلك المسؤولية'],
+  ['خلاص لا تعصب، بعطيك إياه','x'],
+  ['طيب انتظر أشوف الرسالة','r','التهديد خلاك تتردد']]}]},
+{who:'شركة الاتصالات · السحب الكبير',num:'+965 5••• ••09',turns:[
+ {say:'مبروك! رقمك فاز في سحب شركة الاتصالات بـ 5,000 د.ك 🎉',tac:'إغراء',o:[
+  ['أنا ما شاركت في أي سحب','s','جائزة من مسابقة ما دخلتها'],
+  ['صج؟! والله ما أصدق!','r','الفرحة تخليك تنزل حذرك'],
+  ['شلون أستلمها؟','r','بديت تمشي وراه']]},
+ {say:'عشان نحوّل الجائزة، أبي رقم بطاقتك وتاريخ الانتهاء بس.',tac:'طلب بيانات',o:[
+  ['الجائزة تنحوّل برقم الحساب، مو بالبطاقة','s','يطلب بيانات البطاقة عشان يدفع منها'],
+  ['رقمها 4532…','x'],
+  ['ليش تحتاج البطاقة؟','s','بيانات البطاقة ما لها علاقة باستلام جائزة']]},
+ {say:'في رسوم تحويل بسيطة 15 د.ك بس، وإلا تروح الجايزة لغيرك الليلة!',tac:'استعجال',o:[
+  ['جائزة أدفع عليها؟ هذي حيلة','s','رسوم مقدمة مقابل جائزة'],
+  ['15 بس؟ أوكي أحوّلها','x'],
+  ['خلني أفكر شوي','r','ما زال يقدر يضغط عليك']]},
+ {say:'خلاص بأرسل لك رابط، دخّل فيه بياناتك وتوصلك الجائزة.',tac:'رابط مزيف',o:[
+  ['بسكّر وأتأكد من موقع الشركة الرسمي','w','الرابط يسرق بياناتك'],
+  ['أرسله، بشوفه','x'],
+  ['تمام بدخل الحين','x']]}]}
+];
+var DU=null;
+function duelEl(){var d=$('duel');if(!d){d=document.createElement('div');d.className='duel';d.id='duel';d.setAttribute('dir','rtl');document.body.appendChild(d)}d.hidden=false;return d}
+function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();DU=null;navOn('home');renderHome(true)}
+function duelRing(){var last=store.duelLast,pool=DUEL.map(function(_,i){return i}).filter(function(i){return i!==last});var k=pool[Math.floor(Math.random()*pool.length)];store.duelLast=k;save(store);
+ DU={sc:DUEL[k],t:0,p:0,clues:[],miss:[],id:Date.now()};var d=duelEl();
+ d.innerHTML='<div class="dring"><img src="img/fox-sneaky.png" alt=""><h2>مكالمة واردة</h2><b>'+DU.sc.who+'</b><small class="muted" dir="ltr">'+DU.sc.num+'</small><p class="muted" style="max-width:19rem;margin-top:.4rem">'+gx('بو حيلة متنكّر ويتصل عليك. {اكشف|اكشفي} حيلته، {لقّط|لقّطي} علاماتها، و{سكّر|سكّري} قبل لا ياخذ منك شي.')+'</p><div class="dans"><button style="background:var(--coral)" id="dDec">رفض</button><button style="background:var(--tq)" id="dAcc">رد</button></div></div>';
+ sfx.ring();buzz([200,100,200]);$('dAcc').onclick=function(){sfx.stop();duelStart()};$('dDec').onclick=function(){sfx.stop();duelEnd('dec')}}
+function duelStart(){var d=duelEl();d.innerHTML='<div class="dtop"><button class="dx" id="dX" aria-label="خروج">✕</button><div class="dms"><div class="dm c">العلامات<div class="db"><i id="dMc"></i></div><span id="dNc">0/4</span></div><div class="dm p">ضغط بو حيلة<div class="db"><i id="dMp"></i></div></div></div></div>'+
+ '<div class="dwho"><img id="dFx" src="img/fox-sneaky.png" alt=""><div><b>'+DU.sc.who+'</b><small>'+DU.sc.num+'</small></div><span class="live">● مباشر</span></div><div class="dchat" id="dChat"></div><div class="dopts" id="dOpts"></div><button class="dhang" id="dHang">✆ سكّر الخط</button>';
+ $('dX').onclick=duelClose;$('dHang').onclick=function(){duelEnd('hang')};duelTurn()}
+function dFace(n){var f=$('dFx');if(f){f.src='img/fox-'+n+'.png';f.style.transform='scale(1.12)';setTimeout(function(){if(f)f.style.transform=''},250)}}
+function dPush(c,h){var c2=$('dChat');if(!c2)return;var e=document.createElement('div');e.className=c;e.innerHTML=h;c2.appendChild(e);c2.scrollTop=1e5}
+function duelTurn(){var my=DU&&DU.id;if(!my)return;var T=DU.sc.turns[DU.t];$('dOpts').innerHTML='';dPush('dtyping','بو حيلة يتكلم…');
+ setTimeout(function(){if(!DU||DU.id!==my)return;var ty=document.querySelector('.dtyping');if(ty)ty.remove();dPush('bub f','<span class="tac">'+T.tac+'</span><br>'+T.say);sfx.ding();
+  var o=shuffle(T.o.map(function(x,i){return i}));$('dOpts').innerHTML=o.map(function(i){return '<button class="dopt" data-i="'+i+'">'+T.o[i][0]+'</button>'}).join('');
+  [].forEach.call($('dOpts').querySelectorAll('.dopt'),function(b){b.onclick=function(){duelPick(T.o[+b.dataset.i])}});var c2=$('dChat');if(c2)requestAnimationFrame(function(){c2.scrollTop=c2.scrollHeight})},900)}
+function dMeters(){$('dMc').style.width=(DU.clues.length/4*100)+'%';$('dNc').textContent=DU.clues.length+'/4';$('dMp').style.width=Math.min(100,DU.p/2*100)+'%'}
+function duelPick(x){var my=DU.id;$('dOpts').innerHTML='';dPush('bub u',x[0]);var later=function(f,ms){setTimeout(function(){if(DU&&DU.id===my)f()},ms)};
+ if(x[1]==='x'){dFace('laugh');sfx.bad();buzz([120,60,220]);later(function(){duelEnd('lose')},900);return}
+ if(x[1]==='s'||x[1]==='w'){DU.clues.push(x[2]);dFace('shocked');sfx.hit(DU.clues.length);dPush('dclue','🔍 كشفت علامة: '+x[2])}
+ if(x[1]==='r'){DU.p++;DU.miss.push(x[2]);dFace('laugh');sfx.mid();dPush('dwarn','⚠ '+x[2])}
+ dMeters();
+ if(x[1]==='w'){later(function(){duelEnd('win')},900);return}
+ if(DU.p>=2){later(function(){duelEnd('lose')},900);return}
+ DU.t++;if(DU.t>=DU.sc.turns.length){later(function(){duelEnd('win')},900);return}
+ later(duelTurn,700)}
+function duelEnd(r){if(!DU)return;var win=r!=='lose',pts=win?Math.max(50,(r==='win'?200:r==='hang'?150:100)+DU.clues.length*100-DU.p*50):0;
+ var du=store.duel=store.duel||{plays:0,wins:0,best:0};du.plays++;if(win)du.wins++;if(pts>du.best)du.best=pts;save(store);
+ var title={win:'{كشفته|كشفتيه} و{سكّرت|سكّرتي} عليه!',hang:'{سكّرت|سكّرتي} بدري، حركة صح',dec:'{رفضت|رفضتي} المكالمة',lose:'بو حيلة {أقنعك|أقنعج}'}[r];
+ if(win)sfx.good();else sfx.bad();
+ var d=duelEl();d.innerHTML=gx('<div class="dend"><img src="img/fox-'+(win?'dizzy':'laugh')+'.png" alt=""><h2>'+title+'</h2><div class="dsc">'+pts+'</div><div class="muted">نقطة'+(pts&&pts>=du.best?' · أعلى رقم لك':'')+'</div>'+
+ (DU.clues.length?'<ul>'+DU.clues.map(function(c){return '<li>✅ '+c+'</li>'}).join('')+'</ul>':'')+
+ (DU.miss.length?'<ul>'+DU.miss.map(function(c){return '<li>⚠️ '+c+'</li>'}).join('')+'</ul>':'')+
+ (r==='dec'||r==='hang'?'<p class="muted">قرار سليم. والنقاط الأعلى تجيك إذا {لقّطت|لقّطتي} علامات الحيلة قبل لا {تسكّر|تسكّرين}.</p>':'')+
+ (r==='lose'?'<p class="muted">القاعدة: لا رمز ولا بيانات بطاقة ولا تحويل لأي أحد يتصل عليك. {سكّر|سكّري} و{اتصل|اتصلي} بالجهة بنفسك.</p>':'')+
+ '<button class="cta" id="dAgain">مكالمة ثانية</button><button class="ghost" id="dBack">رجوع</button></div>');
+ DU={id:0,sc:DU.sc,clues:[],miss:[],p:0,t:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26c';
-function checkUpdate(){if(!$('play').hidden||!$('flip').hidden)return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
+var BUILD='2026-11-26e';
+function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel'))return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 setTimeout(checkUpdate,800);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
 </script>
