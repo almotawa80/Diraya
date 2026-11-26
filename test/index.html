@@ -781,6 +781,54 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 .ntab img.nic{width:1.6rem;height:1.6rem;object-fit:contain;filter:saturate(.75) brightness(.9)}
 .ntab.on img.nic{filter:none;transform:scale(1.1)}
 .ntab.mid .orb img{width:3rem;height:3rem}
+/* «معركة الحيل» */
+.duel .bvs{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;background:#1b2560 url(img/duel/bg.webp?v=1) center/cover no-repeat;padding:calc(env(safe-area-inset-top) + 2.2rem) 1rem calc(env(safe-area-inset-bottom) + 3.6rem);text-align:center;overflow:hidden}
+
+.duel .bvsT,.duel .bvsB{position:relative;display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.duel .bvsT{animation:bInT .5s ease-out both}.duel .bvsB{animation:bInB .5s ease-out both}
+@keyframes bInT{from{transform:translateX(-120%)}}@keyframes bInB{from{transform:translateX(120%)}}
+.duel .bav{width:min(9.5rem,20vh);height:min(9.5rem,20vh);object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.4))}
+.duel .bvs b{font-size:1.6rem;line-height:1.2;font-weight:900;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+.duel .blv{background:rgba(0,0,0,.3);color:var(--saffron);font-weight:800;border-radius:99px;padding:.05rem .9rem;font-size:.9rem}
+.duel .bvsMid{position:relative;align-self:center;width:min(8rem,17vh);height:auto;filter:drop-shadow(0 0 20px rgba(242,183,49,.6));animation:bVs .6s .35s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes bVs{from{transform:scale(0) rotate(-30deg)}}
+.duel .bcd{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:900 4.5rem/1 Cairo;color:#F2B731;text-shadow:0 4px 0 #000;pointer-events:none;animation:bCd .8s ease-out;z-index:2;white-space:nowrap}
+.duel .bcd{top:auto;bottom:calc(env(safe-area-inset-bottom) + .6rem);transform:translateX(-50%);font-size:2.6rem}
+.duel .bmini{width:1.9rem;height:1.9rem;object-fit:contain}
+@keyframes bCd{from{transform:translateX(-50%) scale(2);opacity:0}}
+.duel .bxv{position:absolute;top:calc(env(safe-area-inset-top) + .6rem);right:.8rem;width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:rgba(0,0,0,.3);color:#fff;font-size:1.1rem;z-index:3}
+.duel .btop{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.duel .bhp{flex:1;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.35rem;font-size:.72rem;color:#B9BCD3}
+.duel .bhp b{color:#F6F6F0;font-size:.9rem;min-width:1.8rem;text-align:center}
+.duel .bbar{height:.75rem;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+.duel .bbar i{display:block;height:100%;width:100%;border-radius:99px;transition:width .45s cubic-bezier(.3,1.4,.5,1)}
+.duel .bhp.me i{background:linear-gradient(90deg,#1FC8B4,#6ff0de)}.duel .bhp.fx i{background:linear-gradient(90deg,#ff9b45,#FF6B6B)}
+.duel .bbar.low i{animation:bLow .6s infinite}@keyframes bLow{50%{opacity:.45}}
+.duel .bfox{position:relative;display:flex;justify-content:center;margin:.6rem 0 .2rem;flex-shrink:0}
+.duel .bfox img{width:7.5rem;height:7.5rem;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45))}
+.duel .bround{position:absolute;top:0;inset-inline-start:0;background:rgba(242,183,49,.15);color:var(--saffron);font-weight:800;font-size:.8rem;border-radius:99px;padding:.1rem .7rem}
+.duel .batk{flex:1 1 0;min-height:0;overflow:auto;background:#F6F6F0;color:#232C5A;border-radius:18px;padding:.8rem .9rem;box-shadow:0 8px 20px rgba(0,0,0,.35);position:relative}
+.duel .batk.in{animation:bAtk .4s cubic-bezier(.3,1.5,.5,1)}@keyframes bAtk{from{transform:translateY(-30px) scale(.9);opacity:0}}
+.duel .batk::before{content:"⚔ هجوم";position:absolute;top:-.7rem;inset-inline-start:1rem;background:#FF6B6B;color:#fff;font-size:.7rem;font-weight:900;border-radius:99px;padding:0 .6rem}
+.duel .bfrom{display:flex;align-items:baseline;gap:.5rem;border-bottom:1px solid #dcdcd4;padding-bottom:.35rem;margin-bottom:.4rem}.duel .bfrom b{font-size:.95rem}.duel .bfrom small{color:#6b6f88;font-size:.72rem}
+.duel .batk p{margin:0;line-height:1.7;font-size:.98rem}
+.duel .bres{margin-top:.6rem;border-radius:12px;padding:.45rem .65rem;font-weight:800;font-size:.88rem;line-height:1.6;animation:dIn .25s}
+.duel .bres.ok{background:#d7f7f2;color:#0e6b5f}.duel .bres.no{background:#ffe1e1;color:#a02a2a}
+.duel .btime{height:.4rem;border-radius:99px;background:rgba(255,255,255,.1);margin:.55rem 0;overflow:hidden;flex-shrink:0}.duel .btime i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#FF6B6B,#F2B731)}
+.duel .bbtns{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;flex-shrink:0}
+.duel .bbtns button{border:0;border-radius:16px;min-height:3.6rem;font:900 1.15rem Cairo,sans-serif;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.3)}
+.duel .bbtns button:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.duel .bno{background:linear-gradient(#ff7b7b,#e04848)}.duel .bok{background:linear-gradient(#2fd8c3,#17a796)}
+.duel.shake{animation:bShake .35s}@keyframes bShake{20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+.duel.hurt::after{content:"";position:absolute;inset:0;background:rgba(255,60,60,.35);pointer-events:none;animation:bHurt .45s forwards}@keyframes bHurt{to{opacity:0}}
+.duel .bdmg{position:absolute;left:50%;top:9%;transform:translateX(-50%);font:900 2rem Cairo;pointer-events:none;animation:bDmg 1.1s ease-out forwards;z-index:5;white-space:nowrap;text-shadow:0 3px 0 rgba(0,0,0,.4)}
+.duel .bdmg.f{color:#F2B731}.duel .bdmg.me{color:#FF6B6B;top:8%}
+@keyframes bDmg{from{transform:translate(-50%,10px) scale(.6);opacity:0}20%{transform:translate(-50%,0) scale(1.2);opacity:1}to{transform:translate(-50%,-60px) scale(1);opacity:0}}
+.duel .bko{font:900 2.6rem/1.2 Cairo;color:#F2B731;text-shadow:0 4px 0 #8a1d14;animation:bVs .6s cubic-bezier(.3,1.6,.5,1) both;margin-bottom:.3rem}
+.duel .bend.won img{animation:bSpin 1.2s ease-out}@keyframes bSpin{from{transform:rotate(-25deg) scale(.6)}}
+.duel .bstats{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}.duel .bstats span{background:#2E3870;border-radius:99px;padding:.15rem .7rem;font-size:.82rem;font-weight:700}
+.duel .bmh{font-size:.95rem;margin:.9rem 0 0;text-align:right}
+.duel .bend li small{color:#9FF2E6}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1885,8 +1933,8 @@ var DUEL=[
 ];
 var DU=null;
 function duelEl(){var d=$('duel');if(!d){d=document.createElement('div');d.className='duel';d.id='duel';d.setAttribute('dir','rtl');document.body.appendChild(d)}d.hidden=false;return d}
-function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();DU=null;if(SCR==='prizes')renderPrizes();else if(SCR==='lead')renderLead(LBT);else renderHome(true);navOn(SCR==='prizes'?'prize':SCR==='setp'?'set':SCR)}
-function duelRing(){var last=store.duelLast,pool=DUEL.map(function(_,i){return i}).filter(function(i){return i!==last});var k=pool[Math.floor(Math.random()*pool.length)];store.duelLast=k;save(store);
+function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();if(BT)clearTimeout(BT.to);BT=null;DU=null;if(SCR==='prizes')renderPrizes();else if(SCR==='lead')renderLead(LBT);else renderHome(true);navOn(SCR==='prizes'?'prize':SCR==='setp'?'set':SCR)}
+function duelRingOld(){var last=store.duelLast,pool=DUEL.map(function(_,i){return i}).filter(function(i){return i!==last});var k=pool[Math.floor(Math.random()*pool.length)];store.duelLast=k;save(store);
  DU={sc:DUEL[k],t:0,p:0,clues:[],miss:[],id:Date.now()};var d=duelEl();
  d.innerHTML='<div class="dring"><img src="img/fox-sneaky.png" alt=""><h2>مكالمة واردة</h2><b>'+DU.sc.who+'</b><small class="muted" dir="ltr">'+DU.sc.num+'</small><p class="muted" style="max-width:19rem;margin-top:.4rem">'+gx('بو حيلة متنكّر ويتصل عليك. {اكشف|اكشفي} حيلته، {لقّط|لقّطي} علاماتها، و{سكّر|سكّري} قبل لا ياخذ منك شي.')+'</p><div class="dans"><button style="background:var(--coral)" id="dDec">رفض</button><button style="background:var(--tq)" id="dAcc">رد</button></div></div>';
  sfx.ring();buzz([200,100,200]);$('dAcc').onclick=function(){sfx.stop();duelStart()};$('dDec').onclick=function(){sfx.stop();duelEnd('dec')}}
@@ -1920,6 +1968,60 @@ function duelEnd(r){if(!DU)return;var win=r!=='lose',pts=win?Math.max(50,(r==='w
  (r==='lose'?'<p class="muted">القاعدة: لا رمز ولا بيانات بطاقة ولا تحويل لأي أحد يتصل عليك. {سكّر|سكّري} و{اتصل|اتصلي} بالجهة بنفسك.</p>':'')+
  '<button class="cta" id="dAgain">مكالمة ثانية</button><button class="ghost" id="dBack">رجوع</button></div>');
  DU={id:0,sc:DU.sc,clues:[],miss:[],p:0,t:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
+
+/* ===== «معركة الحيل»: HP battle vs Bu Heela (Khalid 2026-11-26) ===== */
+var BT=null;window.__bt=function(){return BT};
+function btClean(t){return String(t||'').replace(/\[\[|\]\]|\{\{|\}\}/g,'')}
+function btPool(){var a=pool().filter(function(x){return x&&!x.kind&&x.body&&x.ch!=='call'}),sc=shuffle(a.filter(function(x){return x.scam})),ok=shuffle(a.filter(function(x){return !x.scam}));
+ return shuffle(sc.slice(0,7).concat(ok.slice(0,3)))}
+function duelRing(){var my=Date.now();BT={hp:100,fhp:100,r:0,items:btPool(),combo:0,best:0,id:my,miss:[],hits:0,fast:0};DU={id:my};
+ var d=duelEl(),lvl=Object.keys(PR.done||{}).length;
+ d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=1" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
+  '<img class="bvsMid" src="img/duel/vs.webp?v=1" alt="VS">'+
+  '<div class="bvsB"><span class="blv">زعيم الحيل</span><b>بو حيلة</b><img class="bav" src="img/duel/fox.webp?v=1" alt=""></div>'+
+  '<div class="bcd" id="bCd">3</div><button class="bxv" id="dX" aria-label="خروج">✕</button></div>';
+ $('dX').onclick=duelClose;sfx.ring&&sfx.ding();buzz([60,40,60]);
+ var n=3;var tick=setInterval(function(){if(!BT||BT.id!==my){clearInterval(tick);return}n--;var c=$('bCd');if(!c){clearInterval(tick);return}
+  if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)btArena()},550)}},800)}
+function btArena(){var d=duelEl();
+ d.innerHTML='<div class="btop"><button class="dx" id="dX" aria-label="خروج">✕</button>'+
+  '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=1" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN">100</b></div>'+
+  '<div class="bhp fx"><img class="bmini" src="img/duel/fox.webp?v=1" alt=""><div class="bbar"><i id="bFx"></i></div><b id="bFxN">100</b></div></div>'+
+  '<div class="bfox"><img id="bFace" src="img/fox-sneaky.png" alt=""><span class="bround" id="bRound"></span></div>'+
+  '<div class="batk" id="bAtk"></div><div class="btime"><i id="bTime"></i></div>'+
+  '<div class="bbtns"><button class="bno" id="bScam">🚩 حيلة</button><button class="bok" id="bSafe">✅ سليمة</button></div>';
+ $('dX').onclick=duelClose;$('bScam').onclick=function(){btPick(1)};$('bSafe').onclick=function(){btPick(0)};btRound()}
+function btFace(n){var f=$('bFace');if(f)f.src='img/fox-'+n+'.png'}
+function btBars(){$('bMe').style.width=BT.hp+'%';$('bFx').style.width=BT.fhp+'%';$('bMeN').textContent=BT.hp;$('bFxN').textContent=BT.fhp;
+ $('bMe').parentNode.classList.toggle('low',BT.hp<=30);$('bFx').parentNode.classList.toggle('low',BT.fhp<=30)}
+function btRound(){var my=BT.id;if(BT.r>=BT.items.length){btEnd();return}var it=BT.items[BT.r];BT.busy=false;btFace(BT.fhp<=40?'angry':'sneaky');
+ $('bRound').textContent='جولة '+(BT.r+1);var a=$('bAtk');a.classList.remove('in');a.offsetWidth;
+ a.innerHTML='<div class="bfrom"><b>'+btClean(it.from)+'</b><small>'+(it.sub||'')+'</small></div><p>'+btClean(gx(it.body))+'</p>';a.classList.add('in');sfx.ding();btBars();
+ BT.t0=Date.now();var bar=$('bTime');bar.style.transition='none';bar.style.width='100%';bar.offsetWidth;bar.style.transition='width 10s linear';bar.style.width='0%';
+ clearTimeout(BT.to);BT.to=setTimeout(function(){if(BT&&BT.id===my&&!BT.busy)btPick(-1)},10000)}
+function btFloat(txt,cls){var d=$('duel');if(!d)return;var e=document.createElement('div');e.className='bdmg '+cls;e.textContent=txt;d.appendChild(e);setTimeout(function(){e.remove()},1100)}
+function btPick(v){if(!BT||BT.busy)return;BT.busy=true;clearTimeout(BT.to);var my=BT.id,it=BT.items[BT.r],ok=v!==-1&&(!!it.scam===(v===1)),left=Math.max(0,10000-(Date.now()-BT.t0)),d=$('duel'),bar=$('bTime');
+ bar.style.transition='none';bar.style.width=(left/100)+'%';
+ if(ok){BT.combo++;BT.best=Math.max(BT.best,BT.combo);BT.hits++;if(left>6000)BT.fast++;
+  var dmg=14+Math.round(12*left/10000)+(BT.combo>=3?5:0);BT.fhp=Math.max(0,BT.fhp-dmg);
+  btFace(BT.fhp<=0?'dizzy':'shocked');sfx.hit(BT.combo+2);buzz(40);d.classList.add('shake');setTimeout(function(){d.classList.remove('shake')},350);
+  btFloat('-'+dmg+(left>6000?' سريعة!':BT.combo>=3?' كومبو!':''),'f');
+  $('bAtk').innerHTML+='<div class="bres ok">'+(it.scam?'🎯 {كشفتها|كشفتيها}':'👌 صح، رسالة سليمة')+'</div>'}
+ else{BT.combo=0;BT.hp=Math.max(0,BT.hp-25);BT.miss.push(it);btFace('laugh');sfx.bad();buzz([120,60,200]);d.classList.add('hurt');setTimeout(function(){d.classList.remove('hurt')},450);
+  btFloat('-25','me');
+  $('bAtk').innerHTML+='<div class="bres no">'+(v===-1?'⏱ خلص الوقت. ':'')+(it.scam?'كانت حيلة: '+btClean(it.tell||''):'كانت رسالة سليمة، لا {تشك|تشكين} في كل شي')+'</div>'}
+ $('bAtk').innerHTML=gx($('bAtk').innerHTML);btBars();BT.r++;
+ setTimeout(function(){if(!BT||BT.id!==my)return;if(BT.fhp<=0||BT.hp<=0)btEnd();else btRound()},ok?1100:2300)}
+function btEnd(){if(!BT)return;clearTimeout(BT.to);var win=BT.fhp<=0||(BT.fhp<BT.hp&&BT.hp>0),ko=BT.fhp<=0,pts=win?200+BT.hp*5+BT.fast*30+BT.best*20:0;
+ var du=store.duel=store.duel||{plays:0,wins:0,best:0};du.plays++;if(win)du.wins++;var rec=pts>(du.best||0);if(rec)du.best=pts;save(store);
+ var d=duelEl();if(win)sfx.good();else sfx.bad();
+ d.innerHTML=gx('<div class="dend bend'+(win?' won':'')+'">'+(ko?'<div class="bko">ضربة قاضية!</div>':'')+'<img src="img/fox-'+(win?'dizzy':'laugh')+'.png" alt="">'+
+  '<h2>'+(win?(ko?'{طيّحت|طيّحتي} بو حيلة!':'{فزت|فزتي} بالنقاط!'):'بو حيلة {غلبك|غلبج} هالمرة')+'</h2>'+
+  (win?'<div class="dsc">'+pts+'</div><div class="muted">نقطة'+(rec?' · أعلى رقم لك 🏆':'')+'</div><div class="bstats"><span>🎯 '+BT.hits+' كشف</span><span>⚡ '+BT.fast+' سريعة</span><span>🔥 كومبو '+BT.best+'</span></div>':'<p class="muted">ولا يهمك، كل جولة تعلّمك حيلة جديدة.</p>')+
+  (BT.miss.length?'<h3 class="bmh">الحيل اللي {طحت|طحتي} فيها</h3><ul>'+BT.miss.map(function(x){return '<li><b>'+btClean(x.from)+'</b><br>'+(x.scam?'⚠️ '+btClean(x.tell||''):'✅ كانت سليمة')+(x.scam&&x.right?'<br><small>الصح: '+btClean(x.right)+'</small>':'')+'</li>'}).join('')+'</ul>':'')+
+  '<button class="cta" id="dAgain">'+(win?'معركة ثانية':'{جرّب|جرّبي} مرة ثانية')+'</button><button class="ghost" id="dBack">رجوع</button></div>');
+ if(win){for(var i=0;i<16;i++){var c=document.createElement('i');c.className='coin';c.style.setProperty('--dx',(Math.random()*320-160)+'px');c.style.setProperty('--dy',(Math.random()*-320)+'px');c.style.animationDuration=(0.8+Math.random()*.6)+'s';d.appendChild(c)}}
+ BT=null;DU={id:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 /* ===== Full prizes and leaderboard pages (Khalid 2026-11-26) ===== */
 function passedMax(){var d=PR.done||{},m=0;for(var k in d)if(d[k]&&+k>m)m=+k;return m}
 function renderPrizes(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';for(n=1;n<=STAGES.length;n++){if(d[n])med++;if(d[n]===3)gold++}
@@ -1968,7 +2070,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26t';
+var BUILD='2026-11-26v';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
