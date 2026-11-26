@@ -85,8 +85,9 @@
 .brand{gap:1.15rem;padding:.3rem .1rem 0}
 .brand .bell{width:3.6rem!important;height:3.6rem!important}
 .brand .bell::before,.brand .bell::after{display:none}
-.brand>div{flex:1;min-width:0}
-.brand p{font-size:.88rem!important}
+.brand>div:not(.bell){flex:1;min-width:0}
+.brand p{font-size:.88rem!important;line-height:1.55!important;margin-top:.6rem!important}
+.brand h1{line-height:1.2!important;margin:0!important}
 .brand h1{font-size:2.1rem!important;line-height:1.1}
 .brand p{font-size:.9rem;line-height:1.5;margin-top:.1rem}
 #home .map{display:flex!important;flex-direction:column;gap:.15rem;position:relative;padding:.3rem 0 .2rem}
