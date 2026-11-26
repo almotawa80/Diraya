@@ -2043,8 +2043,8 @@ function btPool(){var a=pool().filter(function(x){return x&&!x.kind&&x.body&&x.c
  return shuffle(sc.slice(0,7).concat(ok.slice(0,3)))}
 function duelRing(){var my=Date.now();BT={hp:100,fhp:100,r:0,items:btPool(),combo:0,best:0,id:my,miss:[],hits:0,fast:0};DU={id:my};
  var d=duelEl(),lvl=Object.keys(PR.done||{}).length;
- d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=2" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
-  '<img class="bvsMid" src="img/duel/vs.webp?v=1" alt="VS">'+
+ d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=3" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
+  '<img class="bvsMid" src="img/duel/vs.webp?v=3" alt="VS">'+
   '<div class="bvsB"><span class="blv">زعيم الحيل</span><b>بو حيلة</b><img class="bav" src="img/duel/fox.webp?v=1" alt=""></div>'+
   '<div class="bcd" id="bCd">3</div><button class="bxv" id="dX" aria-label="خروج">✕</button></div>';
  $('dX').onclick=duelClose;sfx.ring&&sfx.ding();buzz([60,40,60]);
@@ -2052,7 +2052,7 @@ function duelRing(){var my=Date.now();BT={hp:100,fhp:100,r:0,items:btPool(),comb
   if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)btArena()},550)}},800)}
 function btArena(){var d=duelEl();
  d.innerHTML='<div class="btop"><button class="dx" id="dX" aria-label="خروج">✕</button>'+
-  '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=2" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN">100</b></div>'+
+  '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=3" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN">100</b></div>'+
   '<div class="bhp fx"><img class="bmini" src="img/duel/fox.webp?v=1" alt=""><div class="bbar"><i id="bFx"></i></div><b id="bFxN">100</b></div></div>'+
   '<div class="bfox"><img id="bFace" src="img/fox-sneaky.png" alt=""><span class="bround" id="bRound"></span></div>'+
   '<div class="batk" id="bAtk"></div><div class="btime"><i id="bTime"></i></div>'+
@@ -2132,7 +2132,7 @@ function renderLeadOld(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forE
 
 /* ===== Game-style prizes + leaderboard (Khalid's ChatGPT design, 2026-11-26) ===== */
 var PZV='?v=1';function pzi(n){return 'img/pz/'+n+'.webp'+PZV}
-var SHE=/^(أم_|نوره|شهد|مريوم|دانة|سارة|فاطمة)/;function avOf(nm){return 'img/duel/'+(SHE.test(nm)?'she':'he')+'.webp?v=2'}
+var SHE=/^(أم_|نوره|شهد|مريوم|دانة|سارة|فاطمة)/;function avOf(nm){return 'img/duel/'+(SHE.test(nm)?'she':'he')+'.webp?v=3'}
 function renderPrizes(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';for(n=1;n<=STAGES.length;n++){if(d[n])med++;if(d[n]===3)gold++}
  var pm=passedMax(),ix=ixCalc();
  h+='<div class="gzhero"><div class="gzban"><img class="gzl" src="'+pzi('laurel')+'" alt=""><span>الجوائز</span></div><img class="gzvault" src="'+pzi('vault')+'" alt=""></div>';
@@ -2158,7 +2158,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
   '<div class="gzpod"><img class="gzpodimg" src="'+pzi('podium')+'" alt="">'+[[1,'p2'],[0,'p1'],[2,'p3']].map(function(z){var x=L[z[0]];
    return '<div class="gzpa '+z[1]+'">'+(z[0]===0?'<img class="gzcrown" src="'+pzi('crown')+'" alt="">':'')+'<img class="gzav" src="'+avOf(x[0])+'" alt=""><b>'+nm(x[0])+'</b><small>⭐ '+x[1].toLocaleString('en-US')+'</small></div>'}).join('')+'</div></div>'+
   '<div class="gztabs">'+[['week','هالأسبوع'],['all','الكل'],['duel','واجه بو حيلة']].map(function(x){return '<button data-l="'+x[0]+'" class="'+(x[0]===t?'on':'')+'">'+(x[0]==='duel'?'<img src="img/map/tFox.webp?v=s" alt="">':'')+x[1]+'</button>'}).join('')+'</div>'+
-  '<div class="gzr gzme"><i>'+(rank>10?'+10':rank)+'</i><img src="img/duel/'+G('he','she')+'.webp?v=2" alt=""><span>'+G('أنت','أنتِ')+'</span><em>⭐ '+me.toLocaleString('en-US')+'</em></div>'+
+  '<div class="gzr gzme"><i>'+(rank>10?'+10':rank)+'</i><img src="img/duel/'+G('he','she')+'.webp?v=3" alt=""><span>'+G('أنت','أنتِ')+'</span><em>⭐ '+me.toLocaleString('en-US')+'</em></div>'+
   '<div class="gzlist">'+L.map(function(x,i){return '<div class="gzr"><i class="r'+(i<3?i+1:'')+'">'+(i+1)+'</i><img src="'+avOf(x[0])+'" alt=""><span>'+nm(x[0])+'</span><em>⭐ '+x[1].toLocaleString('en-US')+'</em></div>'}).join('')+'</div>'+
   '<p class="pgnote">الترتيب الحالي أرقام توضيحية لين نربطه بالأرقام الحقيقية.'+(t==='duel'?' النقاط هنا: أعلى نتيجة لك في معركة الحيل.':'')+'</p>';
  $('lead').innerHTML=gx(h);[].forEach.call($('lead').querySelectorAll('.gztabs button'),function(b){b.onclick=function(){renderLead(b.dataset.l)}})}
@@ -2172,7 +2172,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26x';
+var BUILD='2026-11-26y';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
