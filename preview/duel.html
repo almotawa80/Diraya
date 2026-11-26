@@ -1,0 +1,176 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>معاينة: واجه بو حيلة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--deep:#232C5A;--deep2:#1A2149;--fg:#F6F6F0;--gold:#E3BE7C;--tq:#1FC8B4;--coral:#FF6B6B;--line:#606690;--card:#2E3870;--muted:#B9BCD3}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{font-family:Cairo,sans-serif;background:var(--deep);color:var(--fg);-webkit-tap-highlight-color:transparent;overflow:hidden}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+.scr{flex:1;overflow:auto;padding:1rem 1rem 7rem}.scr[hidden]{display:none}
+h1{font-size:1.5rem;font-weight:900}h2{font-size:1.15rem;font-weight:800;margin:1rem 0 .5rem}
+.sub{color:var(--muted);font-size:.9rem}
+.tag{display:inline-block;background:var(--gold);color:var(--deep);font-weight:800;font-size:.7rem;border-radius:99px;padding:.1rem .6rem;margin-bottom:.5rem}
+.stg{display:flex;align-items:center;gap:.8rem;background:var(--card);border-radius:16px;padding:.8rem;margin:.5rem 0}
+.stg b{display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:12px;background:var(--gold);color:var(--deep);font-weight:900}
+.stg.lock{opacity:.45}.daily{background:linear-gradient(135deg,#3A4690,#2E3870);border:1px solid var(--gold)}
+/* bottom bar */
+.bar{position:fixed;left:0;right:0;bottom:0;height:calc(4.6rem + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--deep2);border-top:1px solid #ffffff14;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;z-index:5}
+.tab{background:none;border:0;color:var(--muted);font:600 .68rem Cairo;display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.tab svg{width:1.45rem;height:1.45rem}.tab.on{color:var(--gold)}
+.mid{position:relative;top:-1.3rem}.mid .orb{width:4.4rem;height:4.4rem;border-radius:50%;background:radial-gradient(circle at 50% 35%,#F2D39A,var(--gold));display:grid;place-items:center;box-shadow:0 0 0 5px var(--deep2),0 6px 20px #E3BE7C66;animation:pulse 2s infinite}
+.mid img{width:3.6rem}.mid span{color:var(--gold);font-weight:800;margin-top:.2rem}
+@keyframes pulse{50%{box-shadow:0 0 0 5px var(--deep2),0 6px 30px #E3BE7Caa}}
+.lb{display:flex;align-items:center;gap:.7rem;background:var(--card);border-radius:14px;padding:.6rem .8rem;margin:.4rem 0}.lb i{font-style:normal;font-weight:900;width:1.6rem;color:var(--gold)}.lb em{margin-inline-start:auto;font-style:normal;font-weight:800}
+.me{border:1px solid var(--tq)}
+.seg{display:flex;background:var(--card);border-radius:99px;padding:.25rem;margin:.6rem 0}.seg button{flex:1;border:0;background:none;color:var(--muted);font:700 .8rem Cairo;padding:.4rem;border-radius:99px}.seg .on{background:var(--gold);color:var(--deep)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}.md{background:var(--card);border-radius:14px;padding:.7rem .3rem;text-align:center;font-size:.75rem}.md div{font-size:1.7rem}.md.off{opacity:.35}
+.row{display:flex;justify-content:space-between;background:var(--card);border-radius:14px;padding:.8rem;margin:.4rem 0}
+/* duel */
+.duel{position:fixed;inset:0;z-index:10;background:linear-gradient(180deg,#151B3E,var(--deep));display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + .6rem) .9rem calc(env(safe-area-inset-bottom) + .8rem)}
+.duel[hidden]{display:none}
+.top{display:flex;align-items:center;gap:.6rem}
+.x{width:2.4rem;height:2.4rem;border-radius:50%;border:0;background:#ffffff14;color:var(--fg);font-size:1.2rem}
+.meters{flex:1;display:grid;gap:.3rem}.m{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}.m .b{flex:1;height:.45rem;border-radius:9px;background:#ffffff18;overflow:hidden}.m .b i{display:block;height:100%;width:0;transition:width .4s}
+.m.p i{background:var(--coral)}.m.c i{background:var(--tq)}
+.who{display:flex;align-items:center;gap:.7rem;margin:.8rem 0 .4rem}.who img{width:3.6rem;height:3.6rem;object-fit:contain;transition:transform .3s}.who b{display:block;font-weight:800}.who small{color:var(--muted);font-size:.75rem}
+.who .live{margin-inline-start:auto;font-size:.7rem;background:var(--coral);border-radius:99px;padding:.1rem .55rem;font-weight:800}
+.chat{flex:1;overflow:auto;display:flex;flex-direction:column;gap:.5rem;padding:.3rem 0}
+.bub{max-width:85%;padding:.6rem .8rem;border-radius:16px;line-height:1.55;font-size:.95rem;animation:in .25s}
+.bub.f{background:var(--card);align-self:flex-start;border-top-right-radius:4px}
+.bub.u{background:var(--tq);color:#0E2B33;align-self:flex-end;border-top-left-radius:4px;font-weight:600}
+.bub .tac{display:inline-block;font-size:.65rem;font-weight:800;background:#FF6B6B33;color:#FFB0B0;border-radius:99px;padding:0 .5rem;margin-bottom:.2rem}
+.clue{align-self:center;font-size:.78rem;background:#1FC8B422;color:#9FF2E6;border:1px dashed #1FC8B488;border-radius:12px;padding:.3rem .7rem;animation:in .3s}
+.warn{align-self:center;font-size:.78rem;background:#FF6B6B22;color:#FFB0B0;border-radius:12px;padding:.3rem .7rem}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.typing{align-self:flex-start;color:var(--muted);font-size:.8rem}
+.opts{display:grid;gap:.45rem;margin-top:.5rem}
+.opt{border:0;border-radius:14px;background:var(--fg);color:var(--deep);font:700 .92rem Cairo;padding:.75rem .8rem;text-align:right}
+.opt:active{transform:scale(.98)}
+.hang{margin-top:.5rem;border:0;border-radius:14px;background:var(--coral);color:#fff;font:800 1rem Cairo;padding:.8rem;display:flex;justify-content:center;gap:.5rem;align-items:center}
+.ring{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;text-align:center}
+.ring img{width:9rem;animation:shake 1s infinite}.ring h2{margin:0}
+@keyframes shake{0%,100%{transform:rotate(0)}10%,30%{transform:rotate(-6deg)}20%,40%{transform:rotate(6deg)}50%{transform:rotate(0)}}
+.ans{display:flex;gap:2.5rem;margin-top:1.5rem}.ans button{width:4.4rem;height:4.4rem;border-radius:50%;border:0;color:#fff;font:800 .75rem Cairo}
+.end{flex:1;overflow:auto;text-align:center;padding-top:1rem}.end img{width:8rem}.end h1{margin:.4rem 0}
+.score{font-size:2.4rem;font-weight:900;color:var(--gold)}
+.end ul{list-style:none;padding:0;text-align:right;margin:.8rem 0}.end li{background:var(--card);border-radius:12px;padding:.5rem .7rem;margin:.35rem 0;font-size:.85rem}
+.cta{display:block;width:100%;border:0;border-radius:14px;background:var(--gold);color:var(--deep);font:800 1rem Cairo;padding:.85rem;margin-top:.5rem}
+.ghost{background:#ffffff14;color:var(--fg)}
+.note{font-size:.72rem;color:var(--muted);text-align:center;margin-top:.8rem}
+</style></head><body>
+<div class="app">
+<section class="scr" id="s-home">
+ <span class="tag">معاينة فقط</span>
+ <h1>واعي</h1><p class="sub">اكشف بو حيلة قبل ما يصفّر حسابك.</p>
+ <div class="stg daily"><b>☀︎</b><div><div style="font-weight:800">تحدي اليوم</div><div class="sub">6 بطاقات · نفس البطاقات للجميع</div></div></div>
+ <h2>المراحل</h2>
+ <div class="stg"><b>1</b><div>لنكن على دراية</div></div>
+ <div class="stg"><b>2</b><div>ولدك يلعب أونلاين</div></div>
+ <div class="stg"><b>3</b><div>واتساب والأقارب</div></div>
+ <div class="stg lock"><b>4</b><div>الروابط والطرود</div></div>
+ <div class="stg lock"><b>5</b><div>أمن المعلومات</div></div>
+</section>
+<section class="scr" id="s-prize" hidden>
+ <h1>الجوائز والأوسمة</h1>
+ <div class="seg"><button class="on">الأوسمة</button><button>الجوائز</button></div>
+ <div class="grid"><div class="md"><div>🥇</div>المرحلة 1</div><div class="md"><div>🥈</div>المرحلة 2</div><div class="md"><div>🥉</div>المرحلة 3</div><div class="md"><div>🦊</div>هزمت بو حيلة</div><div class="md off"><div>🔥</div>7 أيام متتالية</div><div class="md off"><div>🛡️</div>بدون أخطاء</div></div>
+ <h2>خزنة الجوائز</h2><div class="row"><span>خصم على قسيمة شراء</span><span class="sub">بعد المرحلة 5</span></div><div class="row"><span>دخول السحب الشهري</span><span class="sub">بعد المرحلة 10</span></div>
+</section>
+<section class="scr" id="s-lead" hidden>
+ <h1>المتصدرين</h1><p class="sub">ألقاب يختارها اللاعبين، بدون أسماء أو أرقام.</p>
+ <div class="seg"><button class="on">هالأسبوع</button><button>النقاط</button><button>الأوسمة</button><button>بو حيلة</button></div>
+ <div class="lb"><i>1</i>صقر_الجهراء<em>9,840</em></div><div class="lb"><i>2</i>أم_فهد_الواعية<em>9,215</em></div><div class="lb"><i>3</i>كاشف_الحيل<em>8,760</em></div><div class="lb"><i>4</i>بو_سالم<em>8,102</em></div><div class="lb"><i>5</i>نوره.ك<em>7,950</em></div>
+ <div class="lb me"><i>48</i>أنت<em id="myScore">3,120</em></div>
+ <h2>أرقام عامة</h2><div class="row"><span>لاعبين هالأسبوع</span><b>12,430</b></div><div class="row"><span>مكالمات بو حيلة اللي انكشفت</span><b>68%</b></div>
+ <p class="note">الأرقام في هالصفحة توضيحية.</p>
+</section>
+<section class="scr" id="s-set" hidden>
+ <h1>الإعدادات</h1>
+ <div class="row"><span>الصوت</span><b>تشغيل</b></div><div class="row"><span>الاهتزاز</span><b>تشغيل</b></div><div class="row"><span>الخطاب</span><b>واعي / واعية</b></div><div class="row"><span>لقبك في المتصدرين</span><b>…</b></div><div class="row"><span>بلّغ عن احتيال</span><b>←</b></div>
+</section>
+</div>
+<nav class="bar">
+ <button class="tab on" data-s="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>الرئيسية</button>
+ <button class="tab" data-s="prize"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg>الجوائز</button>
+ <button class="tab mid" id="go"><div class="orb"><img src="../img/fox-sneaky.png" alt=""></div><span>واجه بو حيلة</span></button>
+ <button class="tab" data-s="lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>المتصدرين</button>
+ <button class="tab" data-s="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>الإعدادات</button>
+</nav>
+
+<div class="duel" id="duel" hidden></div>
+
+<script>
+var IMG='../img/fox-';
+var SC=[
+{who:'فيصل · قسم الحماية',num:'+965 6••• ••41',turns:[
+ {say:'مساك الله بالخير، معاك فيصل من قسم الحماية في البنك. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك.',tac:'انتحال صفة',o:[
+  ['أي بنك بالضبط؟ وشنو رقمك الوظيفي؟','s','ما ذكر اسم البنك، وتهرّب من رقمه الوظيفي'],
+  ['يا ساتر! شنو أسوي الحين؟','r','الخوف يخليك تسلّمه القيادة'],
+  ['ما سويت شي، أوقفها لي','r','طلبت منه هو يتصرف بدل ما تتأكد بنفسك']]},
+ {say:'ما عندنا وقت للأسئلة! العملية بتتم خلال 3 دقايق إذا ما تحركنا.',tac:'استعجال',o:[
+  ['ليش تتصل من رقم جوال عادي مو رقم البنك؟','s','يتصل من رقم جوال شخصي'],
+  ['زين قول بسرعة شنو المطلوب','r','الاستعجال نجح معك'],
+  ['أقدر أوقف البطاقة من التطبيق بنفسي','s','يستعجلك عشان ما تفكر']]},
+ {say:'بيوصلك الحين رمز برسالة. قوله لي عشان أوقف العملية.',tac:'طلب الرمز',o:[
+  ['الرسالة مكتوب فيها: لا تشارك الرمز مع أحد','s','يطلب الرمز السري، والبنك ما يطلبه أبدًا'],
+  ['تمام، الرمز هو 4 8 1…','x'],
+  ['أرسله لك واتساب أسهل؟','x']]},
+ {say:'إذا ما عطيتني الرمز خلال دقيقة، بتنسحب فلوسك كلها وأنت المسؤول!',tac:'تخويف',o:[
+  ['بسكّر وأتصل على الرقم اللي ورا بطاقتي','w','يهددك ويحمّلك المسؤولية'],
+  ['خلاص لا تعصب، بعطيك إياه','x'],
+  ['طيب انتظر أشوف الرسالة','r','التهديد خلاك تتردد']]}]},
+{who:'شركة الاتصالات · السحب الكبير',num:'+965 5••• ••09',turns:[
+ {say:'مبروك! رقمك فاز في سحب شركة الاتصالات بـ 5,000 د.ك 🎉',tac:'إغراء',o:[
+  ['أنا ما شاركت في أي سحب','s','جائزة من مسابقة ما دخلتها'],
+  ['صج؟! والله ما أصدق!','r','الفرحة تخليك تنزل حذرك'],
+  ['شلون أستلمها؟','r','بديت تمشي وراه']]},
+ {say:'عشان نحوّل الجائزة، أبي رقم بطاقتك وتاريخ الانتهاء بس.',tac:'طلب بيانات',o:[
+  ['الجائزة تنحوّل برقم الحساب، مو بالبطاقة','s','يطلب بيانات البطاقة عشان يدفع منها'],
+  ['رقمها 4532…','x'],
+  ['ليش تحتاج البطاقة؟','s','بيانات البطاقة ما لها علاقة باستلام جائزة']]},
+ {say:'في رسوم تحويل بسيطة 15 د.ك بس، وإلا تروح الجايزة لغيرك الليلة!',tac:'استعجال',o:[
+  ['جائزة أدفع عليها؟ هذي حيلة','s','رسوم مقدمة مقابل جائزة'],
+  ['15 بس؟ أوكي أحوّلها','x'],
+  ['خلني أفكر شوي','r','ما زال يقدر يضغط عليك']]},
+ {say:'خلاص بأرسل لك رابط، دخّل فيه بياناتك وتوصلك الجائزة.',tac:'رابط مزيف',o:[
+  ['بسكّر وأتأكد من موقع الشركة الرسمي','w','الرابط يسرق بياناتك'],
+  ['أرسله، بشوفه','x'],
+  ['تمام بدخل الحين','x']]}]}
+];
+var $=function(i){return document.getElementById(i)},D=$('duel'),st;
+document.querySelectorAll('.tab[data-s]').forEach(function(b){b.onclick=function(){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});b.classList.add('on');['home','prize','lead','set'].forEach(function(s){$('s-'+s).hidden=s!==b.dataset.s})}});
+$('go').onclick=ring;
+function ring(){st={sc:SC[Math.floor(Math.random()*SC.length)],t:0,p:0,clues:[],miss:[]};D.hidden=false;
+ D.innerHTML='<div class="ring"><img src="'+IMG+'sneaky.png"><h2>مكالمة واردة</h2><div style="font-weight:800">'+st.sc.who+'</div><div class="sub">'+st.sc.num+'</div><p class="sub" style="max-width:18rem;margin-top:.5rem">بو حيلة يتصل عليك. اكشف حيلته، ولقط علاماتها، وسكّر قبل لا ياخذ منك شي.</p><div class="ans"><button style="background:var(--coral)" id="dec">رفض</button><button style="background:var(--tq)" id="acc">رد</button></div></div>';
+ $('acc').onclick=start;$('dec').onclick=function(){end('dec')}}
+function start(){D.innerHTML='<div class="top"><button class="x" id="cl">✕</button><div class="meters"><div class="m c">العلامات<div class="b"><i id="mc"></i></div><span id="nc">0/4</span></div><div class="m p">ضغط بو حيلة<div class="b"><i id="mp"></i></div></div></div></div>'+
+ '<div class="who"><img id="fx" src="'+IMG+'sneaky.png"><div><b>'+st.sc.who+'</b><small>'+st.sc.num+'</small></div><span class="live">● مباشر</span></div><div class="chat" id="chat"></div><div class="opts" id="opts"></div><button class="hang" id="hg">✆ سكّر الخط</button>';
+ $('cl').onclick=function(){D.hidden=true};$('hg').onclick=function(){end('hang')};turn()}
+function face(n){var f=$('fx');if(f){f.src=IMG+n+'.png';f.style.transform='scale(1.12)';setTimeout(function(){f.style.transform=''},250)}}
+function push(c,h){var e=document.createElement('div');e.className=c;e.innerHTML=h;$('chat').appendChild(e);$('chat').scrollTop=1e5}
+function turn(){var T=st.sc.turns[st.t];$('opts').innerHTML='';push('typing','بو حيلة يكتب…');
+ setTimeout(function(){var ty=document.querySelector('.typing');ty&&ty.remove();push('bub f','<span class="tac">'+T.tac+'</span><br>'+T.say);
+  var o=T.o.slice().sort(function(){return Math.random()-.5});
+  $('opts').innerHTML=o.map(function(x,i){return '<button class="opt" data-i="'+T.o.indexOf(x)+'">'+x[0]+'</button>'}).join('');
+  $('opts').querySelectorAll('.opt').forEach(function(b){b.onclick=function(){pick(T.o[b.dataset.i])}})},900)}
+function meters(){$('mc').style.width=(st.clues.length/4*100)+'%';$('nc').textContent=st.clues.length+'/4';$('mp').style.width=(st.p/2*100)+'%'}
+function pick(x){$('opts').innerHTML='';push('bub u',x[0]);
+ if(x[1]==='x'){face('laugh');setTimeout(function(){end('lose')},900);return}
+ if(x[1]==='s'||x[1]==='w'){st.clues.push(x[2]);face('shocked');push('clue','🔍 كشفت علامة: '+x[2])}
+ if(x[1]==='r'){st.p++;st.miss.push(x[2]);face('laugh');push('warn','⚠ '+x[2])}
+ meters();
+ if(x[1]==='w'){setTimeout(function(){end('win')},900);return}
+ if(st.p>=2){setTimeout(function(){end('lose')},900);return}
+ st.t++;if(st.t>=st.sc.turns.length){setTimeout(function(){end('win')},900);return}
+ setTimeout(turn,700)}
+function end(r){var win=r==='win'||r==='hang'||r==='dec',pts=win?(r==='win'?200:r==='hang'?150:100)+st.clues.length*100-st.p*50:0;
+ var title={win:'كشفته وسكّرت عليه!',hang:'سكّرت بدري، حركة صح',dec:'رفضت المكالمة',lose:'بو حيلة أقنعك'}[r];
+ var img=win?'dizzy':'laugh';
+ D.innerHTML='<div class="end"><img src="'+IMG+img+'.png"><h1>'+title+'</h1><div class="score">'+pts+'</div><div class="sub">نقطة</div>'+
+ (st.clues.length?'<ul>'+st.clues.map(function(c){return '<li>✅ '+c+'</li>'}).join('')+'</ul>':'')+
+ (st.miss.length?'<ul>'+st.miss.map(function(c){return '<li>⚠️ '+c+'</li>'}).join('')+'</ul>':'')+
+ (r==='dec'||r==='hang'?'<p class="sub">قرار سليم. بس النقاط الأعلى تجيك إذا لقطت علامات الحيلة قبل لا تسكّر.</p>':'')+
+ (r==='lose'?'<p class="sub">القاعدة: لا رمز ولا بيانات بطاقة ولا تحويل لأي أحد يتصل عليك. سكّر واتصل بالجهة بنفسك.</p>':'')+
+ '<button class="cta" id="again">مكالمة ثانية</button><button class="cta ghost" id="bk">رجوع</button><p class="note">معاينة: حواران فقط. النسخة الكاملة فيها حوارات أكثر، وبو حيلة يغيّر أسلوبه حسب ردودك.</p></div>';
+ $('again').onclick=ring;$('bk').onclick=function(){D.hidden=true}}
+</script></body></html>
