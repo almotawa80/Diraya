@@ -340,7 +340,7 @@ html{overflow:hidden}
 @keyframes rise{0%{transform:translateY(20px) scale(.7);opacity:0}25%{transform:translateY(0) scale(1.1);opacity:1}100%{transform:translateY(-70px);opacity:0}}
 .coin{position:absolute;left:50%;top:50%;width:.8rem;height:.8rem;border-radius:50%;background:var(--saffron);box-shadow:inset 0 0 0 2px #A8854A;z-index:3;pointer-events:none;animation:coin .65s ease-out forwards}
 @keyframes coin{to{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
-.wave{position:absolute;inset:2.2rem .7rem auto .7rem;z-index:4;pointer-events:none;background:rgba(35,44,90,.9);color:var(--fg);border-radius:18px;padding:.45rem .9rem;text-align:center;animation:wavein 1.3s forwards}
+.wave{position:absolute;inset:auto .7rem;top:50%;margin-top:-2.4rem;z-index:4;pointer-events:none;background:rgba(35,44,90,.9);color:var(--fg);border-radius:18px;padding:.45rem .9rem;text-align:center;animation:wavein 1.3s forwards}
 .wave b{display:block;font-weight:900;font-size:1.3rem;color:var(--saffron)}
 .wave span{font-size:.88rem}
 @keyframes wavein{0%{transform:translateY(-30px);opacity:0}15%,80%{transform:none;opacity:1}100%{opacity:0}}
@@ -641,6 +641,10 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 
 #home .stg.go .dot{animation:stgGo .42s ease-out}
 @keyframes stgGo{0%{transform:scale(1)}50%{transform:scale(1.25);box-shadow:0 0 0 10px rgba(227,190,124,.35)}100%{transform:scale(1)}}
+/* Header (Khalid 2026-11-26): smaller settings button, tagline on one line and a bit bolder */
+.brand .gear{width:38px;height:38px;align-self:flex-start;margin-top:.5rem}.brand .gear svg{width:1.15rem;height:1.15rem}
+.brand p#tagline{white-space:nowrap;font-weight:600!important;color:var(--fg)!important;opacity:.85;font-size:clamp(.6rem,3.25vw,.9rem)!important;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:360px){.brand{gap:.6rem!important}.brand .bell{width:3.1rem!important;height:3.1rem!important}}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -999,9 +1003,13 @@ function ac(){if(!S.sound)return null;try{AC=AC||new(window.AudioContext||window
 function tone(f,t0,d,type,g){var a=ac();if(!a)return;try{var o=a.createOscillator(),v=a.createGain(),t=a.currentTime+t0;o.type=type||'sine';o.frequency.value=f;v.gain.setValueAtTime(0.0001,t);v.gain.linearRampToValueAtTime(g||.09,t+.015);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(a.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
 var sfx={
  ding:function(){tone(988,0,.1,'triangle',.05);tone(1319,.08,.18,'triangle',.05)},
- ringOnce:function(){for(var i=0;i<4;i++){tone(784,i*.11,.09,'square',.04);tone(988,i*.11+.055,.05,'square',.035)}},
- ring:function(){sfx.stop();sfx.ringOnce();ringT=setInterval(sfx.ringOnce,1500)},
- stop:function(){if(ringT){clearInterval(ringT);ringT=null}},
+ /* one classic telephone ring (Khalid 2026-11-26): 440+480 Hz with a soft bell trill, about 1.3 s, played once */
+ ring:function(){sfx.stop();var a=ac();if(!a)return;try{var t=a.currentTime+.02,d=1.3,v=a.createGain(),m=a.createGain(),l=a.createOscillator();
+  v.gain.setValueAtTime(.0001,t);v.gain.linearRampToValueAtTime(.07,t+.03);v.gain.setValueAtTime(.07,t+d-.12);v.gain.exponentialRampToValueAtTime(.0001,t+d);
+  l.frequency.value=20;var lg=a.createGain();lg.gain.value=.35;m.gain.value=.65;l.connect(lg);lg.connect(m.gain);
+  [440,480].forEach(function(f){var o=a.createOscillator();o.type='sine';o.frequency.value=f;o.connect(m);o.start(t);o.stop(t+d+.05)});
+  m.connect(v);v.connect(a.destination);l.start(t);l.stop(t+d+.05);ringT=v}catch(e){}},
+ stop:function(){if(ringT){try{var a=ac();ringT.gain.cancelScheduledValues(0);ringT.gain.setValueAtTime(.0001,a?a.currentTime:0)}catch(e){}ringT=null}},
  hit:function(c){var f=440*Math.pow(2,Math.min(c,8)/6);tone(f,0,.09,'triangle');tone(f*1.5,.07,.16,'triangle')},
  good:function(){tone(523,0,.12,'triangle');tone(659,.09,.12,'triangle');tone(784,.18,.25,'triangle');tone(1047,.3,.35,'triangle')},
  mid:function(){tone(523,0,.14,'triangle');tone(494,.12,.22,'triangle')},
@@ -1238,7 +1246,18 @@ var CALLS=[
   {say:'بسرعة! إذا ما قلته أبوك بيعصّب عليك!',o:[['أقول له الرمز',0],['أسكّر وأقول لأبوي',2]]}]},
  {a:'k',from:'فريق دعم اللعبة',lever:'fear',why:'فريق اللعبة لا يتصل بك ولا يطلب كلمة السر. من يأخذها يأخذ الحساب.',steps:[
   {say:'حسابك في اللعبة عليه بلاغ وبينحذف اليوم!',o:[['لا! شلون أحله؟',1],['أسكّر وأقول لأهلي',2]]},
-  {say:'عطني كلمة السر وأنا ألغي البلاغ.',o:[['أعطيه كلمة السر',0],['أسكّر وأقول لأهلي',2]]}]}
+  {say:'عطني كلمة السر وأنا ألغي البلاغ.',o:[['أعطيه كلمة السر',0],['أسكّر وأقول لأهلي',2]]}]},
+ {a:'ye',t:'ai',from:'+965 9••• ••72',lever:'trust',why:'الصوت مقلّد بالذكاء الاصطناعي من مقاطع منشورة. السرّية والاستعجال وطلب الكفالة علامات. اتصل على رقمه المحفوظ أو على أهله.',steps:[
+  {say:'(صوت ولد أختك بالضبط) «أنا بالمخفر! صار سوء تفاهم ويبون كفالة 600 د.ك الحين.»',o:[['خلني أكلم أمك أول',2],['شصار؟ أنت بخير؟',1]]},
+  {say:'«لا تكلم أحد، أمي بتعصب! المحامي بيرسل لك الآيبان، حوّل بسرعة.»',o:[['أحوّل الحين',0],['أسكّر وأتصل على رقمه المحفوظ',2],['قول لي شنو اسم مدرستك الأولى',1]]},
+  {say:'(يسكت شوي) «ما أتذكر الحين.. ضروري الفلوس!»',o:[['أسكّر وأتصل على أهله',2],['خلاص بحوّل',0]]}]},
+ {a:'ye',t:'ai',from:'مكالمة فيديو · فريق أمن البنك',lever:'authority',why:'الوجه والصوت مولَّدان. البنك لا يطلب منك تنزيل تطبيق أو مشاركة شاشتك أبدًا.',steps:[
+  {say:'(تظهر موظفة بزي رسمي وخلفها شعار البنك) «حسابك تعرّض لاختراق، لازم نأمّنه الحين.»',o:[['أسكّر وأتصل بالرقم المكتوب على بطاقتي',2],['شلون صار الاختراق؟',1]]},
+  {say:'«نزّل تطبيق الدعم من الرابط اللي بيوصلك، وشارك شاشتك عشان نشوف المشكلة.»',o:[['أشارك الشاشة',0],['البنك ما يطلب مشاركة الشاشة، بسكّر',2]]},
+  {say:'«إذا سكّرت بيتجمّد حسابك نهائيًا!»',o:[['خلاص أشارك',0],['أسكّر وأتصل بالبنك بنفسي',2]]}]},
+ {a:'ye',t:'ai',from:'+965 5••• ••18',lever:'trust',why:'الصوت مقلّد. صورة البطاقة من الوجهين تكفي للشراء باسمك. اتصل على رقم أهلك المحفوظ.',steps:[
+  {say:'(صوت أمك بالضبط) «جوالي خربان وهذا رقم صديقتي. أبي أطلب دوا من الصيدلية أونلاين.»',o:[['زين، شنو تبين؟',1],['بتصل عليج على رقمج',2]]},
+  {say:'«صوّر لي بطاقتك البنكية من الوجهين وأرسلها واتساب، بسرعة الصيدلية بتسكّر.»',o:[['أصوّرها وأرسلها',0],['أطلب لج الدوا بنفسي من تطبيق الصيدلية',2],['أرسل الرقم بس بدون الخلف',0]]}]}
 ];
 var ORDERS=[
  {a:'ye',t:'أعطيت رمز التحقق لمتصل، ثم شكّيت.',steps:['أتصل بالبنك من الرقم خلف البطاقة','أطلب إيقاف البطاقة فورًا','أراجع آخر العمليات في التطبيق','أبلّغ الجهات المختصة'],why:'الدقائق الأولى تفرق: اتصل بالبنك وأوقف البطاقة قبل أي شيء.',lever:'urgency'},
@@ -1322,7 +1341,7 @@ function buildMode0(st,items,n){
   if(out.length<PER_STAGE){var O=poolFor(ORDERS),o=O[n%O.length];out.push({kind:'order',id:'ord'+n,d:o,from:'رتّب الخطوات',cap:'رتّب الخطوات',scam:1,lever:o.lever,tell:o.why,right:''})}return shuffle(out)}
  if(m==='pair'&&st.ids&&st.m==='pair')return shuffle(tagFirst(poolFor(PAIRS),st.pt).slice(0,2).map(function(p,k){return {kind:'pair',id:'pair'+n+'_'+k,d:p,from:'أيهما الحقيقي؟',cap:'أيهما الحقيقي؟',scam:1,lever:p.lever,tell:p.why,right:''}}).concat(own(items,3,1)));
  if(m==='pair')return tagFirst(poolFor(PAIRS),st.pt).slice(0,6).map(function(p,k){return {kind:'pair',id:'pair'+n+'_'+k,d:p,from:'أيهما الحقيقي؟',cap:'أيهما الحقيقي؟',scam:1,lever:p.lever,tell:p.why,right:''}});
- if(m==='call'&&st.ids&&st.m==='call'){var tc=poolFor(CALLS).filter(function(c){return c.t===st.pt}).slice(0,3).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});return shuffle(tc.concat(own(items,PER_STAGE-tc.length,1)))}
+ if(m==='call'&&st.ids&&st.m==='call'){var tc=shuffle(poolFor(CALLS).filter(function(c){return c.t===st.pt})).slice(0,3).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});return shuffle(tc.concat(own(items,PER_STAGE-tc.length,1)))}
  if(m==='call')return tagFirst(poolFor(CALLS),st.pt).slice(0,5).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});
  if(m==='page'){var pu=function(p){return p.parts[0][1]},pg=PAGES.filter(function(p){return p.fake&&!/iphone/.test(pu(p))}).concat(shuffle(PAGES.filter(function(p){return !p.fake})).slice(0,1));
   return shuffle(pg.map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}}).concat(own(items,PER_STAGE-pg.length,1)))}
