@@ -745,7 +745,7 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 @keyframes stgoP{50%{box-shadow:0 4px 22px rgba(227,190,124,.7)}}
 /* game map (Khalid 2026-11-26, concept 3) */
 #home{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
-#home .map.world{display:block!important;position:relative;aspect-ratio:733/1900;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))!important;width:auto!important;max-width:none!important;padding:0!important;flex:none;background:url(img/map/bg2.jpg) bottom center/100% auto no-repeat;border-radius:0!important}
+#home .map.world{display:block!important;position:relative;aspect-ratio:733/1900;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))!important;width:auto!important;max-width:none!important;padding:0!important;flex:none;background:url(img/map/bg2.jpg?v=q) bottom center/100% auto no-repeat;border-radius:0!important}
 #home .map.world::before{content:"";position:absolute;inset:0 0 auto 0;height:7%;border:0;transform:none;left:0;top:0;bottom:auto;background:linear-gradient(var(--ink,#232C5A),transparent)}
 #home .map.world::after{content:"";position:absolute;inset:auto 0 0 0;height:5%;background:linear-gradient(transparent,var(--ink,#232C5A))}
 #home .map.world .stg{position:absolute!important;display:block!important;width:19%;padding:0!important;transform:translate(-50%,-62%);z-index:2;opacity:1}
@@ -763,13 +763,13 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 #home .map.world .stg.sel::before{content:"";position:absolute;left:-14%;right:-14%;bottom:-6%;height:55%;border-radius:50%;background:radial-gradient(closest-side,rgba(31,200,180,.8),rgba(31,200,180,.25) 60%,transparent);animation:wpulse 1.6s ease-in-out infinite;z-index:-1}
 @keyframes wpulse{50%{transform:scale(1.15);opacity:.6}}
 #home .map.world .stg.sel .num{border-color:var(--tq);box-shadow:0 0 10px var(--tq)}
-#home .map.world .stg.sel .lab{top:auto;bottom:96%;left:50%!important;right:auto!important;transform:translateX(-50%);border-color:var(--tq);box-shadow:0 0 14px rgba(31,200,180,.5);padding:.3rem .8rem}
+#home .map.world .stg.sel .lab{top:-6%;border-color:var(--tq);box-shadow:0 0 14px rgba(31,200,180,.5);padding:.3rem .8rem}
 #home .map.world .stg .stgo{display:flex;margin-top:.25rem}
 #home .map.world .stg.boss{width:27%;transform:translate(-50%,-70%)}
 #home .map.world .stg.boss .ic{filter:drop-shadow(0 0 16px rgba(227,190,124,.55))}
-#home .map.world .stg.boss .lab{top:auto;bottom:-16%;left:50%;right:auto;transform:translateX(-50%);background:linear-gradient(#b8312f,#8e1f22);border-color:var(--saffron)}
+#home .map.world .stg.boss .lab{top:auto;bottom:98%;left:50%;right:auto;transform:translateX(-50%);background:linear-gradient(#b8312f,#8e1f22);border-color:var(--saffron)}
 #home .map.world .stg.boss .num{display:none}
-#home .map.world .stg.boss.sel .lab{bottom:-30%}
+#home .map.world .stg.boss.sel .lab{bottom:98%;top:auto;left:50%;right:auto}
 #home .map.world .stg.go .pd{animation:stgGo .42s ease-out}
 html.big #home .map.world .stg .lab b{font-size:1.05rem}
 #home .whud{display:flex;justify-content:space-around;align-items:center;gap:.3rem;padding:.45rem .5rem;border:1.5px solid rgba(227,190,124,.45)}
@@ -799,9 +799,9 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
     <div class="challenge" id="challenge" hidden></div>
 
     <div class="wallet whud">
-      <div class="wc"><img src="img/map/hMed.png" alt=""><span><b><span id="hMedals">0</span>/<span id="hTot">10</span></b><small>ميداليات</small></span></div><i></i>
-      <div class="wc"><img src="img/map/hShd.png" alt=""><span><b id="hShields">0</b><small>دروع</small></span></div><i></i>
-      <div class="wc"><img src="img/map/hWal.png" alt=""><span><b><span id="hWallet">1,000</span> <small style="display:inline" class="cur">د.ك</small></b><small id="hWl">محفظتك</small></span></div>
+      <div class="wc"><img src="img/map/hMed.png?v=q" alt=""><span><b><span id="hMedals">0</span>/<span id="hTot">10</span></b><small>ميداليات</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hShd.png?v=q" alt=""><span><b id="hShields">0</b><small>دروع</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hWal.png?v=q" alt=""><span><b><span id="hWallet">1,000</span> <small style="display:inline" class="cur">د.ك</small></b><small id="hWl">محفظتك</small></span></div>
     </div>
 
     <button class="daily" id="daily" style="display:none"></button>
@@ -857,11 +857,11 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
   <!-- FLIP -->
   <section class="screen scroll" id="flip" hidden></section>
   <nav class="nav" id="nav" aria-label="القائمة">
-    <button class="ntab on" data-t="home"><img class="nic" src="img/map/tHome.png" alt="">الرئيسية</button>
-    <button class="ntab" data-t="prize"><img class="nic" src="img/map/tPrize.png" alt="">الجوائز</button>
-    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/map/tFox.png" alt=""></div><span>واجه بو حيلة</span></button>
-    <button class="ntab" data-t="lead"><img class="nic" src="img/map/tLead.png" alt="">المتصدرين</button>
-    <button class="ntab" data-t="set"><img class="nic" src="img/map/tSet.png" alt="">الإعدادات</button>
+    <button class="ntab on" data-t="home"><img class="nic" src="img/map/tHome.png?v=q" alt="">الرئيسية</button>
+    <button class="ntab" data-t="prize"><img class="nic" src="img/map/tPrize.png?v=q" alt="">الجوائز</button>
+    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/map/tFox.png?v=q" alt=""></div><span>واجه بو حيلة</span></button>
+    <button class="ntab" data-t="lead"><img class="nic" src="img/map/tLead.png?v=q" alt="">المتصدرين</button>
+    <button class="ntab" data-t="set"><img class="nic" src="img/map/tSet.png?v=q" alt="">الإعدادات</button>
   </nav>
 </div>
 
@@ -1179,7 +1179,7 @@ var challenge=null;
 function parseHash(){var m=/^#?tahaddi-(\d+)-(\d+)$/.exec(location.hash||'');if(m)challenge={stage:+m[1],wallet:+m[2]}}
 function doneMap(){return S.pro?PR.pdone:PR.done}
 function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:UN())}return STAGES.length}
-var MAPP=[[390,1890],[170,1700],[330,1560],[465,1440],[215,1255,'R'],[370,1120],[485,1010],[300,905],[160,825],[430,700]];
+var MAPP=[[444,1925],[256,1775],[196,1590],[438,1475],[318,1315],[268,1150],[501,1025],[297,895],[195,765],[443,680]];
 function renderHome(keep){logoFox();
  applyBig();
  var d=doneMap(),medals=Object.keys(PR.done).length;
@@ -1203,7 +1203,7 @@ function renderHome(keep){logoFox();
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.style.left=(p[0]/7.33)+'%';b.style.top=((p[1]-246)/19)+'%';
   var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
-  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.png" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.png" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
+  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.png?v=q\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.png?v=q\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
   b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
  if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>1)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
  renderDaily();var c=$('challenge');
@@ -1963,7 +1963,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);setTimeout(hide,sp.className==='quick'?700:2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26p';
+var BUILD='2026-11-26q';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
