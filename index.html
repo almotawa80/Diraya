@@ -743,6 +743,44 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 #home #start{display:none!important}
 #home .stg .stgo{display:inline-flex;align-items:center;justify-content:center;margin-top:.45rem;padding:.35rem 1.1rem;border-radius:99px;background:var(--saffron);color:#232C5A;font-weight:900;font-size:.95rem;box-shadow:0 4px 14px rgba(227,190,124,.35);animation:stgoP 1.8s infinite}
 @keyframes stgoP{50%{box-shadow:0 4px 22px rgba(227,190,124,.7)}}
+/* game map (Khalid 2026-11-26, concept 3) */
+#home{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+#home .map.world{display:block!important;position:relative;aspect-ratio:733/1900;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))!important;width:auto!important;max-width:none!important;padding:0!important;flex:none;background:url(img/map/bg2.jpg) bottom center/100% auto no-repeat;border-radius:0!important}
+#home .map.world::before{content:"";position:absolute;inset:0 0 auto 0;height:7%;border:0;transform:none;left:0;top:0;bottom:auto;background:linear-gradient(var(--ink,#232C5A),transparent)}
+#home .map.world::after{content:"";position:absolute;inset:auto 0 0 0;height:5%;background:linear-gradient(transparent,var(--ink,#232C5A))}
+#home .map.world .stg{position:absolute!important;display:block!important;width:19%;padding:0!important;transform:translate(-50%,-62%);z-index:2;opacity:1}
+#home .map.world .stg.locked{opacity:1}
+#home .map.world .stg .pd{position:relative;display:block}
+#home .map.world .stg .ic{width:100%;display:block;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+#home .map.world .stg .num{position:absolute;bottom:-4%;left:50%;transform:translateX(-50%);width:1.7rem;height:1.7rem;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.9rem;background:#232C5A;border:2px solid var(--saffron);color:#F6F6F0}
+#home .map.world .stg.locked .num{border-color:#9aa0b5;color:#c9ccd8}
+#home .map.world .stg .md{position:absolute;top:-8%;left:-14%;width:44%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}
+#home .map.world .stg .lab{position:absolute;top:40%;white-space:nowrap;background:rgba(26,33,73,.9);border:1.5px solid rgba(246,246,240,.15);padding:.15rem .7rem;border-radius:99px;box-shadow:0 4px 10px rgba(0,0,0,.35);text-align:center;min-width:0}
+#home .map.world .stg.R .lab{right:86%;left:auto}#home .map.world .stg.L .lab{left:86%;right:auto}
+#home .map.world .stg .lab b{font-size:.95rem;font-weight:800;line-height:1.5;color:#F6F6F0}
+#home .map.world .stg.locked .lab b{color:#b9bdcc}
+#home .map.world .stg.sel{width:23%;z-index:3}
+#home .map.world .stg.sel::before{content:"";position:absolute;left:-14%;right:-14%;bottom:-6%;height:55%;border-radius:50%;background:radial-gradient(closest-side,rgba(31,200,180,.8),rgba(31,200,180,.25) 60%,transparent);animation:wpulse 1.6s ease-in-out infinite;z-index:-1}
+@keyframes wpulse{50%{transform:scale(1.15);opacity:.6}}
+#home .map.world .stg.sel .num{border-color:var(--tq);box-shadow:0 0 10px var(--tq)}
+#home .map.world .stg.sel .lab{top:auto;bottom:96%;left:50%!important;right:auto!important;transform:translateX(-50%);border-color:var(--tq);box-shadow:0 0 14px rgba(31,200,180,.5);padding:.3rem .8rem}
+#home .map.world .stg .stgo{display:flex;margin-top:.25rem}
+#home .map.world .stg.boss{width:27%;transform:translate(-50%,-70%)}
+#home .map.world .stg.boss .ic{filter:drop-shadow(0 0 16px rgba(227,190,124,.55))}
+#home .map.world .stg.boss .lab{top:auto;bottom:-16%;left:50%;right:auto;transform:translateX(-50%);background:linear-gradient(#b8312f,#8e1f22);border-color:var(--saffron)}
+#home .map.world .stg.boss .num{display:none}
+#home .map.world .stg.boss.sel .lab{bottom:-30%}
+#home .map.world .stg.go .pd{animation:stgGo .42s ease-out}
+html.big #home .map.world .stg .lab b{font-size:1.05rem}
+#home .whud{display:flex;justify-content:space-around;align-items:center;gap:.3rem;padding:.45rem .5rem;border:1.5px solid rgba(227,190,124,.45)}
+#home .whud .wc{display:flex;align-items:center;gap:.35rem;min-width:0}
+#home .whud .wc img{width:2.1rem;height:2.1rem;object-fit:contain;flex:none}
+#home .whud b{display:block;font-size:1.1rem;line-height:1.15;font-weight:900}
+#home .whud .wc>span>small{display:block;font-size:.7rem;opacity:.75}
+#home .whud>i{width:1px;align-self:stretch;background:rgba(246,246,240,.15)}
+.ntab img.nic{width:1.6rem;height:1.6rem;object-fit:contain;filter:saturate(.75) brightness(.9)}
+.ntab.on img.nic{filter:none;transform:scale(1.1)}
+.ntab.mid .orb img{width:3rem;height:3rem}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -760,9 +798,10 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 
     <div class="challenge" id="challenge" hidden></div>
 
-    <div class="wallet">
-      <div class="wl"><small id="hWl">محفظتك</small><b id="hWallet">1,000</b> <small style="display:inline" class="cur">د.ك</small></div>
-      <div class="ws"><span>الدروع <b id="hShields">0</b></span><span>الأوسمة <b id="hMedals">0</b> / <span id="hTot">10</span></span></div>
+    <div class="wallet whud">
+      <div class="wc"><img src="img/map/hMed.png" alt=""><span><b><span id="hMedals">0</span>/<span id="hTot">10</span></b><small>ميداليات</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hShd.png" alt=""><span><b id="hShields">0</b><small>دروع</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hWal.png" alt=""><span><b><span id="hWallet">1,000</span> <small style="display:inline" class="cur">د.ك</small></b><small id="hWl">محفظتك</small></span></div>
     </div>
 
     <button class="daily" id="daily" style="display:none"></button>
@@ -818,11 +857,11 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
   <!-- FLIP -->
   <section class="screen scroll" id="flip" hidden></section>
   <nav class="nav" id="nav" aria-label="القائمة">
-    <button class="ntab on" data-t="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>الرئيسية</button>
-    <button class="ntab" data-t="prize"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg>الجوائز</button>
-    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/fox-sneaky.png" alt=""></div><span>واجه بو حيلة</span></button>
-    <button class="ntab" data-t="lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>المتصدرين</button>
-    <button class="ntab" data-t="set"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg>الإعدادات</button>
+    <button class="ntab on" data-t="home"><img class="nic" src="img/map/tHome.png" alt="">الرئيسية</button>
+    <button class="ntab" data-t="prize"><img class="nic" src="img/map/tPrize.png" alt="">الجوائز</button>
+    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/map/tFox.png" alt=""></div><span>واجه بو حيلة</span></button>
+    <button class="ntab" data-t="lead"><img class="nic" src="img/map/tLead.png" alt="">المتصدرين</button>
+    <button class="ntab" data-t="set"><img class="nic" src="img/map/tSet.png" alt="">الإعدادات</button>
   </nav>
 </div>
 
@@ -1140,6 +1179,7 @@ var challenge=null;
 function parseHash(){var m=/^#?tahaddi-(\d+)-(\d+)$/.exec(location.hash||'');if(m)challenge={stage:+m[1],wallet:+m[2]}}
 function doneMap(){return S.pro?PR.pdone:PR.done}
 function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:UN())}return STAGES.length}
+var MAPP=[[390,1890],[170,1700],[330,1560],[465,1440],[215,1255,'R'],[370,1120],[485,1010],[300,905],[160,825],[430,700]];
 function renderHome(keep){logoFox();
  applyBig();
  var d=doneMap(),medals=Object.keys(PR.done).length;
@@ -1157,14 +1197,14 @@ function renderHome(keep){logoFox();
   bt._busy=1;se.scrollIntoView({behavior:'smooth',block:'center'});
   setTimeout(function(){se.classList.add('go');setTimeout(function(){bt._busy=0;se.classList.remove('go');startStage(sel)},420)},650)};
  $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+(st.m&&MODES[st.m]?' · '+MODES[st.m].n:'')+' · '+PER_STAGE+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
- var box=$('map');box.innerHTML='';
- STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),b=document.createElement('button');
-  b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
+ var box=$('map');box.className='map world';box.innerHTML='';
+ STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),boss=n===STAGES.length,p=MAPP[i]||MAPP[MAPP.length-1],b=document.createElement('button');
+  b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked')+(boss?' boss':'')+((p[2]||(p[0]<366?'L':'R'))==='L'?' L':' R');b.id='stage-'+n;b.disabled=!open;
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
-  b.classList.add(i%2?'L':'R');var md=x.m&&MODES[x.m]?MODES[x.m].n:'';
-  b.innerHTML='<span class="dot">'+(d[n]?medalSvg(d[n]):n)+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>')+'</span><span class="lab"><b>'+x.n+'</b><small>'+(MICON[x.m]||'')+md+'</small>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
+  b.style.left=(p[0]/7.33)+'%';b.style.top=((p[1]-246)/19)+'%';
+  var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
+  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.png" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.png" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
   b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
- box.insertAdjacentHTML('beforeend','<div class="mapend"><span class="mfox">'+foeSvg('conf')+'</span><span>بو حيلة ينتظرك في النهاية</span></div>');
  if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>1)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
@@ -1923,7 +1963,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);setTimeout(hide,sp.className==='quick'?700:2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26o';
+var BUILD='2026-11-26p';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
