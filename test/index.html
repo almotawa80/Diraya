@@ -1251,7 +1251,7 @@ function startDrill(g){var p=shuffle(pool()),a=p.filter(function(x){return g==='
  startStage(0,{kind:'drill',n:'تمرين: '+GRP[g],d:'',ids:shuffle(a.concat(b)).map(function(x){return x.id}),loss:5,bonus:kid()?20:30})}
 function certText(){var x=ixCalc();return (S.fem?'شهادة واعية':'شهادة واعي')+' · لنكن على دراية\nمؤشر الوعي: '+x.p+' من 100\nالأوسمة: '+Object.keys(PR.done).length+' من '+STAGES.length+(x.best?'\nأقوى شي عندي: '+GRP[x.best.g]:'')+'\nجرّب وشوف مؤشرك'+(ART_URL?'\n'+ART_URL:'')}
 function openIndex(){var x=ixCalc(),h='<h3>مؤشر الوعي<small>يُحسب من إجاباتك على هذا الجهاز فقط</small></h3>';
- if(x.n<8)h+='<div class="fact">{العب|العبي} مرحلة واحدة على الأقل ليظهر مؤشرك.</div>';
+ if(x.n<3)h+='<div class="fact">{العب|العبي} مرحلة واحدة على الأقل ليظهر مؤشرك.</div>';
  else{h+='<div class="ixnum">'+x.p+'<small> من 100</small></div><div class="fact">'+(x.p>=85?'{واعي|واعية} جدًا. بو حيلة يتعب معك.':x.p>=65?'مستواك زين، وباقي نقاط تحتاج تقوية.':'بو حيلة يلقى ثغرات. التمرين يسدّها.')+'</div>';
   x.rows.forEach(function(r){h+='<div class="ixrow'+(x.weak&&x.weak.g===r.g&&r.p<85?' weak':'')+'"><div><span>'+GRP[r.g]+'</span><b>'+r.p+'%</b></div><div class="ixbar"><i style="width:'+r.p+'%"></i></div></div>'});
   if(x.weak&&x.weak.p<85)h+='<button class="cta" id="ixDrill">{تمرّن|تمرّني} على: '+GRP[x.weak.g]+'</button>';
@@ -1963,7 +1963,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);setTimeout(hide,sp.className==='quick'?700:2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26q';
+var BUILD='2026-11-26r';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
