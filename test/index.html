@@ -129,8 +129,9 @@
 @keyframes spSweep{to{left:120%}}
 @keyframes spUp{from{opacity:0;transform:translateY(14px)}}
 @keyframes spGrow{to{width:7rem}}
+#splash.quick *{animation:none!important}#splash.quick .spLine{width:7rem}
 @media (prefers-reduced-motion:reduce){#splash *{animation:none!important}#splash .spLine{width:7rem}}
-</style></head><body><div id="splash" aria-hidden="true" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#1F2756;color:#F6F6F0;font-family:Cairo,sans-serif"><div class="spShield"><img src="img/logo.png" alt="" style="width:100%;display:block"><div class="spShine"></div></div><h2>واعي</h2><p>لنكن على دراية</p><div class="spLine"></div></div>
+</style></head><body><div id="splash" aria-hidden="true" style="position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#1F2756;color:#F6F6F0;font-family:Cairo,sans-serif"><div class="spShield"><img src="img/logo.png" alt="" style="width:100%;display:block"><div class="spShine"></div></div><h2>واعي</h2><p>لنكن على دراية</p><div class="spLine"></div></div><script>try{if(/[?&]v=/.test(location.search)){document.getElementById('splash').className='quick'}}catch(e){}</script>
 <title>واعي</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
@@ -1919,9 +1920,9 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
 /* splash: show about 2.4 s once per launch, tap to skip */
 (function(){var sp=$('splash');if(!sp)return;var gone=false;function hide(){if(gone)return;gone=true;sp.classList.add('out');setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},500)}
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
- sp.addEventListener('click',hide);setTimeout(hide,2400)})();
+ sp.addEventListener('click',hide);setTimeout(hide,sp.className==='quick'?700:2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26m';
+var BUILD='2026-11-26n';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
