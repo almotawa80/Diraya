@@ -738,6 +738,10 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .lbl.me{background:rgba(31,200,180,.14);border:1px solid var(--tq)}
 .pgnote{font-size:.72rem;color:var(--muted);text-align:center}
 .mystats{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}.mystats div{background:rgba(255,255,255,.05);border-radius:12px;padding:.55rem .7rem}.mystats small{display:block;color:var(--muted);font-size:.72rem}.mystats b{font-size:1.1rem;color:var(--saffron)}
+/* start button inside the selected stage card (Khalid 2026-11-26) */
+#home #start{display:none!important}
+#home .stg .stgo{display:inline-flex;align-items:center;justify-content:center;margin-top:.45rem;padding:.35rem 1.1rem;border-radius:99px;background:var(--saffron);color:#232C5A;font-weight:900;font-size:.95rem;box-shadow:0 4px 14px rgba(227,190,124,.35);animation:stgoP 1.8s infinite}
+@keyframes stgoP{50%{box-shadow:0 4px 22px rgba(227,190,124,.7)}}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1013,16 +1017,16 @@ ITEMS.push(
 
 var SLOTS=[['7:12 ص','#F9C784','#8FD3E8',0],['9:41 ص','#9ADCF0','#5BB4E5',0],['11:05 ص','#7CCBF2','#4A9BE0',0],['1:30 م','#6BBDF0','#3F8FDA',0],['4:18 م','#8FBDEB','#F2B66D',0],['6:02 م','#F29E6D','#A9549A',0],['8:20 م','#4E4396','#222B66',1],['10:56 م','#222B66','#0B1430',1]];
 var STAGES_Y=[
- {n:'لنكن على دراية',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','e11'],secs:15,loss:30,bonus:50,m:'swipe'},
- {n:'ولدك يلعب أونلاين',d:'جواهر مجانية وحسابات مقلَّدة وغرباء',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:35,bonus:60,m:'scam'},
- {n:'واتساب والأقارب',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6','z2','z5','z6','z11'],secs:13,loss:40,bonus:70,m:'pair',pt:'wa'},
- {n:'الروابط والطرود',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','z1','z10','y12','e9','n3'],secs:14,loss:45,bonus:80,m:'tap'},
- {n:'أمن المعلومات',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9','z3','z4','z8','z12'],secs:12.5,loss:55,bonus:90,m:'swipe'},
- {n:'الثراء السريع',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11','z7','z9'],secs:12,loss:65,bonus:100,m:'page'},
- {n:'غسيل الأموال',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:75,bonus:120,m:'act'},
- {n:'الذكاء الاصطناعي',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:85,bonus:140,m:'call',pt:'ai'},
- {n:'سرية العملاء والإفصاح',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:95,bonus:160,m:'rapid'},
- {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','e12','m8','a5','k2','z12','n4','z3','z8'],secs:8.5,loss:120,bonus:300,m:'swipe'}
+ {n:'أول الخيط',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','e11'],secs:15,loss:30,bonus:50,m:'swipe'},
+ {n:'فخ اللعبة',d:'جواهر مجانية وحسابات مقلَّدة وغرباء',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:35,bonus:60,m:'scam'},
+ {n:'رقم جديد؟',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6','z2','z5','z6','z11'],secs:13,loss:40,bonus:70,m:'pair',pt:'wa'},
+ {n:'اضغط هنا!',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','z1','z10','y12','e9','n3'],secs:14,loss:45,bonus:80,m:'tap'},
+ {n:'سرّك لك',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9','z3','z4','z8','z12'],secs:12.5,loss:55,bonus:90,m:'swipe'},
+ {n:'ربح خيالي',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11','z7','z9'],secs:12,loss:65,bonus:100,m:'page'},
+ {n:'حسابك مو للإيجار',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:75,bonus:120,m:'act'},
+ {n:'صوت مزيّف',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:85,bonus:140,m:'call',pt:'ai'},
+ {n:'ما يطلع برّا',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:95,bonus:160,m:'rapid'},
+ {n:'وجهًا لوجه',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','e12','m8','a5','k2','z12','n4','z3','z8'],secs:8.5,loss:120,bonus:300,m:'swipe'}
 ];
 var STAGES=STAGES_Y;
 var STAGES_K=[
@@ -1157,10 +1161,10 @@ function renderHome(keep){logoFox();
   b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked');b.id='stage-'+n;b.disabled=!open;
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.classList.add(i%2?'L':'R');var md=x.m&&MODES[x.m]?MODES[x.m].n:'';
-  b.innerHTML='<span class="dot">'+(d[n]?medalSvg(d[n]):n)+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>')+'</span><span class="lab"><b>'+x.n+'</b><small>'+(MICON[x.m]||'')+md+(n===sel&&x.d?' · '+x.d:'')+'</small></span>';
-  b.onclick=function(){S.sel=n;renderHome(true)};box.appendChild(b)});
+  b.innerHTML='<span class="dot">'+(d[n]?medalSvg(d[n]):n)+(open?'':'<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg>')+'</span><span class="lab"><b>'+x.n+'</b><small>'+(MICON[x.m]||'')+md+'</small>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
+  b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
  box.insertAdjacentHTML('beforeend','<div class="mapend"><span class="mfox">'+foeSvg('conf')+'</span><span>بو حيلة ينتظرك في النهاية</span></div>');
- if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>2)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
+ if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>1)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
 }
@@ -1917,9 +1921,9 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);setTimeout(hide,2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26l';
+var BUILD='2026-11-26m';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
-setTimeout(checkUpdate,800);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
+checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
 </script>
 
