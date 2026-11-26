@@ -568,8 +568,8 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .card.found .tell,.card.found bdi.url{background:rgba(240,96,93,.16);border:1.5px solid #F0605D}
 
 #stage .tbar{height:14px!important;border-radius:99px;background:rgba(35,44,90,.28)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.25)!important;overflow:hidden;position:relative;margin-inline:.2rem}
-#stage .tbar i{background:linear-gradient(270deg,#2EC4A6,#E3BE7C)!important;border-radius:99px;box-shadow:0 0 8px rgba(227,190,124,.6);transition:background .3s}
-#stage .tbar.low i{background:linear-gradient(270deg,#F0605D,#FF8A65)!important;box-shadow:0 0 10px rgba(240,96,93,.8);animation:tLow .5s ease-in-out infinite}
+#stage .tbar i{background:hsl(130,78%,52%);border-radius:99px;box-shadow:0 0 8px rgba(227,190,124,.6);transition:background .3s}
+#stage .tbar.low i{animation:tLow .5s ease-in-out infinite}
 @keyframes tLow{50%{opacity:.55}}
 
 .sheet .shandle{width:2.6rem;height:.3rem;border-radius:99px;background:rgba(246,248,255,.25);margin:-.2rem auto .6rem}
@@ -623,9 +623,21 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .hand::before{font-size:3rem}
 .demo .dbin{display:none!important}
 
-.hand.lr{animation:handLR 2.2s ease-in-out 3 both}
+.hand.lr{animation:handPress 4.4s ease-in-out 2 both;inset:auto 0 12% 0}
+.card.demo-sw{animation:cardLR 4.4s ease-in-out 2;transform-origin:50% 120%}
+.card.demo-sw .stamp.n{animation:stN 4.4s ease-in-out 2}
+.card.demo-sw .stamp.y{animation:stY 4.4s ease-in-out 2}
+@keyframes cardLR{0%,8%,46%,54%,100%{transform:none}22%,34%{transform:translateX(-26%) rotate(-9deg)}68%,80%{transform:translateX(26%) rotate(9deg)}}
+@keyframes stN{0%,12%,40%,100%{opacity:0}22%,34%{opacity:1}}
+@keyframes stY{0%,58%,86%,100%{opacity:0}68%,80%{opacity:1}}
+@keyframes handPress{0%{opacity:0;transform:scale(1.2)}6%{opacity:1;transform:scale(1)}92%{opacity:1}100%{opacity:0}}
 @keyframes handLR{0%{transform:translateX(0);opacity:0}10%{opacity:1}30%{transform:translateX(-70px) rotate(-12deg)}50%{transform:translateX(0)}70%{transform:translateX(70px) rotate(12deg)}90%{transform:translateX(0);opacity:1}100%{opacity:0}}
 .srow .slab{white-space:normal!important;overflow:visible;text-overflow:clip;line-height:1.35}
+
+#play.demo-on #bNo{animation:btnN 4.4s ease-in-out 2}
+#play.demo-on #bYes{animation:btnY 4.4s ease-in-out 2}
+@keyframes btnN{0%,12%,40%,100%{transform:none;box-shadow:0 4px 0 #B83A3A}22%,34%{transform:scale(1.08);box-shadow:0 0 0 4px #fff,0 4px 0 #B83A3A}}
+@keyframes btnY{0%,58%,86%,100%{transform:none}68%,80%{transform:scale(1.08);box-shadow:0 0 0 4px #E3BE7C}}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1149,13 +1161,13 @@ function nextCard(){
  $('lensN').textContent=S.lens;setCtrl(true);bindSwipe(card);fit(card);
  if(call){sfx.ring();buzz([200,100,200])}else{sfx.ding();buzz(40)}
  if(S.voice)speak((call?'':fx(it.from)+'. ')+plain(fx(it.body)));
- if(!S.tut&&S.handHint&&!it.kind&&!call){S.handHint=false;store.handSeen=1;save(store);var hd2=document.createElement('i');hd2.className='hand lr';card.appendChild(hd2);var cx2=$('ctx');cx2.hidden=false;cx2.className='ctx coach';cx2.innerHTML=gx('<b>{اسحب|اسحبي} الرسالة:</b> يسار إذا {تشك|تشكين}، ويمين إذا {تثق|تثقين}.');setTimeout(function(){if(hd2.parentNode)hd2.remove()},6600)}
+ if(!S.tut&&S.handHint&&!it.kind&&!call){S.handHint=false;store.handSeen=1;save(store);var hd2=document.createElement('i');hd2.className='hand lr';card.appendChild(hd2);card.classList.add('demo-sw');$('play').classList.add('demo-on');var stopD=function(){card.classList.remove('demo-sw');$('play').classList.remove('demo-on');if(hd2.parentNode)hd2.remove()};card.addEventListener('pointerdown',stopD,{once:true});$('bNo').addEventListener('click',stopD,{once:true});$('bYes').addEventListener('click',stopD,{once:true});setTimeout(function(){card.classList.remove('demo-sw');$('play').classList.remove('demo-on')},8800);var cx2=$('ctx');cx2.hidden=false;cx2.className='ctx coach';cx2.innerHTML=gx('<b>{اسحب|اسحبي} الرسالة:</b> يسار إذا {تشك|تشكين}، ويمين إذا {تثق|تثقين}.');setTimeout(function(){if(hd2.parentNode)hd2.remove()},9000)}
  if(S.tut){S.phase='judge';timer.run=false;sfx.stop();cx.hidden=false;cx.className='ctx coach';cx.innerHTML=gx(it.coach);
   if(it.hand!==undefined){var hd=document.createElement('i');hd.className='hand '+it.hand;card.appendChild(hd)}
   if(it.lens){$('bYes').disabled=$('bNo').disabled=true;$('bIn').classList.add('glow')}
   if(!$('skipTut')){var sk=document.createElement('button');sk.className='skip';sk.id='skipTut';sk.textContent='تخطَّ التمرين';sk.onclick=function(){endTut(true)};$('stage').appendChild(sk)}
   return}
- S.phase='judge';timer.max=timer.left=(S.rapid?3.4+(call?1.5:0):(2.5+words(it)*S.perWord+(call?2:0)))*S.mult;timer.last=performance.now();timer.lastTick=9;timer.run=true;
+ S.phase='judge';timer.max=timer.left=(S.rapid?3.4+(call?1.5:0):(2.5+words(it)*S.perWord+(call?2:0)))*S.mult;if(card.classList.contains('demo-sw')){timer.max=timer.left=timer.left+9}timer.last=performance.now();timer.lastTick=9;timer.run=true;
  $('tbar').classList.remove('low');var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)});
 }
 /* ---------- extra interaction types ---------- */
@@ -1409,7 +1421,7 @@ function fit(card){var b=card.querySelector('.cbody'),f=1.12,k=0;b.style.fontSiz
 function setCtrl(on){$('bYes').disabled=$('bNo').disabled=!on;$('bIn').disabled=!on||S.lens<=0}
 function loop(now){
  var dt=Math.min(.25,(now-timer.last)/1000);timer.last=now;timer.left-=dt;
- $('tfill').style.transform='scaleX('+Math.max(0,timer.left/timer.max)+')';
+ $('tfill').style.transform='scaleX('+Math.max(0,timer.left/timer.max)+')';(function(){var f=Math.max(0,Math.min(1,timer.left/timer.max)),el=$('tfill');el.style.background='hsl('+Math.round(f*130)+',78%,'+(48+f*4)+'%)';el.style.boxShadow='0 0 8px hsla('+Math.round(f*130)+',80%,50%,.6)'})();
  if(timer.left<=3){$('tbar').classList.add('low');var s=Math.ceil(timer.left);if(s<timer.lastTick){timer.lastTick=s;sfx.tick()}}
  if(timer.left<=0)judge('timeout');
 }
