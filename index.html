@@ -592,9 +592,9 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .sheet .sdone{width:100%;margin-top:.2rem}
 
 .card.chat{background:#0F1B33;color:#EAF0FF;max-height:100%}
-.chead{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:#1B2A4A;border-bottom:1px solid rgba(255,255,255,.08)}
-.chead .cav{width:2.3rem;height:2.3rem;border-radius:50%;background:#2B3D66;display:grid;place-items:center;font-size:1.25rem}
-.chead b{display:block;font-size:.98rem}.chead small{opacity:.65;font-size:.78rem}
+.chhd{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:#1B2A4A;border-bottom:1px solid rgba(255,255,255,.08)}
+.chhd .cav{width:2.3rem;height:2.3rem;border-radius:50%;background:#2B3D66;display:grid;place-items:center;font-size:1.25rem}
+.chhd b{display:block;font-size:.98rem}.chhd small{opacity:.65;font-size:.78rem}
 .clog{display:flex;flex-direction:column;gap:.4rem;padding:.7rem;overflow-y:auto;min-height:9rem;max-height:17rem}
 .cb{max-width:82%;padding:.45rem .7rem;border-radius:14px;font-size:.95rem;line-height:1.6;animation:cbIn .25s ease-out}
 .cb.them{align-self:flex-start;background:#26375C;border-start-start-radius:4px}
@@ -616,6 +616,16 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .slab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .sreset small{white-space:normal}
 .sheet{max-height:88%!important}
+
+.dhand,.hand{background:none!important;box-shadow:none!important;border-radius:0!important;display:grid;place-items:center;overflow:visible}
+.dhand::before,.hand::before{content:"👆🏼";display:block;line-height:1;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+.dhand::before{font-size:2.3rem}
+.hand::before{font-size:3rem}
+.demo .dbin{display:none!important}
+
+.hand.lr{animation:handLR 2.2s ease-in-out 3 both}
+@keyframes handLR{0%{transform:translateX(0);opacity:0}10%{opacity:1}30%{transform:translateX(-70px) rotate(-12deg)}50%{transform:translateX(0)}70%{transform:translateX(70px) rotate(12deg)}90%{transform:translateX(0);opacity:1}100%{opacity:0}}
+.srow .slab{white-space:normal!important;overflow:visible;text-overflow:clip;line-height:1.35}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1064,7 +1074,7 @@ function renderDaily(){var dc=$('daily'),D=PR.daily||{},t=today(),td=D.d===t,sk=
 function pickT(a){return a[Math.floor(Math.random()*a.length)]}
 function startStage(n,cu){
  ac();applyBig();
- if(n===1&&!store.tut&&!S.pro){startTut();return}
+ if(!store.tut){store.tut=1;save(store)}
  if(PR.wallet<=0){PR.wallet=60;save(store);toast(kid()?'عوّضناك 60 نجمة لأنك {أخبرت|أخبرتي} أهلك بسرعة':'البنك عوّضك 60 د.ك لأنك {بلّغت|بلّغتي} بسرعة')}
  var st=cu||STAGES[n-1],items=st.ids.map(function(id){return BYID[id]});if(!cu||cu.kind!=='daily')items=shuffle(items);
  if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
@@ -1076,7 +1086,8 @@ function startStage(n,cu){
  $('cardwrap').innerHTML='';say(n===STAGES.length?TAUNT.last:TAUNT.start,'');$('foeLoot').textContent=fmt(0);
  setCtrl(false);$('ctx').hidden=true;$('tfill').style.transform='';$('count').textContent='1 / '+items.length;
  show('play');banner(cu?{n:st.n,s:cu.kind==='daily'?'نفس البطاقات للجميع اليوم':'ركّز على نقطة ضعفك'}:{n:'المرحلة '+n+(S.pro?' · محترفين':''),s:st.n});var tk=++timer.id,goOn=function(){if(timer.id===tk)nextCard()},seen=store.seenM=store.seenM||{};
- if(!cu&&st.m&&st.m!=='mix'&&!seen[st.m]){setTimeout(function(){if(timer.id===tk)modeIntro(st.m,function(){seen[st.m]=1;save(store);goOn()})},1100)}else setTimeout(goOn,1250);
+ if(!cu&&(st.m==='swipe'||st.m==='rapid')&&!store.handSeen){S.handHint=true;seen.swipe=1;save(store)}
+ if(!cu&&st.m&&st.m!=='mix'&&st.m!=='swipe'&&!seen[st.m]){setTimeout(function(){if(timer.id===tk)modeIntro(st.m,function(){seen[st.m]=1;save(store);goOn()})},1100)}else setTimeout(goOn,1250);
 }
 /* First time a play style appears: a short looping demo with a moving hand, then the stage starts. */
 var BIN={n:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>',
@@ -1138,6 +1149,7 @@ function nextCard(){
  $('lensN').textContent=S.lens;setCtrl(true);bindSwipe(card);fit(card);
  if(call){sfx.ring();buzz([200,100,200])}else{sfx.ding();buzz(40)}
  if(S.voice)speak((call?'':fx(it.from)+'. ')+plain(fx(it.body)));
+ if(!S.tut&&S.handHint&&!it.kind&&!call){S.handHint=false;store.handSeen=1;save(store);var hd2=document.createElement('i');hd2.className='hand lr';card.appendChild(hd2);var cx2=$('ctx');cx2.hidden=false;cx2.className='ctx coach';cx2.innerHTML=gx('<b>{اسحب|اسحبي} الرسالة:</b> يسار إذا {تشك|تشكين}، ويمين إذا {تثق|تثقين}.');setTimeout(function(){if(hd2.parentNode)hd2.remove()},6600)}
  if(S.tut){S.phase='judge';timer.run=false;sfx.stop();cx.hidden=false;cx.className='ctx coach';cx.innerHTML=gx(it.coach);
   if(it.hand!==undefined){var hd=document.createElement('i');hd.className='hand '+it.hand;card.appendChild(hd)}
   if(it.lens){$('bYes').disabled=$('bNo').disabled=true;$('bIn').classList.add('glow')}
@@ -1331,7 +1343,7 @@ function renderSpecial(it,sl){
  }else if(k==='chat'){
   var cd=it.d,step=0,bad=0;card.className='card sp chat';
   coach('<b>محادثة حية.</b> {اختر|اختاري} ردّك في كل رسالة. لا {تخلّيه|تخلّينه} يصيدك.');
-  card.innerHTML='<div class="chead"><span class="cav">'+cd.av+'</span><span><b>'+cd.from+'</b><small>'+cd.plat+'</small></span></div><div class="clog" id="clog"></div><div class="copts" id="copts"></div>';
+  card.innerHTML='<div class="chhd"><span class="cav">'+cd.av+'</span><span><b>'+cd.from+'</b><small>'+cd.plat+'</small></span></div><div class="clog" id="clog"></div><div class="copts" id="copts"></div>';
   var log=card.querySelector('.clog'),opts=card.querySelector('.copts');
   var show=function(){var st=cd.st[step];log.insertAdjacentHTML('beforeend','<div class="cb them typing"><i></i><i></i><i></i></div>');log.scrollTop=1e4;opts.innerHTML='';
    setTimeout(function(){var t=log.querySelector('.typing');if(t){t.className='cb them';t.innerHTML=gx(st[0])}log.scrollTop=1e4;
