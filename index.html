@@ -590,6 +590,25 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .sreset small{width:100%;padding-inline-start:2.75rem;margin-top:-.45rem;opacity:.6;font-size:.8rem}
 .sreset.sure{background:rgba(240,96,93,.15)}
 .sheet .sdone{width:100%;margin-top:.2rem}
+
+.card.chat{background:#0F1B33;color:#EAF0FF;max-height:100%}
+.chead{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:#1B2A4A;border-bottom:1px solid rgba(255,255,255,.08)}
+.chead .cav{width:2.3rem;height:2.3rem;border-radius:50%;background:#2B3D66;display:grid;place-items:center;font-size:1.25rem}
+.chead b{display:block;font-size:.98rem}.chead small{opacity:.65;font-size:.78rem}
+.clog{display:flex;flex-direction:column;gap:.4rem;padding:.7rem;overflow-y:auto;min-height:9rem;max-height:17rem}
+.cb{max-width:82%;padding:.45rem .7rem;border-radius:14px;font-size:.95rem;line-height:1.6;animation:cbIn .25s ease-out}
+.cb.them{align-self:flex-start;background:#26375C;border-start-start-radius:4px}
+.cb.me{align-self:flex-end;background:#2EC4A6;color:#0F1B33;font-weight:700;border-start-end-radius:4px}
+.cb.me.bad{background:#F0605D;color:#fff}
+.cb.typing{display:flex;gap:.25rem;padding:.6rem .8rem}.cb.typing i{width:.4rem;height:.4rem;border-radius:50%;background:#9FB0D8;animation:tyDot 1s infinite}.cb.typing i+i{animation-delay:.15s}.cb.typing i+i+i{animation-delay:.3s}
+.cnote{align-self:center;font-size:.78rem;color:#FFB4B2;font-weight:700}
+.cend{align-self:center;margin-top:.3rem;padding:.35rem .8rem;border-radius:99px;font-weight:800;font-size:.9rem}.cend.win{background:rgba(46,196,166,.2);color:#5CE0C3}.cend.lose{background:rgba(240,96,93,.2);color:#FF8F8C}
+.copts{display:flex;flex-direction:column;gap:.45rem;padding:.6rem .7rem .8rem;border-top:1px solid rgba(255,255,255,.08)}
+.copts:empty{display:none}
+.copt{background:#fff;color:#232C5A;border-radius:12px;padding:.6rem .8rem;font-weight:800;text-align:start;box-shadow:0 3px 0 #B9C3E0}
+.copt:active{transform:translateY(2px);box-shadow:0 1px 0 #B9C3E0}
+@keyframes cbIn{from{opacity:0;transform:translateY(6px)}}
+@keyframes tyDot{50%{opacity:.3;transform:translateY(-2px)}}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1063,7 +1082,7 @@ function demoHtml(m){
  if(m==='call')return '<div class="demo d-call"><div class="dphone"><span>مكالمة واردة</span><b dir="ltr">+965 5••• ••77</b></div><div class="dopts"><span>أتجاوب</span><span class="hit">أسكّر</span></div>'+H+'</div>';
  if(m==='act')return '<div class="demo d-act"><div class="dmsg">«عطني رمز التحقق»</div><div class="dopts col"><span>أعطيه الرمز</span><span class="hit">بلوك وتبليغ</span><span>أرد وأشوف</span></div>'+H+'</div>';
  if(m==='page')return '<div class="demo d-page"><div class="durl"><u dir="ltr">mybank-kw.secure-pay.co</u></div><div class="dcard"><i></i><i style="width:50%"></i><i></i></div>'+H+'</div>';
- if(m==='scam')return '<div class="demo d-scam"><div class="dmsg">تم إيقاف بطاقتك. <u>___</u></div><div class="dopts"><span class="hit">حدّث خلال ساعة!</span><span>زر الفرع</span></div>'+H+'</div>';
+ if(m==='scam')return '<div class="demo d-scam"><div class="dmsg">مبروك! فزت بـ 10,000 جوهرة 🎉</div><div class="dopts"><span class="hit">ما شاركت، بلوك</span><span>شلون أستلمها؟</span></div>'+H+'</div>';
  return '';
 }
 function modeIntro(m,done){var M=MODES[m],o=document.createElement('div');o.className='mintro';
@@ -1187,6 +1206,28 @@ var PAGES=[
  {fake:0,lever:'authority',why:'نطاق البنك صحيح والتحويل لحسابك ورمز التحقق يصل برسالة. صفحة سليمة.',parts:[['url','mybank.com.kw',''],['h','تحويل بين حساباتك',''],['text','إلى: حساب التوفير الخاص بك',''],['text','المبلغ: 50.000 د.ك',''],['text','سيصلك رمز تحقق برسالة نصية',''],['btn','تأكيد','']]}
 ];
 /* Play-the-scammer: pick the line Bu Heela would use; the point is to learn his tricks. */
+var CHATS=[
+ {av:'🎮',from:'Ace_99',plat:'رسالة خاصة داخل اللعبة',lever:'greed',why:'هدية ببلاش مقابل كلمة السر، وبعدها ضغط «آخر فرصة».',st:[
+  ['هلا! شفتك اليوم بالمباراة، وحش 🔥 عندي سكنات نادرة زيادة، تبي واحد ببلاش؟',[['شكرًا، ما آخذ شي من غرباء',1],['إي أكيد! عطني',0]]],
+  ['بس أحتاج إيميل حسابك وكلمة السر عشان أحوّله لك 😉',[['كلمة سري ما أعطيها لأحد',1],['أوكي، هذي هي…',0]]],
+  ['لا تخاف، كل الشباب سووها. آخر فرصة اليوم!',[['بلوك وتبليغ',1],['خلني أفكر وأرد عليك',0]]]]},
+ {av:'🛡️',from:'دعم اللعبة',plat:'حساب يرسل بالخاص',lever:'fear',why:'التخويف بحذف الحساب حتى ترسل رمز التحقق.',st:[
+  ['تنبيه: حسابك فيه نشاط مشبوه ⚠️',[['الدعم الرسمي ما يراسلني بالخاص',1],['شنو صار؟ ساعدوني',0]]],
+  ['بيوصلك رمز الحين، أرسله لنا عشان نأمّن حسابك.',[['الرمز لي أنا بس، ما أرسله',1],['تمام، الرمز هو…',0]]],
+  ['إذا ما أرسلته خلال 5 دقايق ينحذف حسابك نهائيًا ⏳',[['بلوك، وأغيّر كلمة السر',1],['أرسل الرمز بسرعة',0]]]]},
+ {av:'💎',from:'بائع حسابات',plat:'رسالة خاصة في السوشال',lever:'trust',why:'صفقة رخيصة برا المتجر الرسمي مع طلب السرّية: ما في أي حماية لك.',st:[
+  ['أبيعك حساب فيه كل الشخصيات بنص السعر 💎',[['أشتري من المتجر الرسمي بس',1],['يمكن، كم؟',0]]],
+  ['حوّل على هالرابط، ولا تقول لأهلك عشان ما يخربون الصفقة 🤫',[['أي شي «سري» ما أسويه',1],['أوكي، أحوّل الحين',0]]],
+  ['يلا لا تفوّتها، ترى غيرك يبيها',[['أخبر أهلي وأبلّغ عنه',1],['أحوّل قبل لا تروح',0]]]]},
+ {av:'🙂',from:'صديق جديد',plat:'دردشة اللعبة',lever:'trust',why:'يكسب ثقتك خطوة خطوة، يطلب معلوماتك وصورك، ويبي يسحبك لتطبيق ثاني بسرّية.',st:[
+  ['هلا، عمري 13 مثلك 😊 من وين انت؟ وأي مدرسة؟',[['ما أعطي معلوماتي لغرباء',1],['من … ومدرستي …',0]]],
+  ['طيب ارسل لي صورتك عشان نصير ربع 📸',[['لا، ما أرسل صوري',1],['أوكي، هذي صورتي',0]]],
+  ['خلنا نكمل بتطبيق ثاني، وهذا سر بيننا بس',[['أوقف وأخبر أهلي',1],['أوكي، عطني حسابك',0]]]]},
+ {av:'🏆',from:'بطولة اللعبة',plat:'رسالة خاصة',lever:'greed',why:'جائزة ما شاركت فيها، ورابط خارجي يسرق حسابك، ومهلة قصيرة.',st:[
+  ['🎉 مبروك! فزت بسحب 10,000 جوهرة',[['ما شاركت بأي سحب، غريبة',1],['واو! شلون أستلمها؟',0]]],
+  ['بس سجّل دخولك من هالرابط: free-gems-win.co',[['ما أسجّل دخولي برابط خارجي',1],['أوكي، دخلت',0]]],
+  ['الجائزة تنتهي بعد ساعة! ⏰',[['بلوك وتبليغ',1],['أحاول مرة ثانية بسرعة',0]]]]}
+];
 var SCAMS=[
  {a:'all',t:'game',ctx:'رسالة داخل اللعبة',msg:'مبروك! ربحت 5,000 جوهرة. ___',o:[['دخّل اسم حسابك وكلمة السر خلال 10 دقائق عشان توصلك',2],['الجواهر تنضاف تلقائيًا من المتجر الرسمي',0],['ما نطلب كلمة السر أبدًا',0]],lever:'greed',why:'هدية كبيرة مقابل كلمة السر ومهلة قصيرة: طمع واستعجال.'},
  {a:'all',t:'game',ctx:'حساب «دعم اللعبة»',msg:'حسابك عليه بلاغ. ___',o:[['بينحذف خلال ساعة إلا إذا أرسلت لنا رمز التحقق',2],['تقدر تراجع البلاغ من الإعدادات',0],['تواصل معنا من داخل اللعبة فقط',0]],lever:'fear',why:'التهديد بالحذف يخوّفك حتى ترسل الرمز.'},
@@ -1195,7 +1236,7 @@ var SCAMS=[
  {a:'ye',t:'',ctx:'رسالة نصية باسم البنك',msg:'تم إيقاف بطاقتك. ___',o:[['حدّث بياناتك من الرابط خلال ساعة وإلا تنحذف أموالك',2],['للاستفسار اتصل على الرقم خلف بطاقتك',0],['يمكنك زيارة أقرب فرع',0]],lever:'urgency',why:'الاستعجال والتخويف حتى تضغط الرابط قبل ما تفكر.'},
  {a:'ye',t:'',ctx:'واتساب من رقم جديد',msg:'يبه هذا رقمي اليديد. ___',o:[['ضروري تحوّل لي 300 الحين ولا تقول لأمي',2],['بكلمك من رقمي القديم بعدين',0],['اتصل علي إذا تبي تتأكد',0]],lever:'trust',why:'انتحال القريب مع طلب السرّية.'}
 ];
-var MICON={swipe:'⇆ ',tap:'☝ ',pair:'⚖ ',call:'☎ ',act:'✓ ',page:'🔍 ',rapid:'⚡ ',scam:'🦊 ',mix:'★ '};
+var MICON={swipe:'⇆ ',tap:'☝ ',pair:'⚖ ',call:'☎ ',act:'✓ ',page:'🔍 ',rapid:'⚡ ',scam:'💬 ',mix:'★ '};
 var MODES={
  swipe:{n:'سحب',t:'اسحب البطاقة',d:'{اسحب|اسحبي} يمين إذا {تثق|تثقين}، فتنحفظ في المجلد. ويسار إذا {تشك|تشكين}، فتروح للمهملات.'},
  tap:{n:'لمس الخطأ',t:'المس الخطأ',d:'كل رسالة فيها علامة احتيال. {المس|المسي} الكلمة المريبة نفسها.'},
@@ -1204,7 +1245,7 @@ var MODES={
  act:{n:'وش تسوي الحين؟',t:'وش تسوي الحين؟',d:'الرسالة احتيال أكيد. {اختر|اختاري} التصرف الصح.'},
  page:{n:'افحص الصفحة',t:'افحص صفحة الدفع',d:'{المس|المسي} كل شيء مريب في الصفحة. وإذا الصفحة سليمة {اضغط|اضغطي} «الصفحة سليمة».'},
  rapid:{n:'الجولة السريعة',t:'الجولة السريعة',d:'نفس السحب، بس الوقت قصير جدًا. {فكّر|فكّري} بسرعة.'},
- scam:{n:'العب دور المحتال',t:'العب دور المحتال',d:'{أنت|أنتِ} بو حيلة هالمرة. {اختر|اختاري} الجملة اللي يخدع فيها الناس، عشان {تعرف|تعرفين} حيله.'},
+ scam:{n:'محادثة حية',t:'محادثة حية',d:'غريب {يكلمك|يكلمج} بالخاص. {اختر|اختاري} ردّك في كل رسالة، {وقّف|وقّفي} المحادثة قبل لا يصيدك.'},
  mix:{n:'كل الطرق',t:'',d:''}
 };
 function tagFirst(list,t){return shuffle(list.filter(function(x){return t&&x.t===t})).concat(shuffle(list.filter(function(x){return !t||x.t!==t})))}
@@ -1230,7 +1271,8 @@ function buildMode0(st,items,n){
  if(m==='pair')return tagFirst(poolFor(PAIRS),st.pt).slice(0,6).map(function(p,k){return {kind:'pair',id:'pair'+n+'_'+k,d:p,from:'أيهما الحقيقي؟',cap:'أيهما الحقيقي؟',scam:1,lever:p.lever,tell:p.why,right:''}});
  if(m==='call')return tagFirst(poolFor(CALLS),st.pt).slice(0,5).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});
  if(m==='page')return shuffle(PAGES.slice()).map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}});
- if(m==='scam')return tagFirst(poolFor(SCAMS),'game').slice(0,6).map(function(c,k){return {kind:'scam',id:'scam'+n+'_'+k,d:c,from:c.ctx,cap:'العب دور المحتال',scam:1,lever:c.lever,tell:c.why,right:'',body:c.msg}});
+ if(m==='scam')return shuffle(CHATS.slice()).map(function(c,k){return {kind:'chat',id:'chat'+n+'_'+k,d:c,from:c.from,cap:'محادثة · '+c.from,scam:1,lever:c.lever,tell:c.why,right:'',body:c.st.map(function(x){return x[0]}).join(' ')}});
+ if(m==='scamOLD')return tagFirst(poolFor(SCAMS),'game').slice(0,6).map(function(c,k){return {kind:'scam',id:'scam'+n+'_'+k,d:c,from:c.ctx,cap:'العب دور المحتال',scam:1,lever:c.lever,tell:c.why,right:'',body:c.msg}});
  return items;
 }
 function poolFor(list){var k=S.age==='kid'?'k':'ye';return list.filter(function(x){return x.a==='all'||x.a===k})}
@@ -1278,6 +1320,22 @@ function renderSpecial(it,sl){
    if(x[2]){b.classList.add('bad');b.insertAdjacentHTML('beforeend','<small>'+x[2]+'</small>');found++;sfx.hit(found);card.querySelector('#pCnt').textContent='وجدت '+found;if(found>=need)spDone(it,card,bad===0?2:bad===1?1:0,pd.why)}
    else{b.classList.add('no');bad++;sfx.mid();buzz(40);if(bad>=3)spDone(it,card,0,pd.why)}}});
   card.querySelector('.pok').onclick=function(){if(S.phase!=='judge')return;if(pd.fake){[].forEach.call(card.querySelectorAll('.pp'),function(b){if(pd.parts[+b.getAttribute('data-i')][2])b.classList.add('bad')});spDone(it,card,0,pd.why)}else spDone(it,card,bad?1:2,pd.why)};
+ }else if(k==='chat'){
+  var cd=it.d,step=0,bad=0;card.className='card sp chat';
+  coach('<b>محادثة حية.</b> {اختر|اختاري} ردّك في كل رسالة. لا {تخلّيه|تخلّينه} يصيدك.');
+  card.innerHTML='<div class="chead"><span class="cav">'+cd.av+'</span><span><b>'+cd.from+'</b><small>'+cd.plat+'</small></span></div><div class="clog" id="clog"></div><div class="copts" id="copts"></div>';
+  var log=card.querySelector('.clog'),opts=card.querySelector('.copts');
+  var show=function(){var st=cd.st[step];log.insertAdjacentHTML('beforeend','<div class="cb them typing"><i></i><i></i><i></i></div>');log.scrollTop=1e4;opts.innerHTML='';
+   setTimeout(function(){var t=log.querySelector('.typing');if(t){t.className='cb them';t.innerHTML=gx(st[0])}log.scrollTop=1e4;
+    opts.innerHTML=shuffle(st[1].slice()).map(function(o){return '<button class="copt" data-g="'+o[1]+'">'+gx(o[0])+'</button>'}).join('')},650)};
+  opts.onclick=function(e){var b=e.target.closest('.copt');if(!b||S.phase!=='judge')return;var g=b.getAttribute('data-g')==='1';opts.innerHTML='';
+   log.insertAdjacentHTML('beforeend','<div class="cb me'+(g?'':' bad')+'">'+b.innerHTML+'</div>');
+   if(g){sfx.mid&&0;buzz(15)}else{bad++;buzz(60);log.insertAdjacentHTML('beforeend','<div class="cnote">⚠️ بو حيلة استغل هالرد</div>')}
+   log.scrollTop=1e4;step++;
+   if(step<cd.st.length)setTimeout(show,450);
+   else setTimeout(function(){log.insertAdjacentHTML('beforeend','<div class="cend '+(bad?'lose':'win')+'">'+(bad?'انصدت في '+bad+' من '+cd.st.length:'كشفته وقفلت عليه الباب 👏')+'</div>');log.scrollTop=1e4;
+    spDone(it,card,bad===0?2:bad===1?1:0,'حيلة '+LEVERS[cd.lever].n+': '+cd.why)},400)};
+  show();
  }else if(k==='scam'){
   var sd=it.d,good=sd.o.filter(function(x){return x[1]===2})[0][0];card.className='card sp scam';
   coach('<b>{أنت|أنتِ} بو حيلة.</b> أي جملة يكمّل فيها المحتال رسالته؟');
