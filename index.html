@@ -1,4 +1,4 @@
-<!doctype html><html><head><link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html><head><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* swipe bins: trash on the doubt side (left), saved folder on the trust side (right) */
 .bin{position:absolute;top:46%;width:3.1rem;height:3.1rem;border-radius:16px;display:grid;place-items:center;z-index:4;pointer-events:none;opacity:0;transition:opacity .18s,transform .18s;transform:scale(.8)}
 .bin svg{width:1.7rem;height:1.7rem}
@@ -115,7 +115,7 @@
 #play .hud #foeAva{width:3rem;height:3rem;flex:none}
 #play .hud #combo{flex:none}
 #play #clock{visibility:hidden}
-</style></head><body>
+.brand .bell{background:none!important;box-shadow:none!important;border-radius:22%!important}.brand .bell img{width:100%;height:100%;display:block;border-radius:22%;box-shadow:0 4px 14px rgba(0,0,0,.35)}</style></head><body>
 <title>واعي</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
@@ -997,7 +997,7 @@ function foeSvg(m,full){
  h+='<g class="fxhead"><g class="fxear l"><path d="M58 88 L46 32 L92 66Z" fill="#F08A3C"/><path d="M60 78 L54 48 L78 66Z" fill="#2A1A12"/></g><g class="fxear r"><path d="M142 88 L154 32 L108 66Z" fill="#F08A3C"/><path d="M140 78 L146 48 L122 66Z" fill="#2A1A12"/></g><path d="M42 92 Q100 50 158 92 Q152 130 100 158 Q48 130 42 92Z" fill="#F08A3C"/><path d="M42 92 Q70 114 100 158 Q54 136 42 92Z" fill="#FFF1DC"/><path d="M158 92 Q130 114 100 158 Q146 136 158 92Z" fill="#FFF1DC"/>'+f+'<ellipse cx="100" cy="137" rx="7" ry="5" fill="#2A1A12"/></g>';
  if(st==='lose')h+='<g transform="translate(100 46) scale(1 .38)"><g class="fxorbit"><path d="M30 0 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#F5B942"/><path d="M-18 24 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#F5B942"/><path d="M-18 -30 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1Z" fill="#fff"/></g></g>';
  return h+'</svg>'}
-function logoFox(){var l=$('logoFox');if(l&&!l.firstChild)l.innerHTML=foeSvg('conf')}
+function logoFox(){var l=$('logoFox');if(l&&!l.firstChild)l.innerHTML='<img src="logo.png" alt="">'}
 function face(m){var a=$('foeAva');if(a.getAttribute('data-m')===m)return;a.setAttribute('data-m',m);a.innerHTML=foeSvg(m);a.classList.remove('in');void a.offsetWidth;a.classList.add('in')}
 function say(txt,cls,m){var b=$('foeSay');b.parentNode.classList.toggle('quiet',true);b.textContent=gx(txt);b.className='bubble '+(cls||'');void b.offsetWidth;b.classList.add('in');face(m||(cls==='bad'?'gloat':cls==='good'?'shock':'conf'))}
 function banner(w){var el=document.createElement('div');el.className='wave';el.innerHTML='<b>'+w.n+'</b><span>'+w.s+'</span>';$('stage').appendChild(el);setTimeout(function(){el.remove()},1300)}
