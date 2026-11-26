@@ -2094,15 +2094,15 @@ function btAns(it){if(!it.scam)return 'ok';var b=(it.acts||[]).filter(function(a
 window.__btAns=function(){return BT&&BT.items[BT.r]?btAns(BT.items[BT.r]):null};
 var BT_NM={stop:'⛔ أوقف',ver:'📞 تحقّق',ok:'✅ آمنة'};
 function btMoney(n){return n.toLocaleString('en-US')}
-function duelRing(){var my=Date.now();BT={bal:1000,fhp:100,r:0,items:btPool(),combo:0,best:0,id:my,miss:[],hits:0,fast:0,charge:0,strikes:0,insp:3,relax:!!store.duelRelax};DU={id:my};
+function duelRing(){var my=Date.now();BT={bal:1000,fhp:100,r:0,items:btPool(),combo:0,best:0,id:my,miss:[],hits:0,fast:0,charge:0,strikes:0,insp:3,relax:!!S.big};DU={id:my};
  var d=duelEl(),lvl=Object.keys(PR.done||{}).length;
  d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=3" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
   '<img class="bvsMid" src="img/duel/vs.webp?v=3" alt="VS">'+
   '<div class="bvsB"><span class="blv">زعيم الحيل</span><b>بو حيلة</b><img class="bav" src="img/duel/fox.webp?v=1" alt=""></div>'+
-  '<button class="brelax'+(BT.relax?' on':'')+'" id="bRelax">⏳ وضع مريح: '+(BT.relax?'بدون وقت':'لا')+'</button>'+
+  
   '<div class="bcd" id="bCd">3</div><button class="bxv" id="dX" aria-label="خروج">✕</button></div>';
  $('dX').onclick=duelClose;sfx.ring&&sfx.ding();buzz([60,40,60]);
- $('bRelax').onclick=function(){if(!BT)return;BT.relax=!BT.relax;store.duelRelax=BT.relax?1:0;save(store);this.classList.toggle('on',BT.relax);this.textContent='⏳ وضع مريح: '+(BT.relax?'بدون وقت':'لا')};
+ 
  var n=3;var tick=setInterval(function(){if(!BT||BT.id!==my){clearInterval(tick);return}n--;var c=$('bCd');if(!c){clearInterval(tick);return}
   if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)btArena()},550)}},900)}
 function btArena(){var d=duelEl();
@@ -2251,7 +2251,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26z2';
+var BUILD='2026-11-26z3';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
