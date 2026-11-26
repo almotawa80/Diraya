@@ -1,0 +1,85 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>واعي · معاينة الخريطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#1F2756;color:#F6F6F0;font-family:Cairo,sans-serif;overflow:hidden}
+.app{position:relative;height:100dvh;max-width:480px;margin:0 auto;overflow:hidden}
+.scroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.world{position:relative;width:100%;aspect-ratio:406/1040;background:url(../img/map/bg.jpg) center/100% 100% no-repeat}
+.world::before{content:"";position:absolute;inset:0 0 auto 0;height:30%;background:linear-gradient(#1F2756 0,rgba(31,39,86,.55) 45%,transparent)}
+.world::after{content:"";position:absolute;inset:auto 0 0 0;height:9%;background:linear-gradient(transparent,#1F2756)}
+.top{position:sticky;top:0;z-index:5;padding:calc(env(safe-area-inset-top) + .5rem) 12px .5rem;background:linear-gradient(#1F2756 70%,transparent)}
+.brand{display:flex;align-items:center;justify-content:center;gap:.4rem}
+.brand img{width:2.6rem}.brand b{font-size:1.7rem;font-weight:900;color:#E3BE7C;text-shadow:0 2px 0 #8a5a1c}
+.hud{margin-top:.35rem;display:flex;justify-content:space-around;align-items:center;background:rgba(26,33,73,.82);border:1.5px solid rgba(227,190,124,.55);border-radius:1.1rem;padding:.35rem .4rem;backdrop-filter:blur(6px)}
+.hud div{display:flex;align-items:center;gap:.35rem}
+.hud img{width:2rem;height:2rem;object-fit:contain}
+.hud b{font-size:1.05rem;line-height:1.1;display:block}.hud small{font-size:.68rem;opacity:.75;display:block}
+.hud i{width:1px;height:2rem;background:rgba(246,246,240,.18)}
+.stage{position:absolute;transform:translate(-50%,-62%);width:22%;z-index:2;cursor:pointer}
+.stage .pd{position:relative;width:100%}
+.stage .pd img.ic{width:100%;display:block;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+.stage.lock .pd img.ic{filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+.stage .num{position:absolute;bottom:-4%;left:50%;transform:translateX(-50%);width:1.75rem;height:1.75rem;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.95rem;background:#232C5A;border:2px solid #E3BE7C;color:#F6F6F0}
+.stage.lock .num{border-color:#9aa0b5;color:#c9ccd8}
+.stage .md{position:absolute;top:-6%;left:-12%;width:42%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}
+.stage .lab{position:absolute;top:44%;white-space:nowrap;background:rgba(26,33,73,.88);border:1.5px solid rgba(246,246,240,.15);padding:.15rem .7rem;border-radius:99px;font-weight:800;font-size:.85rem;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.stage.r .lab{right:88%}.stage.l .lab{left:88%}
+.stage.lock .lab{color:#b9bdcc}
+.stage.cur{width:25%;z-index:3}
+.stage.cur::before{content:"";position:absolute;left:-12%;right:-12%;bottom:-8%;height:55%;border-radius:50%;background:radial-gradient(closest-side,rgba(31,200,180,.75),rgba(31,200,180,.25) 60%,transparent);animation:pulse 1.6s ease-in-out infinite;z-index:-1}
+@keyframes pulse{50%{transform:scale(1.15);opacity:.65}}
+.stage.cur .num{border-color:#1FC8B4;box-shadow:0 0 10px #1FC8B4}
+.stage.cur .lab{border-color:#1FC8B4;box-shadow:0 0 14px rgba(31,200,180,.5);padding:.35rem .8rem;text-align:center;top:22%}
+.go{display:block;margin-top:.25rem;background:linear-gradient(#F7D58E,#E3A93C);color:#232C5A;border-radius:99px;padding:.15rem .9rem;font-weight:900;font-size:.95rem;box-shadow:0 3px 0 #a46c1c}
+.boss{position:absolute;transform:translate(-50%,-70%);width:34%;z-index:2}
+.boss img{width:100%;filter:drop-shadow(0 0 18px rgba(227,190,124,.55)) grayscale(.35) brightness(.85)}
+.boss .lab{position:absolute;bottom:-14%;left:50%;transform:translateX(-50%);white-space:nowrap;background:linear-gradient(#b8312f,#8e1f22);border:1.5px solid #E3BE7C;border-radius:.6rem;padding:.1rem .8rem;font-weight:900;font-size:.9rem}
+.boss .lab small{opacity:.8;margin-inline-start:.3rem}
+.pad{height:6.5rem}
+nav{position:absolute;left:12px;right:12px;bottom:calc(8px + env(safe-area-inset-bottom));height:3.9rem;z-index:6;display:flex;justify-content:space-around;align-items:center;background:rgba(26,33,73,.72);backdrop-filter:blur(10px);border:1.5px solid rgba(227,190,124,.35);border-radius:1.6rem}
+nav a{display:flex;flex-direction:column;align-items:center;font-size:.68rem;font-weight:800;color:#c9ccd8;width:20%}
+nav a img{width:1.75rem;height:1.75rem;object-fit:contain}
+nav a.on{color:#E3BE7C}
+nav a.mid{margin-top:-2.2rem}
+nav a.mid span{width:4rem;height:4rem;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#F7D58E,#E3A93C);border:3px solid #232C5A;box-shadow:0 0 0 2px #E3BE7C,0 6px 14px rgba(0,0,0,.45)}
+nav a.mid img{width:3.1rem;height:3.1rem}
+.tag{position:fixed;top:calc(env(safe-area-inset-top) + 6px);left:8px;z-index:9;font-size:.65rem;background:#FF6B6B;color:#fff;border-radius:6px;padding:0 .4rem}
+</style></head><body>
+<div class="app"><div class="tag">معاينة</div>
+<div class="scroll" id="sc">
+ <div class="top">
+  <div class="brand"><b>واعي</b><img src="../img/map/s10.png" alt=""></div>
+  <div class="hud">
+   <div><img src="../img/map/hMed.png" alt=""><span><b>3/10</b><small>ميداليات</small></span></div><i></i>
+   <div><img src="../img/map/hShd.png" alt=""><span><b>1</b><small>دروع</small></span></div><i></i>
+   <div><img src="../img/map/hWal.png" alt=""><span><b>1,000 <small style="display:inline">د.ك</small></b><small>محفظتك</small></span></div>
+  </div>
+ </div>
+ <div class="world" id="w"></div>
+ <div class="pad"></div>
+</div>
+<nav>
+ <a class="on"><img src="../img/map/tHome.png" alt="">الرئيسية</a>
+ <a><img src="../img/map/tPrize.png" alt="">الجوائز</a>
+ <a class="mid"><span><img src="../img/map/tFox.png" alt=""></span>واجه بو حيلة</a>
+ <a><img src="../img/map/tLead.png" alt="">المتصدرين</a>
+ <a><img src="../img/map/tSet.png" alt="">الإعدادات</a>
+</nav>
+</div>
+<script>
+// road points traced on the 406x1040 background (x,y)
+var P=[[185,1000],[200,935],[105,862],[175,785],[232,708],[130,625],[185,545],[262,465],[95,395]];
+var N=['أول الخيط','فخ اللعبة','رقم جديد؟','اضغط هنا!','سرّك لك','ربح خيالي','حسابك مو للإيجار','صوت مزيّف','ما يطلع برّا'];
+var MED={1:3,2:2,3:1},CUR=4,w=document.getElementById('w');
+P.forEach(function(p,i){var n=i+1,lock=n>CUR,cur=n===CUR,d=document.createElement('div');
+ d.className='stage '+(p[0]<203?'l':'r')+(lock?' lock':'')+(cur?' cur':'');
+ d.style.left=(p[0]/406*100)+'%';d.style.top=(p[1]/1040*100)+'%';
+ d.innerHTML='<div class="pd"><img class="ic" src="../img/map/'+(lock?'lock':'s'+n)+'.png" alt="">'+(MED[n]?'<img class="md" src="../img/map/m'+MED[n]+'.png" alt="">':'')+'<span class="num">'+n+'</span></div><span class="lab">'+N[i]+(cur?'<span class="go">▶ ابدأ</span>':'')+'</span>';
+ w.appendChild(d)});
+var b=document.createElement('div');b.className='boss';b.style.left=(175/406*100)+'%';b.style.top=(300/1040*100)+'%';
+b.innerHTML='<img src="../img/map/s10.png" alt=""><span class="lab">وجهًا لوجه<small>10</small></span>';w.appendChild(b);
+setTimeout(function(){var c=document.querySelector('.stage.cur');c&&c.scrollIntoView({block:'center'})},80);
+</script>
+</body></html>
