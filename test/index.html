@@ -761,7 +761,7 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
     <div class="challenge" id="challenge" hidden></div>
 
     <div class="wallet">
-      <div class="wl"><small id="hWl">محفظتك</small><b id="hWallet">500.000</b> <small style="display:inline" class="cur">د.ك</small></div>
+      <div class="wl"><small id="hWl">محفظتك</small><b id="hWallet">1,000</b> <small style="display:inline" class="cur">د.ك</small></div>
       <div class="ws"><span>الدروع <b id="hShields">0</b></span><span>الأوسمة <b id="hMedals">0</b> / <span id="hTot">10</span></span></div>
     </div>
 
@@ -1018,16 +1018,16 @@ ITEMS.push(
 
 var SLOTS=[['7:12 ص','#F9C784','#8FD3E8',0],['9:41 ص','#9ADCF0','#5BB4E5',0],['11:05 ص','#7CCBF2','#4A9BE0',0],['1:30 م','#6BBDF0','#3F8FDA',0],['4:18 م','#8FBDEB','#F2B66D',0],['6:02 م','#F29E6D','#A9549A',0],['8:20 م','#4E4396','#222B66',1],['10:56 م','#222B66','#0B1430',1]];
 var STAGES_Y=[
- {n:'أول الخيط',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','e11'],secs:15,loss:30,bonus:50,m:'swipe'},
- {n:'فخ اللعبة',d:'جواهر مجانية وحسابات مقلَّدة وغرباء',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:35,bonus:60,m:'scam'},
- {n:'رقم جديد؟',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6','z2','z5','z6','z11'],secs:13,loss:40,bonus:70,m:'pair',pt:'wa'},
- {n:'اضغط هنا!',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','z1','z10','y12','e9','n3'],secs:14,loss:45,bonus:80,m:'tap'},
- {n:'سرّك لك',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9','z3','z4','z8','z12'],secs:12.5,loss:55,bonus:90,m:'swipe'},
- {n:'ربح خيالي',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11','z7','z9'],secs:12,loss:65,bonus:100,m:'page'},
- {n:'حسابك مو للإيجار',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:75,bonus:120,m:'act'},
- {n:'صوت مزيّف',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:85,bonus:140,m:'call',pt:'ai'},
- {n:'ما يطلع برّا',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:95,bonus:160,m:'rapid'},
- {n:'وجهًا لوجه',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','e12','m8','a5','k2','z12','n4','z3','z8'],secs:8.5,loss:120,bonus:300,m:'swipe'}
+ {n:'أول الخيط',d:'أساسيات الاحتيال المصرفي',ids:['y2','e4','y8','e6','e1','y9','y10','e11'],secs:15,loss:30,bonus:40,m:'swipe'},
+ {n:'فخ اللعبة',d:'جواهر مجانية وحسابات مقلَّدة وغرباء',ids:['k1','k2','k3','k4','k5','k6','k7','k8','k9','k10'],secs:10,loss:40,bonus:45,m:'scam'},
+ {n:'رقم جديد؟',d:'انتحال الأهل والبيع والشراء',ids:['e3','y5','n4','n5','n7','y13','e10','n6','z2','z5','z6','z11'],secs:13,loss:50,bonus:50,m:'pair',pt:'wa'},
+ {n:'اضغط هنا!',d:'شحنات، مخالفات، رموز QR',ids:['y1','y6','e5','n1','n2','z1','z10','y12','e9','n3'],secs:14,loss:60,bonus:55,m:'tap'},
+ {n:'سرّك لك',d:'كلمات السر والشبكات والتطبيقات',ids:['i1','i2','i3','i4','i5','i6','i7','i8','i9','z3','z4','z8','z12'],secs:12.5,loss:75,bonus:60,m:'swipe'},
+ {n:'ربح خيالي',d:'استثمار مضمون ووظائف وهمية',ids:['y4','y7','e7','n8','n9','n12','n10','n11','z7','z9'],secs:12,loss:90,bonus:65,m:'page'},
+ {n:'حسابك مو للإيجار',d:'حسابك لك وحدك',ids:['m1','m2','m3','m4','m5','m6','m7','m8'],secs:11.5,loss:105,bonus:70,m:'act'},
+ {n:'صوت مزيّف',d:'صوت مقلَّد ووجه مزيّف',ids:['a1','a2','a3','a4','a5','a6','a9','a7','a8','a10'],secs:11,loss:120,bonus:80,m:'call',pt:'ai'},
+ {n:'ما يطلع برّا',d:'بياناتك: من يسأل عنها ومن يراها',ids:['c1','c2','c3','c4','c5','c6','c7','c8','c9'],secs:10.5,loss:140,bonus:90,m:'rapid'},
+ {n:'وجهًا لوجه',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','e12','m8','a5','k2','z12','n4','z3','z8'],secs:8.5,loss:160,bonus:150,m:'swipe'}
 ];
 var STAGES=STAGES_Y;
 var STAGES_K=[
@@ -1048,7 +1048,7 @@ var STAGES_E=[
  {n:'المواجهة الأخيرة',d:'بو حيلة يلعب كل أوراقه',ids:['b1','b2','b4','b8','m3','e12','y11','m8'],loss:110,bonus:300,m:'mix'}
 ];
 var TRACKS={kid:STAGES_K,youth:STAGES_Y,elder:STAGES_E};
-var AGE={kid:{n:'صغار',s:'حتى 14 سنة',pw:1.35,lens:4,loss:1,start:300},youth:{n:'شباب',s:'من 15 إلى 40',pw:1,lens:3,loss:1,start:500},elder:{n:'كبار',s:'فوق 40',pw:1.4,lens:4,loss:.8,start:500}};
+var AGE={kid:{n:'صغار',s:'حتى 14 سنة',pw:1.35,lens:4,loss:1,start:300},youth:{n:'شباب',s:'من 15 إلى 40',pw:1,lens:3,loss:1,start:1000},elder:{n:'كبار',s:'فوق 40',pw:1.4,lens:4,loss:.8,start:1000}};
 var REW={
  kid:[{at:2,t:'ملصقات واعي الرقمية',s:'تزيّن بها محادثاتك'},{at:4,t:'شهادة «{واعي الصغير|واعية الصغيرة}»',s:'تطبعها وتعلّقها'},{at:6,t:'دخول سحب على لعبة',s:'لمن هزم بو حيلة'}],
  youth:[{at:3,t:'كوب قهوة مجاني',s:'من مقهى شريك'},{at:6,t:'خصم 20% على مشترياتك',s:'لدى متجر شريك'},{at:10,t:'دخول السحب الكبير',s:'لمن هزم بو حيلة'}],
@@ -1094,7 +1094,7 @@ function setProfile(){var a='youth';/* one track for everyone (Khalid, 2026-11-2
 /* ---------- helpers ---------- */
 function $(id){return document.getElementById(id)}
 function kid(){return S&&S.age==='kid'}
-function fmt(n){return kid()?Math.round(n).toLocaleString('en-US'):n.toLocaleString('en-US',{minimumFractionDigits:3,maximumFractionDigits:3})}
+function fmt(n){return Math.round(n).toLocaleString('en-US')}
 function CUR(){return kid()?'نجمة':'د.ك'}
 function G(m,f){return S.fem?f:m}
 function gx(t){return String(t).replace(/\{([^{}|]*)\|([^{}|]*)\}/g,function(_,m,f){return S.fem?f:m})}
@@ -1230,7 +1230,7 @@ function pickT(a){return a[Math.floor(Math.random()*a.length)]}
 function startStage(n,cu){
  ac();applyBig();
  if(!store.tut){store.tut=1;save(store)}
- if(PR.wallet<=0){PR.wallet=60;save(store);toast(kid()?'عوّضناك 60 نجمة لأنك {أخبرت|أخبرتي} أهلك بسرعة':'البنك عوّضك 60 د.ك لأنك {بلّغت|بلّغتي} بسرعة')}
+ if(PR.wallet<=0){PR.wallet=100;save(store);toast('بدأنا لك رصيد تدريبي جديد: 100 '+CUR())}
  var st=cu||STAGES[n-1],items=st.ids.map(function(id){return BYID[id]});if(!cu||cu.kind!=='daily')items=shuffle(items);
  if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
  if(!cu)items=buildMode(st,items,n);
@@ -1561,14 +1561,15 @@ function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return 
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok,b.getAttribute('data-t'))}})}
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
  nodes.forEach(function(n){var parts=n.nodeValue.match(/[^.،!؟:…]+[.،!؟:…]*\s*/g);if(!parts)return;var f=document.createDocumentFragment();parts.forEach(function(p){if(!p.trim()){f.appendChild(document.createTextNode(p));return}var s=document.createElement('span');s.className='seg';s.textContent=p;f.appendChild(s)});el.replaceChild(f,n)})}
+function lossFor(it){var b=S.lossAmt||0,v=it&&+it.loss;if(!v)return b;return Math.round(Math.max(b/2,Math.min(b*2,v)))}
 function spDone(it,card,ok,why){
  if(S.phase!=='judge')return;S.phase='busy';timer.run=false;sfx.stop();
  var res={id:it.id,kind:ok===2?'perfect':ok===1?'partial':'fell'},hold=0;
- if(ok===2){S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=10*Math.min(5,S.combo)*(S.pro?2:1);S.pot+=gain;sfx.hit(S.combo);buzz(25);coins();pop('+'+gain+' '+CUR(),'good');say(S.combo>=3?pickT(TAUNT.combo):pickT(TAUNT.caught),'good',S.combo>=3?'angry':'shock')}
+ if(ok===2){S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=(S.combo>=3?10:5)*(S.pro?2:1);S.pot+=gain;sfx.hit(S.combo);buzz(25);coins();pop('+'+gain+' '+CUR(),'good');say(S.combo>=3?pickT(TAUNT.combo):pickT(TAUNT.caught),'good',S.combo>=3?'angry':'shock')}
  else if(ok===1){pop('قريب!','mid');sfx.mid();say('نص نص.. المرة الياية أسرع','mid')}
  else{S.combo=0;hold=S.big?2600:1900;
   if(S.shields>0){S.shields--;$('shieldN').textContent=S.shields;sfx.mid();buzz(80);pop('الدرع حماك','mid');say(pickT(TAUNT.shield),'mid','shock')}
-  else{var amt=Math.min(S.bal,S.lossAmt);S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell),'bad');var st=$('stage');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');$('foeLoot').textContent=fmt(S.loot)}}
+  else{var amt=Math.min(S.bal,lossFor(it));S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell),'bad');var st=$('stage');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');$('foeLoot').textContent=fmt(S.loot)}}
  S.res[S.i]=res;track(it,res.kind);$('score').textContent=fmt(S.pot);
  var cb=$('combo');if(S.combo>=2){cb.hidden=false;cb.textContent='×'+Math.min(5,S.combo);cb.classList.remove('in');void cb.offsetWidth;cb.classList.add('in')}else cb.hidden=true;
  var fin=function(){$('tbar').style.visibility='';flyOff(card,ok?'doubt':'trust');S.i++;nextCard()};
@@ -1605,10 +1606,10 @@ function judge(how){
  if(it.scam&&how==='trust'){
   res.kind='fell';S.combo=0;hold=S.big?1500:950;
   if(S.shields>0){S.shields--;$('shieldN').textContent=S.shields;sfx.mid();buzz(80);pop('الدرع حماك','mid');say(pickT(TAUNT.shield),'mid','shock')}
-  else{var amt=Math.min(S.bal,S.lossAmt);S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell)+' لعبت {عليك|عليج} ورقة «'+LEVERS[it.lever].n+'»','bad');
+  else{var amt=Math.min(S.bal,lossFor(it));S.loot+=amt;lose(amt);pop('−'+fmt(amt)+' '+CUR(),'bad');say(pickT(TAUNT.fell)+' لعبت {عليك|عليج} ورقة «'+LEVERS[it.lever].n+'»','bad');
    var st=$('stage');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');$('foeLoot').textContent=fmt(S.loot)}
  }else if(how!=='timeout'&&((how==='doubt')===!!it.scam)){
-  S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=5*Math.min(5,S.combo)*(S.pro?2:1);
+  S.combo++;S.maxCombo=Math.max(S.maxCombo,S.combo);var gain=(S.combo>=3?10:5)*(S.pro?2:1);
   res.kind='perfect';S.pot+=gain;sfx.hit(S.combo);buzz(25);coins();pop('+'+gain+' '+CUR(),'good');
   say(it.scam?(S.combo>=4?pickT(TAUNT.combo):pickT(TAUNT.caught)):'هذي مو مني.. سليمة',it.scam?'good':'',it.scam?'defeat':'conf');
  }else if(how==='doubt'){
@@ -1680,10 +1681,10 @@ function rest(){
  stopAll();
  var n=S.items.length,played=S.res.length,ok=0;S.res.forEach(function(r){if(r.kind==='perfect'||r.kind==='partial')ok++});
  var need=Math.ceil(n*.7),broke=S.bal<=0,pass=!broke&&ok>=need,miss=n-ok,medal=pass?(miss===0?3:miss===1?2:1):0;
- var reward=pass?S.pot+S.st.bonus*(S.pro?2:1):0,gotShield=false,d=doneMap(),cu=S.custom,first=!cu&&pass&&!d[S.stage],dl=null;
+ var reward=pass&&(S.custom||!doneMap()[S.stage])?S.pot+S.st.bonus*(S.pro?2:1):0,gotShield=false,d=doneMap(),cu=S.custom,first=!cu&&pass&&!d[S.stage],dl=null;
  PR.wallet=Math.max(0,S.bal)+reward;PR.shields=S.shields;
  if(pass&&!cu){d[S.stage]=Math.max(d[S.stage]||0,medal);if(!S.pro)PR.unlocked=Math.max(PR.unlocked,Math.min(STAGES.length,S.stage+1));
-  if(medal===3&&PR.shields<3){PR.shields++;gotShield=true}}
+  if(medal===3&&PR.shields<2){PR.shields++;gotShield=true}}
  if(cu&&cu.kind==='daily'){var td=today(),D=PR.daily=PR.daily||{};if(D.d!==td){D.streak=(D.d&&dayNum(td)-dayNum(D.d)===1)?(D.streak||0)+1:1;D.d=td}D.ok=ok;D.n=n;dl=D}
  var adapt='';if(!S.pro&&!cu){var ad=PR.adapt||1;if(pass&&medal===3){PR.g=(PR.g||0)+1;PR.f=0}else if(!pass){PR.f=(PR.f||0)+1;PR.g=0}else{PR.g=0;PR.f=0}
   if(PR.g>=2){ad=Math.max(.75,ad*.88);PR.g=0;adapt='up'}if(PR.f>=2){ad=Math.min(1.5,ad*1.15);PR.f=0;adapt='down'}PR.adapt=ad}
@@ -1707,13 +1708,13 @@ function renderRest(){
    '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div></div>'+
   (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} بكرة لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>خذ راحتك.</b> زدنا الوقت وتلميحًا إضافيًا في المحاولة الجاية.</span></div>':'')+'</div>';
  var nxt=S.stage+1;
- if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+(kid()?'ونعوّضك 60 نجمة.':'ويعوّضك البنك 60 د.ك.')+'</p>';
+ if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+'ونبدأ لك رصيد تدريبي 100 '+CUR()+'.'+'</p>';
  var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · ورقة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'?okd:missed).push(row)});
  missed.sort(function(a,b){return (b.indexOf('احتيال')>0)-(a.indexOf('احتيال')>0)});
  if(missed.length)h+='<h2 class="lbl">أهم اللي فاتك</h2><div class="recap">'+missed.slice(0,2).join('')+'</div>';
  if(missed.length>2)h+='<details class="more"><summary>باقي اللي فاتك ('+(missed.length-2)+')</summary><div class="recap">'+missed.slice(2).join('')+'</div></details>';
  if(okd.length)h+='<details class="more"><summary>اللي {كشفته|كشفتيه} صح ('+okd.length+')</summary><div class="recap">'+okd.join('')+'</div></details>';
- h+='<div class="btns">'+(!R.refilled?'<button class="ghost gold" id="rRefill">{اشحن|اشحني} رصيدك: {اقرأ|اقرئي} أوراق بو حيلة</button>':'')+(R.pass&&!last&&!R.custom?'<button class="ghost" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>':'')+(R.pass&&!R.custom?'<button class="ghost" id="rRetry">{أعد|أعيدي} المرحلة لوسام أعلى</button>':'')+'<button class="ghost" id="rMap">خريطة المراحل</button></div>';
+ h+='<div class="btns">'+(!R.refilled&&PR.wallet<300?'<button class="ghost gold" id="rRefill">{اشحن|اشحني} رصيدك: {اقرأ|اقرئي} أوراق بو حيلة</button>':'')+(R.pass&&!last&&!R.custom?'<button class="ghost" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>':'')+(R.pass&&!R.custom?'<button class="ghost" id="rRetry">{أعد|أعيدي} المرحلة لوسام أعلى</button>':'')+'<button class="ghost" id="rMap">خريطة المراحل</button></div>';
  h+='<p class="fine">'+(kid()?'إذا صار لك شي مثل هذا في الواقع، {قول|قولي} لأهلك فورًا.':'إذا {وقعت|وقعتي} فعلًا في الواقع: {اتصل|اتصلي} ببنكك فورًا لإيقاف البطاقة ثم {بلّغ|بلّغي} الجهات المختصة.')+'</p>';
  h+='<div class="sticky">'+(R.custom?(R.custom.kind==='daily'?'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بتحدي اليوم</button>':'<button class="cta" id="rIdx">مؤشر الوعي</button>'):R.pass&&!last?'<button class="cta" id="rNext">المرحلة '+nxt+': '+STAGES[nxt-1].n+'</button>':!R.pass?'<button class="cta" id="rRetry">{أعد|أعيدي} المرحلة</button>':'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>')+'</div>';
  var el=$('report');el.innerHTML=gx(h);el.scrollTop=0;
@@ -1744,13 +1745,13 @@ function doShare(tx){
 var F={};
 function startFlip(){
  var pool=S.items.filter(function(it){return it.scam&&!it.cap&&LEVERS[it.lever]});if(pool.length<3&&S.st&&S.st.ids)pool=pool.concat(S.st.ids.map(function(id){return BYID[id]}).filter(function(x){return x&&x.scam&&LEVERS[x.lever]&&pool.indexOf(x)<0}));var list=shuffle(pool).slice(0,3);
- F={list:list,i:0,ok:0,each:15+5*S.stage,done:false};show('flip');renderFlip();
+ F={list:list,i:0,ok:0,each:20,done:false};show('flip');renderFlip();
 }
 function renderFlip(){
  var el=$('flip');S.flipEl=el;
  if(F.i>=F.list.length){
   var amt=F.ok*F.each,msg='تعبئة الاستراحة';
-  if(PR.wallet+amt<60){amt=60-PR.wallet;msg=kid()?'تعويض لأنك {أخبرت|أخبرتي} أهلك بسرعة':'تعويض البنك لأنك {بلّغت|بلّغتي} بسرعة'}
+  if(PR.wallet+amt<100){amt=100-PR.wallet;msg='بدأنا لك رصيد تدريبي جديد'}
   PR.wallet+=amt;save(store);R.refilled=true;R.refillMsg=msg;R.refillAmt=amt;
   el.innerHTML=gx('<div class="rtop"><div class="pct">تعبئة الرصيد</div><div class="rk">{قرأت|قرأتي} '+F.ok+' من '+F.list.length+'</div><div class="big">+'+fmt(amt)+'<small> '+CUR()+'</small></div><div class="pct">بو حيلة لا يملك إلا خمس أوراق. من يعرفها يكشفه مهما غيّر القصة.</div></div>'+
    '<div class="recap">'+Object.keys(LEVERS).map(function(k){var l=LEVERS[k];return '<div style="--k:var(--saffron)"><b>'+l.n+'</b><span>'+l.how+'<br>الرد: '+l.anti+'</span></div>'}).join('')+'</div>'+
@@ -1905,7 +1906,7 @@ var LBT='week',LBD={
  all:[['كاشف_الحيل',18450],['صقر_الجهراء',17920],['أم_فهد_الواعية',16880],['الواعي_الأول',15210],['بو_سالم',14760],['نوره.ك',13990],['دانة_الخليج',12430],['ذيب_الفروانية',11880],['أبو_عبدالله',10950],['شهد_2009',10120]],
  duel:[['ما_يمرّ_علي',650],['كاشف_الحيل',650],['أم_فهد_الواعية',600],['صقر_الجهراء',600],['حارس_المحفظة',550],['نوره.ك',550],['بو_سالم',500],['مريوم',450],['الواعي_الأول',400],['دانة_الخليج',350]]};
 function myPts(t){var du=store.duel||{},d=PR.done||{},med=0;for(var k in d)if(d[k])med+=d[k];
- if(t==='duel')return du.best||0;var base=Math.max(0,Math.round(PR.wallet))+med*150+(du.wins||0)*50;return t==='week'?Math.round(base*.35):base}
+ if(t==='duel')return du.best||0;var base=med*150+Object.keys(d).length*100+(du.wins||0)*50;return t==='week'?Math.round(base*.35):base}
 function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach(function(x){if(x[1]>me)rank++});
  var unit=t==='duel'?'أعلى نقاط في مكالمة':'نقطة';
  var h='<div class="pghead"><h2>المتصدرين</h2><p>ألقاب يختارها اللاعبين، بدون أسماء ولا أرقام.</p></div>'+
@@ -1922,7 +1923,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);setTimeout(hide,sp.className==='quick'?700:2400)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26n';
+var BUILD='2026-11-26o';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
