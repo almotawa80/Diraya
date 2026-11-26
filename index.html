@@ -1012,12 +1012,13 @@ function openSettings(){
   '<div class="sgroup"><div class="srow"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="slab">الخطاب</span><span class="seg2"><button id="whoM" class="'+(G('a','b')==='a'?'on':'')+'">واعي</button><button id="whoF" class="'+(G('a','b')==='b'?'on':'')+'">واعية</button></span></div></div>'+
   '<div class="sgroup"><button class="srow sreset" id="tgReset"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><span class="slab">ابدأ من جديد</span><small>يمسح التقدم والمحفظة</small></button></div><button class="cta sdone" id="closeS">تم</button>');
  s.querySelector('#closeS').onclick=closeSheet;
- $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);openSettings();if(S.sound)sfx.ding()};
- $('tgVoice').onclick=function(){S.voice=!S.voice;store.voice=S.voice;save(store);openSettings();if(S.voice)speak('القراءة الصوتية تعمل');else hush()};
- $('tgBig').onclick=function(){S.big=!S.big;store.big=S.big;save(store);renderHome();openSettings()};
+ function flip(id,on){var b=$(id);b.setAttribute('aria-checked',on);b.querySelector('.sw').classList.toggle('on',!!on)}
+ $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);flip('tgSound',S.sound);if(S.sound)sfx.ding()};
+ $('tgVoice').onclick=function(){S.voice=!S.voice;store.voice=S.voice;save(store);flip('tgVoice',S.voice);if(S.voice)speak('القراءة الصوتية تعمل');else hush()};
+ $('tgBig').onclick=function(){S.big=!S.big;store.big=S.big;save(store);flip('tgBig',S.big);renderHome()};
  $('whoM').onclick=function(){if(G('a','b')!=='a'){store.fem=0;save(store);location.reload()}};$('whoF').onclick=function(){if(G('a','b')!=='b'){store.fem=1;save(store);location.reload()}};
  var rs=$('tgReset');rs.onclick=function(){if(!rs.classList.contains('sure')){rs.classList.add('sure');rs.querySelector('.slab').textContent='متأكد؟ اضغط مرة ثانية';rs.querySelector('small').textContent='ما تقدر ترجع التقدم بعدها';return}try{localStorage.removeItem('ranna.v2')}catch(e){}location.href=location.pathname};
- if(all)$('tgPro').onclick=function(){S.pro=!S.pro;renderHome();openSettings()};
+ if(all)$('tgPro').onclick=function(){S.pro=!S.pro;flip('tgPro',S.pro);renderHome()};
 }
 $('gear').onclick=openSettings;
 $('quit').onclick=function(){$('play').classList.remove('sp');$('tbar').style.visibility='';var sk=$('skipTut');if(sk)sk.remove();$('stage').classList.remove('tut');S.tut=false;stopAll();renderHome();show('home')};
