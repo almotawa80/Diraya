@@ -609,6 +609,13 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .copt:active{transform:translateY(2px);box-shadow:0 1px 0 #B9C3E0}
 @keyframes cbIn{from{opacity:0;transform:translateY(6px)}}
 @keyframes tyDot{50%{opacity:.3;transform:translateY(-2px)}}
+
+.sheet>*{flex-shrink:0}
+.sgroup{flex-shrink:0}
+.srow{min-height:3.4rem;flex-shrink:0}
+.slab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sreset small{white-space:normal}
+.sheet{max-height:88%!important}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -943,7 +950,7 @@ function bd(s){return '<bdi'+(/^[+\w]/.test(s)?' dir="ltr"':'')+'>'+s+'</bdi>'}
 function plain(s){return s.replace(/\{\{|\}\}|\[\[|\]\]/g,'')}
 function words(it){return plain(it.body+' '+(it.ctx||'').replace(/<[^>]+>/g,'')).trim().split(/\s+/).length}
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
-function show(id){['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});closeSheet()}
+function show(id){if(id!=='home'){try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}document.documentElement.scrollTop=0;document.body.scrollTop=0}['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});if(id!=='home'){$(id).scrollTop=0;window.scrollTo(0,0)}closeSheet()}
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=gx(msg);$('app').appendChild(t);setTimeout(function(){t.remove()},1900)}
 function medalSvg(m){var c=['','var(--bronze)','var(--silver)','var(--saffron)'][m];return '<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h4l1 6H9zM13 2h4l-2 6h-3z" fill="var(--tq)"/><circle cx="12" cy="15" r="7" fill="'+c+'"/><circle cx="12" cy="15" r="4.300" fill="none" stroke="rgba(15,27,61,.35)" stroke-width="1.400"/></svg>'}
 var SHIELD='<svg class="shd" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.400 9 8 11 4.600-2 8-6 8-11V5z" fill="var(--tq)"/><path d="m8.500 12 2.500 2.500 4.500-5" fill="none" stroke="var(--tq-ink)" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1002,7 +1009,7 @@ function openSettings(){
  var all=Object.keys(PR.done).length>=STAGES.length;
  function row(id,ico,t,on){return '<button class="srow" id="'+id+'" role="switch" aria-checked="'+on+'"><span class="sic">'+ico+'</span><span class="slab">'+t+'</span><span class="sw'+(on?' on':'')+'"><i></i></span></button>'}
  var s=sheet('<div class="shandle"></div><h3>الإعدادات</h3><div class="sgroup">'+row('tgSound','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>','الأصوات',S.sound)+row('tgVoice','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>','قراءة البطاقات بصوت',S.voice)+row('tgBig','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 9 6l5 12M5.8 14h6.4M15 18l3-7 3 7M15.8 16h4.4"/></svg>','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>','دوري المحترفين',S.pro):'')+'</div>'+
-  '<div class="sgroup"><div class="srow"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="slab">صيغة الخطاب</span><span class="seg2"><button id="whoM" class="'+(G('a','b')==='a'?'on':'')+'">واعي</button><button id="whoF" class="'+(G('a','b')==='b'?'on':'')+'">واعية</button></span></div></div>'+
+  '<div class="sgroup"><div class="srow"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="slab">الخطاب</span><span class="seg2"><button id="whoM" class="'+(G('a','b')==='a'?'on':'')+'">واعي</button><button id="whoF" class="'+(G('a','b')==='b'?'on':'')+'">واعية</button></span></div></div>'+
   '<div class="sgroup"><button class="srow sreset" id="tgReset"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><span class="slab">ابدأ من جديد</span><small>يمسح التقدم والمحفظة</small></button></div><button class="cta sdone" id="closeS">تم</button>');
  s.querySelector('#closeS').onclick=closeSheet;
  $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);openSettings();if(S.sound)sfx.ding()};
