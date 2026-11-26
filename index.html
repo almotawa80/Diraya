@@ -638,6 +638,9 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 #play.demo-on #bYes{animation:btnY 4.4s ease-in-out 2}
 @keyframes btnN{0%,12%,40%,100%{transform:none;box-shadow:0 4px 0 #B83A3A}22%,34%{transform:scale(1.08);box-shadow:0 0 0 4px #fff,0 4px 0 #B83A3A}}
 @keyframes btnY{0%,58%,86%,100%{transform:none}68%,80%{transform:scale(1.08);box-shadow:0 0 0 4px #E3BE7C}}
+
+#home .stg.go .dot{animation:stgGo .42s ease-out}
+@keyframes stgGo{0%{transform:scale(1)}50%{transform:scale(1.25);box-shadow:0 0 0 10px rgba(227,190,124,.35)}100%{transform:scale(1)}}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -1013,7 +1016,12 @@ function renderHome(keep){logoFox();
  $('hWallet').textContent=fmt(PR.wallet);$('hShields').textContent=PR.shields;$('hMedals').textContent=medals;
  var ns=nextStage();if(!keep||!S.sel)S.sel=ns;var sel=S.sel,st=STAGES[sel-1];
  $('start').textContent=gx(d[sel]?'{أعد|أعيدي} المرحلة ':'{ابدأ|ابدئي} المرحلة ')+sel+' · '+st.n;
- $('start').onclick=function(){startStage(sel)};
+ $('start').onclick=function(){var se=$('stage-'+sel),h=$('home'),bt=this;if(bt._busy)return;
+  if(!se){startStage(sel);return}
+  var r=se.getBoundingClientRect(),hr=h.getBoundingClientRect(),sb=$('start').getBoundingClientRect(),vis=r.top>=hr.top+10&&r.bottom<=sb.top-10;
+  if(vis){startStage(sel);return}
+  bt._busy=1;se.scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(function(){se.classList.add('go');setTimeout(function(){bt._busy=0;se.classList.remove('go');startStage(sel)},420)},650)};
  $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+(st.m&&MODES[st.m]?' · '+MODES[st.m].n:'')+' · '+PER_STAGE+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
  var box=$('map');box.innerHTML='';
  STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),b=document.createElement('button');
