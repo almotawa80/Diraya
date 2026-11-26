@@ -908,6 +908,8 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 [data-ph="3"] .phi{width:4.2rem;height:4.2rem;filter:drop-shadow(0 0 14px rgba(242,183,49,.55)) drop-shadow(0 6px 6px rgba(0,0,0,.4))}
 [data-ph="3"] .ph h1{font-size:2.5rem;margin-top:.1rem;background:linear-gradient(#fff6cf 0%,#FFD66B 45%,#e09a1c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.2px #7a3d00;filter:drop-shadow(0 4px 0 #5d2a00) drop-shadow(0 8px 12px rgba(0,0,0,.45))}
 [data-ph="3"] .ph::after{content:"";display:block;width:8rem;height:3px;margin-top:.55rem;border-radius:3px;background:linear-gradient(90deg,transparent,#F2B731,transparent)}
+.pgin{animation:pgIn .42s cubic-bezier(.22,.9,.3,1) both}@keyframes pgIn{from{opacity:0;transform:translateY(22px)}}
+html{scroll-behavior:auto}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -937,13 +939,13 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 .gzhero.lb{padding-top:.2rem}
 .gzban.lbt{flex-direction:column}.gzban.lbt span{background:linear-gradient(#2a357a,#1b2358);color:#FFD66B;text-shadow:0 3px 0 #0c1030}
 .gzcr0{width:3.4rem;margin-bottom:-.55rem;position:relative;z-index:2;filter:drop-shadow(0 3px 3px rgba(0,0,0,.4))}
-.gzpod{position:relative;width:100%;max-width:24rem;margin:.4rem auto 0;aspect-ratio:700/560}
+.gzpod{position:relative;width:100%;max-width:24rem;margin:.4rem auto 0;aspect-ratio:700/600}
 .gzpodimg{position:absolute;left:0;right:0;bottom:0;width:100%}
 .gzpa{position:absolute;display:flex;flex-direction:column;align-items:center;width:25%;transform:translateX(-50%)}
-.gzpa.p1{left:50%;top:0;width:30%}.gzpa.p2{left:21%;top:17%}.gzpa.p3{left:79%;top:25%}
+.gzpa.p1{left:50%;bottom:40%;width:27%}.gzpa.p2{left:21%;bottom:29%;width:23%}.gzpa.p3{left:79%;bottom:22%;width:22%}
 .gzpa .gzav{width:100%;filter:drop-shadow(0 5px 6px rgba(0,0,0,.45))}
 .gzpa .gzcrown{width:48%;margin-bottom:-12%;position:relative;z-index:2}
-.gzpa b{font-size:.76rem;font-weight:900;line-height:1.4;white-space:nowrap;margin-top:.15rem;background:rgba(15,20,55,.85);border-radius:99px;padding:0 .55rem}
+.gzpa b{max-width:9rem;overflow:hidden;text-overflow:ellipsis;font-size:.74rem;font-weight:900;line-height:1.4;white-space:nowrap;margin-top:.15rem;background:rgba(15,20,55,.85);border-radius:99px;padding:0 .55rem}
 .gzpa small{font-size:.7rem;color:#FFE7A8;font-weight:800;background:rgba(15,20,55,.85);border-radius:99px;padding:0 .5rem;margin-top:.1rem}
 .gztabs{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:.4rem;margin-top:.9rem}
 .gztabs button{display:flex;align-items:center;justify-content:center;gap:.25rem;border-radius:99px;border:2px solid rgba(242,183,49,.6);background:#1b2358;color:#F6F6F0;font:800 .85rem Cairo,sans-serif;min-height:2.6rem;padding:0 .4rem;white-space:nowrap}
@@ -2022,10 +2024,13 @@ function openLead(){var d=PR.done||{},med=0,du=store.duel||{};for(var k in d)if(
  '<div class="lbrow"><span>أيام تحدي اليوم المتتالية</span><b>'+((PR.daily&&PR.daily.streak)||0)+'</b></div>'+
  '<button class="ghost" id="closeS">تم</button>';
  var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;$('dim').onclick=closeSheet}
-[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.onclick=function(){var t=b.dataset.t;
- if(t==='home'){closeSheet();if(SCR!=='home'){renderHome(true);show('home')}else{$('home').scrollTop=0}return}
+function navScrollTop(){var e=$(SCR),y=Math.max(window.scrollY||0,e?e.scrollTop:0);if(y<4)return false;try{window.scrollTo({top:0,behavior:'smooth'});if(e&&e.scrollTop)e.scrollTo({top:0,behavior:'smooth'})}catch(x){window.scrollTo(0,0)}return true}
+function navEnter(id){var e=$(id);if(!e)return;e.classList.remove('pgin');e.offsetWidth;e.classList.add('pgin');setTimeout(function(){e.classList.remove('pgin')},500)}
+[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.onclick=function(){var t=b.dataset.t,cur={home:'home',prize:'prizes',lead:'lead',set:'setp'}[t];
+ if(cur&&SCR===cur&&!$('sheet')){navScrollTop();return}
+ if(t==='home'){closeSheet();if(SCR!=='home'){renderHome(true);show('home');navEnter('home')}return}
  if(t==='duel'){closeSheet();duelRing();return}
- if(t==='prize'){closeSheet();renderPrizes();show('prizes')}else if(t==='lead'){closeSheet();renderLead('week');show('lead')}else if(t==='set'){SETPAGE=true;openSettings();SETPAGE=false}}});
+ if(t==='prize'){closeSheet();renderPrizes();show('prizes');navEnter('prizes')}else if(t==='lead'){closeSheet();renderLead('week');show('lead');navEnter('lead')}else if(t==='set'){SETPAGE=true;openSettings();SETPAGE=false;navEnter('setp')}}});
 var DUEL=[
 {who:'فيصل · قسم الحماية',num:'+965 6••• ••41',turns:[
  {say:'مساك الله بالخير، معاك فيصل من قسم الحماية في البنك. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك.',tac:'انتحال صفة',o:[
@@ -2270,7 +2275,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26z4';
+var BUILD='2026-11-26z6';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
