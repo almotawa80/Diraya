@@ -1016,7 +1016,7 @@ function openSettings(){
  $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);flip('tgSound',S.sound);if(S.sound)sfx.ding()};
  $('tgVoice').onclick=function(){S.voice=!S.voice;store.voice=S.voice;save(store);flip('tgVoice',S.voice);if(S.voice)speak('القراءة الصوتية تعمل');else hush()};
  $('tgBig').onclick=function(){S.big=!S.big;store.big=S.big;save(store);flip('tgBig',S.big);renderHome()};
- $('whoM').onclick=function(){if(G('a','b')!=='a'){store.fem=0;save(store);location.reload()}};$('whoF').onclick=function(){if(G('a','b')!=='b'){store.fem=1;save(store);location.reload()}};
+ var setW=function(f){store.fem=f?1:0;S.fem=!!f;save(store);$('whoM').classList.toggle('on',!f);$('whoF').classList.toggle('on',!!f);renderHome(true)};$('whoM').onclick=function(){setW(0)};$('whoF').onclick=function(){setW(1)};
  var rs=$('tgReset');rs.onclick=function(){if(!rs.classList.contains('sure')){rs.classList.add('sure');rs.querySelector('.slab').textContent='متأكد؟ اضغط مرة ثانية';rs.querySelector('small').textContent='ما تقدر ترجع التقدم بعدها';return}try{localStorage.removeItem('ranna.v2')}catch(e){}location.href=location.pathname};
  if(all)$('tgPro').onclick=function(){S.pro=!S.pro;flip('tgPro',S.pro);renderHome()};
 }
