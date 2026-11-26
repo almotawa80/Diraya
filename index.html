@@ -745,7 +745,7 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 @keyframes stgoP{50%{box-shadow:0 4px 22px rgba(227,190,124,.7)}}
 /* game map (Khalid 2026-11-26, concept 3) */
 #home{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
-#home .map.world{transition:opacity .35s;display:block!important;position:relative;aspect-ratio:733/1900;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))!important;width:auto!important;max-width:none!important;padding:0!important;flex:none;background:url(img/map/bg2.webp?v=r) bottom center/100% auto no-repeat;border-radius:0!important}
+#home .map.world{transition:opacity .35s;display:block!important;position:relative;aspect-ratio:733/1900;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))!important;width:auto!important;max-width:none!important;padding:0!important;flex:none;background:url(img/map/bg2.webp?v=s) bottom center/100% auto no-repeat;border-radius:0!important}
 #home .map.world::before{content:"";position:absolute;inset:0 0 auto 0;height:7%;border:0;transform:none;left:0;top:0;bottom:auto;background:linear-gradient(var(--ink,#232C5A),transparent)}
 #home .map.world::after{content:"";position:absolute;inset:auto 0 0 0;height:5%;background:linear-gradient(transparent,var(--ink,#232C5A))}
 #home .map.world .stg{position:absolute!important;display:block!important;width:19%;padding:0!important;transform:translate(-50%,-62%);z-index:2;opacity:1}
@@ -799,9 +799,9 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
     <div class="challenge" id="challenge" hidden></div>
 
     <div class="wallet whud">
-      <div class="wc"><img src="img/map/hMed.webp?v=r" alt=""><span><b><span id="hMedals">0</span>/<span id="hTot">10</span></b><small>ميداليات</small></span></div><i></i>
-      <div class="wc"><img src="img/map/hShd.webp?v=r" alt=""><span><b id="hShields">0</b><small>دروع</small></span></div><i></i>
-      <div class="wc"><img src="img/map/hWal.webp?v=r" alt=""><span><b><span id="hWallet">1,000</span> <small style="display:inline" class="cur">د.ك</small></b><small id="hWl">محفظتك</small></span></div>
+      <div class="wc"><img src="img/map/hMed.webp?v=s" alt=""><span><b><span id="hMedals">0</span>/<span id="hTot">10</span></b><small>ميداليات</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hShd.webp?v=s" alt=""><span><b id="hShields">0</b><small>دروع</small></span></div><i></i>
+      <div class="wc"><img src="img/map/hWal.webp?v=s" alt=""><span><b><span id="hWallet">1,000</span> <small style="display:inline" class="cur">د.ك</small></b><small id="hWl">محفظتك</small></span></div>
     </div>
 
     <button class="daily" id="daily" style="display:none"></button>
@@ -857,11 +857,11 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
   <!-- FLIP -->
   <section class="screen scroll" id="flip" hidden></section>
   <nav class="nav" id="nav" aria-label="القائمة">
-    <button class="ntab on" data-t="home"><img class="nic" src="img/map/tHome.webp?v=r" alt="">الرئيسية</button>
-    <button class="ntab" data-t="prize"><img class="nic" src="img/map/tPrize.webp?v=r" alt="">الجوائز</button>
-    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/map/tFox.webp?v=r" alt=""></div><span>واجه بو حيلة</span></button>
-    <button class="ntab" data-t="lead"><img class="nic" src="img/map/tLead.webp?v=r" alt="">المتصدرين</button>
-    <button class="ntab" data-t="set"><img class="nic" src="img/map/tSet.webp?v=r" alt="">الإعدادات</button>
+    <button class="ntab on" data-t="home"><img class="nic" src="img/map/tHome.webp?v=s" alt="">الرئيسية</button>
+    <button class="ntab" data-t="prize"><img class="nic" src="img/map/tPrize.webp?v=s" alt="">الجوائز</button>
+    <button class="ntab mid" data-t="duel" aria-label="واجه بو حيلة"><div class="orb"><img src="img/map/tFox.webp?v=s" alt=""></div><span>واجه بو حيلة</span></button>
+    <button class="ntab" data-t="lead"><img class="nic" src="img/map/tLead.webp?v=s" alt="">المتصدرين</button>
+    <button class="ntab" data-t="set"><img class="nic" src="img/map/tSet.webp?v=s" alt="">الإعدادات</button>
   </nav>
 </div>
 
@@ -1203,7 +1203,7 @@ function renderHome(keep){logoFox();
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.style.left=(p[0]/7.33)+'%';b.style.top=((p[1]-246)/19)+'%';
   var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
-  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=r\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=r\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
+  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=s\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=s\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
   b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
  if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>1)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
  renderDaily();var c=$('challenge');
@@ -1965,10 +1965,10 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  /* wait for the map images so the home map appears complete (Khalid 2026-11-26) */
  var minT=sp.className==='quick'?500:2200,t0=Date.now(),list=['bg2','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','lock','m1','m2','m3','hWal','hShd','hMed','tHome','tPrize','tFox','tLead','tSet'],left=list.length;
  function one(){if(--left>0)return;var w=Math.max(0,minT-(Date.now()-t0));setTimeout(hide,w)}
- list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=r'});
+ list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26s';
+var BUILD='2026-11-26t';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
