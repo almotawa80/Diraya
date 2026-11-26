@@ -108,7 +108,7 @@
 .mfox{width:3.6rem;height:3.6rem;border-radius:50%;background:var(--ink2);border:3px solid var(--coral);overflow:hidden;display:grid;place-items:center}
 .mfox svg{width:100%;height:100%}
 #home #pick{display:none}
-#home #start{position:sticky;bottom:.6rem;z-index:5;box-shadow:0 8px 22px rgba(14,19,48,.55)}
+#home #start{position:sticky;bottom:calc(5.6rem + env(safe-area-inset-bottom,0px));z-index:5;box-shadow:0 8px 22px rgba(14,19,48,.55)}
 #play .score,#play .foe{display:none!important}
 #play .hud{gap:.7rem}
 #play .hud .bal{flex:1}
@@ -646,13 +646,14 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .brand p#tagline{white-space:nowrap;font-weight:600!important;color:var(--fg)!important;opacity:.85;font-size:clamp(.6rem,3.25vw,.9rem)!important;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:360px){.brand{gap:.6rem!important}.brand .bell{width:3.1rem!important;height:3.1rem!important}}
 /* Bottom bar + «واجه بو حيلة» call duel (Khalid approved 2026-11-26) */
-.nav{flex-shrink:0;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px))) -.75rem;padding:.35rem 0 calc(.45rem + env(safe-area-inset-bottom,0px));background:#1A2149;border-top:1px solid rgba(246,246,240,.08)}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:3;max-width:460px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;padding:.3rem 0 max(.45rem,env(safe-area-inset-bottom,0px));background:rgba(26,33,73,.45);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);border-top:1px solid rgba(246,246,240,.1)}
+#home,#prizes,#lead,#setp{padding-bottom:calc(6.2rem + env(safe-area-inset-bottom,0px))!important}
 .nav[hidden]{display:none!important}
 .ntab{background:none;border:0;color:#B9BCD3;font:600 .68rem var(--body,Cairo);display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.2rem 0;min-height:44px;justify-content:flex-end}
 .ntab svg{width:1.4rem;height:1.4rem}.ntab.on{color:var(--saffron)}
-.ntab.mid{margin-top:-1.15rem}.ntab.mid .orb{width:4.1rem;height:4.1rem;border-radius:50%;background:radial-gradient(circle at 50% 35%,#F2D39A,var(--saffron));display:grid;place-items:center;box-shadow:0 0 0 5px #1A2149,0 6px 20px rgba(227,190,124,.4);animation:orbP 2.2s infinite}
+.ntab.mid{margin-top:-1.6rem;position:relative;z-index:1}.ntab.mid .orb{width:4.1rem;height:4.1rem;border-radius:50%;background:radial-gradient(circle at 50% 35%,#F2D39A,var(--saffron));display:grid;place-items:center;box-shadow:0 0 0 4px rgba(26,33,73,.85),0 6px 20px rgba(227,190,124,.4);animation:orbP 2.2s infinite}
 .ntab.mid img{width:3.3rem;height:3.3rem;object-fit:contain}.ntab.mid span{color:var(--saffron);font-weight:800;white-space:nowrap}
-@keyframes orbP{50%{box-shadow:0 0 0 5px #1A2149,0 6px 30px rgba(227,190,124,.75)}}
+@keyframes orbP{50%{box-shadow:0 0 0 4px rgba(26,33,73,.85),0 6px 30px rgba(227,190,124,.75)}}
 #gear,#vault{display:none!important}.foot2{grid-template-columns:1fr!important}
 .duel{position:fixed;inset:0;height:100dvh;z-index:50;background:linear-gradient(180deg,#151B3E,#232C5A);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + .7rem) 1rem calc(env(safe-area-inset-bottom,0px) + .8rem);max-width:460px;margin:0 auto;color:var(--fg)}
 .duel .dtop{display:flex;align-items:center;gap:.6rem}
@@ -684,6 +685,44 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
 .duel .muted{color:#B9BCD3;font-size:.88rem;line-height:1.6}
 .lbrow{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.06);border-radius:12px;padding:.6rem .8rem;margin:.35rem 0}.lbrow b{color:var(--saffron)}
 .mdgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin:.3rem 0 .6rem}.mdgrid div{background:rgba(255,255,255,.06);border-radius:10px;text-align:center;padding:.35rem 0;font-size:.7rem}.mdgrid div i{display:block;font-style:normal;font-size:1.25rem}.mdgrid .off{opacity:.35}
+/* Full pages: prizes and leaderboard (Khalid 2026-11-26) */
+#prizes,#lead,#setp{gap:.9rem;padding-bottom:1rem}#setp .sgroup{margin-top:.2rem}
+.pghead h2{margin:0;font-size:1.6rem;font-weight:900}.pghead p{margin:.1rem 0 0;color:var(--muted);font-size:.9rem}
+.pgcard{background:rgba(255,255,255,.06);border-radius:18px;padding:.9rem}
+.pgcard h4{margin:0 0 .6rem;font-size:1rem;font-weight:800;display:flex;justify-content:space-between;align-items:center}.pgcard h4 small{font-weight:600;color:var(--muted);font-size:.78rem}
+.nextbar{height:.6rem;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin:.45rem 0 .25rem}.nextbar i{display:block;height:100%;background:linear-gradient(90deg,var(--tq),#7FE8DA);border-radius:9px}
+.mdls{display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem .3rem}
+.mdl{min-width:0;display:flex;flex-direction:column;align-items:center;gap:.25rem;font-size:.62rem;color:var(--muted);text-align:center;line-height:1.25}
+.mdl b{width:min(3rem,11.5vw);height:min(3rem,11.5vw);border-radius:50%;display:grid;place-items:center;font-size:1.05rem;font-weight:900;color:#3a2a10;position:relative;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),0 3px 8px rgba(0,0,0,.25)}
+.mdl b::after{content:'';position:absolute;inset:4px;border-radius:50%;border:2px solid rgba(255,255,255,.45)}
+.mdl.m1 b{background:radial-gradient(circle at 35% 30%,#F3C3A2,#C77D4F 60%,#8E5230)}
+.mdl.m2 b{background:radial-gradient(circle at 35% 30%,#FFFFFF,#C9D2E3 55%,#8E99B0)}
+.mdl.m3 b{background:radial-gradient(circle at 35% 30%,#FFF3C4,#E3BE7C 55%,#B4873A);animation:shine 3s infinite}
+.mdl.m0 b{background:rgba(255,255,255,.07);color:rgba(246,246,240,.35);box-shadow:none}.mdl.m0 b::after{border-color:rgba(255,255,255,.08)}
+@keyframes shine{50%{filter:brightness(1.18)}}
+.ach{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-top:1px solid rgba(255,255,255,.06)}.ach:first-of-type{border-top:0}
+.ach .ai{width:2.5rem;height:2.5rem;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;background:rgba(255,255,255,.08);flex-shrink:0}
+.ach.done .ai{background:var(--saffron)}
+.ach .at{flex:1;min-width:0}.ach .at b{display:block;font-size:.92rem}.ach .at small{color:var(--muted);font-size:.75rem}
+.ach .ab{height:.4rem;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:.3rem}.ach .ab i{display:block;height:100%;background:var(--saffron)}
+.ach .an{font-size:.75rem;font-weight:800;color:var(--saffron);white-space:nowrap}
+.rwc{display:flex;gap:.7rem;align-items:center;border-radius:16px;padding:.75rem;background:rgba(255,255,255,.05);margin-top:.5rem;border:1px dashed rgba(255,255,255,.14)}
+.rwc.open{background:linear-gradient(135deg,rgba(227,190,124,.25),rgba(227,190,124,.08));border:1px solid var(--saffron)}
+.rwc .ri{font-size:1.6rem;width:2.6rem;text-align:center}.rwc b{display:block;font-size:.95rem}.rwc small{color:var(--muted);font-size:.78rem}
+.rwc .rs{margin-inline-start:auto;font-size:.72rem;font-weight:800;border-radius:99px;padding:.15rem .6rem;background:rgba(255,255,255,.1);white-space:nowrap}.rwc.open .rs{background:var(--saffron);color:#232C5A}
+.lbtabs{display:flex;background:rgba(255,255,255,.06);border-radius:99px;padding:.25rem}.lbtabs button{flex:1;border:0;background:none;color:var(--muted);font:700 .8rem var(--body,Cairo);padding:.45rem .2rem;border-radius:99px;min-height:38px}.lbtabs .on{background:var(--saffron);color:#232C5A}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:.4rem;margin-top:.4rem}
+.pod{text-align:center}.pod .av{width:3.3rem;height:3.3rem;margin:0 auto .3rem;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1.2rem;color:#232C5A}
+.pod.p1 .av{width:4rem;height:4rem;background:radial-gradient(circle at 35% 30%,#FFF3C4,#E3BE7C 60%,#B4873A);box-shadow:0 0 0 3px rgba(227,190,124,.35)}
+.pod.p2 .av{background:radial-gradient(circle at 35% 30%,#FFFFFF,#C9D2E3 60%,#8E99B0)}.pod.p3 .av{background:radial-gradient(circle at 35% 30%,#F3C3A2,#C77D4F 60%,#8E5230)}
+.pod .nm{font-size:.78rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pod .sc{font-size:.75rem;color:var(--saffron);font-weight:800}
+.pod .blk{margin-top:.35rem;border-radius:12px 12px 0 0;background:rgba(255,255,255,.08);display:grid;place-items:center;font-weight:900;font-size:1.3rem;color:var(--muted)}
+.pod.p1 .blk{height:4.4rem;background:rgba(227,190,124,.22);color:var(--saffron)}.pod.p2 .blk{height:3.2rem}.pod.p3 .blk{height:2.4rem}
+.lbl{display:flex;align-items:center;gap:.7rem;padding:.55rem .75rem;border-radius:14px;background:rgba(255,255,255,.05);margin-top:.4rem}
+.lbl i{font-style:normal;font-weight:900;width:1.7rem;color:var(--muted);text-align:center}.lbl .nm{flex:1;font-weight:700;font-size:.9rem}.lbl em{font-style:normal;font-weight:800;color:var(--saffron)}
+.lbl.me{background:rgba(31,200,180,.14);border:1px solid var(--tq)}
+.pgnote{font-size:.72rem;color:var(--muted);text-align:center}
+.mystats{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}.mystats div{background:rgba(255,255,255,.05);border-radius:12px;padding:.55rem .7rem}.mystats small{display:block;color:var(--muted);font-size:.72rem}.mystats b{font-size:1.1rem;color:var(--saffron)}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -743,6 +782,15 @@ html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-beh
       <button class="b-no" id="bNo">أشك<small id="noSub">أوقف هنا</small></button>
     </div>
   </section>
+
+  <!-- PRIZES -->
+  <section class="screen scroll" id="prizes" hidden></section>
+
+  <!-- SETTINGS PAGE -->
+  <section class="screen scroll" id="setp" hidden></section>
+
+  <!-- LEADERBOARD -->
+  <section class="screen scroll" id="lead" hidden></section>
 
   <!-- REPORT -->
   <section class="screen scroll" id="report" hidden></section>
@@ -1037,7 +1085,7 @@ function bd(s){return '<bdi'+(/^[+\w]/.test(s)?' dir="ltr"':'')+'>'+s+'</bdi>'}
 function plain(s){return s.replace(/\{\{|\}\}|\[\[|\]\]/g,'')}
 function words(it){return plain(it.body+' '+(it.ctx||'').replace(/<[^>]+>/g,'')).trim().split(/\s+/).length}
 function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x}return a}
-function show(id){if(id!=='home'){try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}document.documentElement.scrollTop=0;document.body.scrollTop=0}['home','play','report','flip'].forEach(function(s){$(s).hidden=(s!==id)});var nv=$('nav');if(nv)nv.hidden=(id!=='home');if(id!=='home'){$(id).scrollTop=0;window.scrollTo(0,0)}closeSheet()}
+var SCR='home';function show(id){if(id!=='home'){try{window.scrollTo({top:0,left:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}document.documentElement.scrollTop=0;document.body.scrollTop=0}['home','play','report','flip','prizes','lead','setp'].forEach(function(s){var e=$(s);if(e)e.hidden=(s!==id)});SCR=id;var nv=$('nav');if(nv)nv.hidden=!/^(home|prizes|lead|setp)$/.test(id);if(/^(home|prizes|lead|setp)$/.test(id)&&window.__navOn)window.__navOn(id==='prizes'?'prize':id==='setp'?'set':id);if(id!=='home'){$(id).scrollTop=0;window.scrollTo(0,0)}closeSheet()}
 function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=gx(msg);$('app').appendChild(t);setTimeout(function(){t.remove()},1900)}
 function medalSvg(m){var c=['','var(--bronze)','var(--silver)','var(--saffron)'][m];return '<svg class="medal" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h4l1 6H9zM13 2h4l-2 6h-3z" fill="var(--tq)"/><circle cx="12" cy="15" r="7" fill="'+c+'"/><circle cx="12" cy="15" r="4.300" fill="none" stroke="rgba(15,27,61,.35)" stroke-width="1.400"/></svg>'}
 var SHIELD='<svg class="shd" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.400 9 8 11 4.600-2 8-6 8-11V5z" fill="var(--tq)"/><path d="m8.500 12 2.500 2.500 4.500-5" fill="none" stroke="var(--tq-ink)" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1101,10 +1149,11 @@ function renderHome(keep){logoFox();
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
 }
+var SETPAGE=false;function sheetOrPage(html){if(!SETPAGE)return sheet(html);closeSheet();var pg=$('setp');pg.innerHTML=gx('<div class="pghead"><h2>الإعدادات</h2><p>الصوت والخطاب والتقدم.</p></div>'+html.replace('<div class="shandle"></div><h3>الإعدادات</h3>','').replace('<button class="cta sdone" id="closeS">تم</button>','<button id="closeS" hidden></button>'));show('setp');pg.scrollTop=0;return pg}
 function openSettings(){
  var all=Object.keys(PR.done).length>=STAGES.length;
  function row(id,ico,t,on){return '<button class="srow" id="'+id+'" role="switch" aria-checked="'+on+'"><span class="sic">'+ico+'</span><span class="slab">'+t+'</span><span class="sw'+(on?' on':'')+'"><i></i></span></button>'}
- var s=sheet('<div class="shandle"></div><h3>الإعدادات</h3><div class="sgroup">'+row('tgSound','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>','الأصوات',S.sound)+row('tgVoice','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>','قراءة البطاقات بصوت',S.voice)+row('tgBig','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 9 6l5 12M5.8 14h6.4M15 18l3-7 3 7M15.8 16h4.4"/></svg>','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>','دوري المحترفين',S.pro):'')+'</div>'+
+ var s=sheetOrPage('<div class="shandle"></div><h3>الإعدادات</h3><div class="sgroup">'+row('tgSound','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>','الأصوات',S.sound)+row('tgVoice','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>','قراءة البطاقات بصوت',S.voice)+row('tgBig','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 9 6l5 12M5.8 14h6.4M15 18l3-7 3 7M15.8 16h4.4"/></svg>','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>','دوري المحترفين',S.pro):'')+'</div>'+
   '<div class="sgroup"><div class="srow"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="slab">الخطاب</span><span class="seg2"><button id="whoM" class="'+(G('a','b')==='a'?'on':'')+'">واعي</button><button id="whoF" class="'+(G('a','b')==='b'?'on':'')+'">واعية</button></span></div></div>'+
   '<div class="sgroup"><button class="srow sreset" id="tgReset"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><span class="slab">ابدأ من جديد</span><small>يمسح التقدم والمحفظة</small></button></div><button class="cta sdone" id="closeS">تم</button>');
  s.querySelector('#closeS').onclick=closeSheet;
@@ -1603,7 +1652,7 @@ function lose(amount){
  (function step(n){var k=Math.min(1,(n-t0)/600);el.textContent=fmt(from+(to-from)*k);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to)})(t0);
 }
 function sheet(html){closeSheet();var dm=document.createElement('div');dm.className='dim';dm.id='dim';$('app').appendChild(dm);var s=document.createElement('div');s.className='sheet';s.id='sheet';s.innerHTML=gx(html);$('app').appendChild(s);return s}
-function closeSheet(){var s=$('sheet');if(s)s.remove();s=$('dim');if(s)s.remove();navOn('home')}
+function closeSheet(){var s=$('sheet');if(s)s.remove();s=$('dim');if(s)s.remove();navOn(SCR==='prizes'?'prize':SCR==='lead'?'lead':SCR==='setp'?'set':'home')}
 
 /* ---------- rest stop ---------- */
 var R=null;
@@ -1717,7 +1766,7 @@ if(!store.age)openWho(true);
 window.addEventListener('hashchange',function(){parseHash();if(!$('home').hidden)renderHome()});
 document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.stop();hush()}else if(S.phase==='judge'){timer.last=performance.now()}});
 /* ===== Bottom bar + «واجه بو حيلة» (Khalid approved 2026-11-26) ===== */
-function navOn(t){[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.classList.toggle('on',b.dataset.t===t)})}
+window.__navOn=function(t){navOn(t)};function navOn(t){[].forEach.call(document.querySelectorAll('.ntab'),function(b){b.classList.toggle('on',b.dataset.t===t)})}
 function openPrizes(){var d=PR.done||{},h='<h3>الجوائز والأوسمة<small>أوسمتك في المراحل، والجوائز اللي تنفتح لك</small></h3><div class="mdgrid">';
  for(var n=1;n<=STAGES.length;n++){var m=d[n]||0;h+='<div class="'+(m?'':'off')+'"><i>'+(['🔒','🥉','🥈','🥇'][m])+'</i>'+n+'</div>'}
  var du=store.duel||{};h+='</div>'+(du.wins?'<div class="lbrow"><span>🦊 كشفت بو حيلة في المكالمات</span><b>'+du.wins+' مرة</b></div>':'');
@@ -1734,9 +1783,9 @@ function openLead(){var d=PR.done||{},med=0,du=store.duel||{};for(var k in d)if(
  '<button class="ghost" id="closeS">تم</button>';
  var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;$('dim').onclick=closeSheet}
 [].forEach.call(document.querySelectorAll('.ntab'),function(b){b.onclick=function(){var t=b.dataset.t;
- if(t==='home'){closeSheet();navOn('home');$('home').scrollTo?$('home').scrollTo({top:0,behavior:'smooth'}):($('home').scrollTop=0);return}
+ if(t==='home'){closeSheet();if(SCR!=='home'){renderHome(true);show('home')}else{$('home').scrollTop=0}return}
  if(t==='duel'){closeSheet();duelRing();return}
- if(t==='prize')openPrizes();else if(t==='lead')openLead();else if(t==='set')openSettings();navOn(t)}});
+ if(t==='prize'){closeSheet();renderPrizes();show('prizes')}else if(t==='lead'){closeSheet();renderLead('week');show('lead')}else if(t==='set'){SETPAGE=true;openSettings();SETPAGE=false}}});
 var DUEL=[
 {who:'فيصل · قسم الحماية',num:'+965 6••• ••41',turns:[
  {say:'مساك الله بالخير، معاك فيصل من قسم الحماية في البنك. رصدنا عملية مشبوهة على بطاقتك بـ 480 د.ك.',tac:'انتحال صفة',o:[
@@ -1775,7 +1824,7 @@ var DUEL=[
 ];
 var DU=null;
 function duelEl(){var d=$('duel');if(!d){d=document.createElement('div');d.className='duel';d.id='duel';d.setAttribute('dir','rtl');document.body.appendChild(d)}d.hidden=false;return d}
-function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();DU=null;navOn('home');renderHome(true)}
+function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();DU=null;if(SCR==='prizes')renderPrizes();else if(SCR==='lead')renderLead(LBT);else renderHome(true);navOn(SCR==='prizes'?'prize':SCR==='setp'?'set':SCR)}
 function duelRing(){var last=store.duelLast,pool=DUEL.map(function(_,i){return i}).filter(function(i){return i!==last});var k=pool[Math.floor(Math.random()*pool.length)];store.duelLast=k;save(store);
  DU={sc:DUEL[k],t:0,p:0,clues:[],miss:[],id:Date.now()};var d=duelEl();
  d.innerHTML='<div class="dring"><img src="img/fox-sneaky.png" alt=""><h2>مكالمة واردة</h2><b>'+DU.sc.who+'</b><small class="muted" dir="ltr">'+DU.sc.num+'</small><p class="muted" style="max-width:19rem;margin-top:.4rem">'+gx('بو حيلة متنكّر ويتصل عليك. {اكشف|اكشفي} حيلته، {لقّط|لقّطي} علاماتها، و{سكّر|سكّري} قبل لا ياخذ منك شي.')+'</p><div class="dans"><button style="background:var(--coral)" id="dDec">رفض</button><button style="background:var(--tq)" id="dAcc">رد</button></div></div>';
@@ -1810,9 +1859,47 @@ function duelEnd(r){if(!DU)return;var win=r!=='lose',pts=win?Math.max(50,(r==='w
  (r==='lose'?'<p class="muted">القاعدة: لا رمز ولا بيانات بطاقة ولا تحويل لأي أحد يتصل عليك. {سكّر|سكّري} و{اتصل|اتصلي} بالجهة بنفسك.</p>':'')+
  '<button class="cta" id="dAgain">مكالمة ثانية</button><button class="ghost" id="dBack">رجوع</button></div>');
  DU={id:0,sc:DU.sc,clues:[],miss:[],p:0,t:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
+/* ===== Full prizes and leaderboard pages (Khalid 2026-11-26) ===== */
+function passedMax(){var d=PR.done||{},m=0;for(var k in d)if(d[k]&&+k>m)m=+k;return m}
+function renderPrizes(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';for(n=1;n<=STAGES.length;n++){if(d[n])med++;if(d[n]===3)gold++}
+ var pm=passedMax(),nx=null;REWARDS.forEach(function(r){if(!nx&&!d[r.at])nx=r});
+ h+='<div class="pghead"><h2>الجوائز والأوسمة</h2><p>كل مرحلة {تعدّيها|تعدّينها} تعطيك وسام، والأوسمة تفتح لك الجوائز.</p></div>';
+ h+='<div class="pgcard"><h4>'+(nx?'الجائزة الجاية: '+nx.t:'{فتحت|فتحتي} كل الجوائز 🎉')+'<small>'+med+' / '+STAGES.length+' وسام</small></h4>'+
+  (nx?'<div class="nextbar"><i style="width:'+Math.round(pm/nx.at*100)+'%"></i></div><small class="pgnote" style="text-align:right;display:block">باقي لك '+(nx.at-pm===1?'مرحلة وحدة':(nx.at-pm===2?'مرحلتين':(nx.at-pm)+' مراحل'))+'</small>':'')+'</div>';
+ h+='<div class="pgcard"><h4>خزانة الأوسمة<small>🥇 '+gold+' ذهبي</small></h4><div class="mdls">';
+ for(n=1;n<=STAGES.length;n++){var m=d[n]||0;h+='<div class="mdl m'+m+'"><b>'+(m?n:'🔒')+'</b>'+STAGES[n-1].n+'</div>'}
+ h+='</div></div>';
+ var A=[['📞','كاشف المكالمات','{افز|افزي} على بو حيلة في 5 مكالمات',du.wins||0,5],
+  ['🔥','سلسلة الوعي','{العب|العبي} تحدي اليوم 7 أيام ورا بعض',(PR.daily&&PR.daily.streak)||0,7],
+  ['🥇','ثلاث ذهبيات','{احصل|احصلي} على الذهبي في 3 مراحل',gold,3],
+  ['🏅','جامع الأوسمة','وسام في كل المراحل',med,STAGES.length],
+  ['🦊','هازم بو حيلة','{عدّ|عدّي} المرحلة الأخيرة',d[STAGES.length]?1:0,1]];
+ h+='<div class="pgcard"><h4>الإنجازات<small>'+A.filter(function(a){return a[3]>=a[4]}).length+' / '+A.length+'</small></h4>'+A.map(function(a){var v=Math.min(a[3],a[4]),ok=v>=a[4];
+  return '<div class="ach'+(ok?' done':'')+'"><span class="ai">'+a[0]+'</span><div class="at"><b>'+a[1]+'</b><small>'+a[2]+'</small><div class="ab"><i style="width:'+Math.round(v/a[4]*100)+'%"></i></div></div><span class="an">'+(ok?'✓':v+' / '+a[4])+'</span></div>'}).join('')+'</div>';
+ h+='<div class="pgcard"><h4>الجوائز<small>أمثلة توضيحية</small></h4>'+REWARDS.map(function(r){var open=!!d[r.at],left=r.at-pm;
+  return '<div class="rwc'+(open?' open':'')+'"><span class="ri">'+(open?'🎁':'🔒')+'</span><div><b>'+r.t+'</b><small>'+r.s+'</small></div><span class="rs">'+(open?'مفتوحة':(left===1?'باقي مرحلة':(left===2?'باقي مرحلتين':'باقي '+left+' مراحل')))+'</span></div>'}).join('')+
+  '<div class="fact" style="margin-top:.7rem"><small>قاعدة الجوائز</small>جائزتك الحقيقية تظهر داخل تطبيق البنك الرسمي فقط. لا رابط، لا رسالة، ولا طلب بيانات بطاقة. أي «جائزة» تطلب بياناتك احتيال.</div></div>';
+ $('prizes').innerHTML=gx(h);$('prizes').scrollTop=0}
+var LBT='week',LBD={
+ week:[['صقر_الجهراء',4820],['أم_فهد_الواعية',4515],['كاشف_الحيل',4210],['بو_سالم',3980],['نوره.ك',3720],['ذيب_الفروانية',3410],['شهد_2009',3105],['أبو_عبدالله',2890],['مريوم',2640],['حارس_المحفظة',2400]],
+ all:[['كاشف_الحيل',18450],['صقر_الجهراء',17920],['أم_فهد_الواعية',16880],['الواعي_الأول',15210],['بو_سالم',14760],['نوره.ك',13990],['دانة_الخليج',12430],['ذيب_الفروانية',11880],['أبو_عبدالله',10950],['شهد_2009',10120]],
+ duel:[['ما_يمرّ_علي',650],['كاشف_الحيل',650],['أم_فهد_الواعية',600],['صقر_الجهراء',600],['حارس_المحفظة',550],['نوره.ك',550],['بو_سالم',500],['مريوم',450],['الواعي_الأول',400],['دانة_الخليج',350]]};
+function myPts(t){var du=store.duel||{},d=PR.done||{},med=0;for(var k in d)if(d[k])med+=d[k];
+ if(t==='duel')return du.best||0;var base=Math.max(0,Math.round(PR.wallet))+med*150+(du.wins||0)*50;return t==='week'?Math.round(base*.35):base}
+function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach(function(x){if(x[1]>me)rank++});
+ var unit=t==='duel'?'أعلى نقاط في مكالمة':'نقطة';
+ var h='<div class="pghead"><h2>المتصدرين</h2><p>ألقاب يختارها اللاعبين، بدون أسماء ولا أرقام.</p></div>'+
+ '<div class="lbtabs">'+[['week','هالأسبوع'],['all','الكل'],['duel','واجه بو حيلة']].map(function(x){return '<button data-l="'+x[0]+'" class="'+(x[0]===t?'on':'')+'">'+x[1]+'</button>'}).join('')+'</div>'+
+ '<div class="podium">'+[1,0,2].map(function(i){var x=L[i];return '<div class="pod p'+(i+1)+'"><div class="av">'+x[0].charAt(0)+'</div><div class="nm">'+x[0]+'</div><div class="sc">'+x[1].toLocaleString('en-US')+'</div><div class="blk">'+(i+1)+'</div></div>'}).join('')+'</div>'+
+ L.slice(3).map(function(x,i){return '<div class="lbl"><i>'+(i+4)+'</i><span class="nm">'+x[0]+'</span><em>'+x[1].toLocaleString('en-US')+'</em></div>'}).join('')+
+ '<div class="lbl me"><i>'+(rank>10?'+10':rank)+'</i><span class="nm">أنت</span><em>'+me.toLocaleString('en-US')+'</em></div>'+
+ '<p class="pgnote">ترتيب اللاعبين الحالي أرقام توضيحية، لين نربطه بالأرقام الحقيقية. '+unit+'.</p>';
+ var du=store.duel||{},d=PR.done||{},med=0;for(var k in d)if(d[k])med++;
+ h+='<div class="pgcard"><h4>أرقامك</h4><div class="mystats"><div><small>محفظتك</small><b>'+fmt(PR.wallet)+'</b></div><div><small>الأوسمة</small><b>'+med+' / '+STAGES.length+'</b></div><div><small>أعلى نقاط مع بو حيلة</small><b>'+(du.best||0)+'</b></div><div><small>مكالمات كشفتها</small><b>'+(du.wins||0)+' / '+(du.plays||0)+'</b></div></div></div>';
+ $('lead').innerHTML=gx(h);[].forEach.call($('lead').querySelectorAll('.lbtabs button'),function(b){b.onclick=function(){renderLead(b.dataset.l)}})}
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26e';
-function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel'))return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
+var BUILD='2026-11-26i';
+function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 setTimeout(checkUpdate,800);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
 </script>
