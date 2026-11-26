@@ -543,8 +543,8 @@ html{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.fx2 *{animation:none!important}}
 
 #stage #foeAva{width:6.2rem;height:6.2rem;flex:none;align-self:center;margin:-.3rem 0 -.5rem;position:relative;z-index:3;filter:drop-shadow(0 6px 10px rgba(35,44,90,.3))}
-#stage .cardwrap{align-items:center;flex:0 1 auto}
-#stage #foeAva{margin-top:auto!important;width:7rem!important;height:7rem!important}
+#stage .cardwrap{align-items:flex-start;flex:0 1 auto}
+#stage #foeAva{margin:0!important;width:7rem!important;height:7rem!important}
 #stage .tbar{margin-top:auto}
 #stage .gpop{inset:auto 0 1.6rem 0!important}
 #bIn{display:none!important}
@@ -1473,7 +1473,7 @@ function renderFlip(){
 }
 
 /* ---------- boot ---------- */
-(function(){var h=document.querySelector('#play .hud'),fa=$('foeAva'),cb=$('combo');if(fa){var sg=$('stage');sg.insertBefore(fa,$('cardwrap'));}if(h&&cb)h.insertBefore(cb,$('quit'))})();
+(function(){var h=document.querySelector('#play .hud'),fa=$('foeAva'),cb=$('combo');if(fa){var sg=$('stage');sg.insertBefore(fa,$('ctx'));}if(h&&cb)h.insertBefore(cb,$('quit'))})();
 window.__ranna=S;window.__face=face;setProfile();parseHash();renderHome();
 function openWho(first){
  var s=sheet('<h3>أهلًا! كيف نخاطبك؟<small>نستخدمها لصيغة الكلام فقط</small></h3><div class="lgrid" style="grid-template-columns:1fr 1fr"><button class="opt" id="wM">واعي</button><button class="opt" id="wF">واعية</button></div>'+(first?'<button class="ghost" id="wS">تخطَّ</button>':''));
