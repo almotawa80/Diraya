@@ -1348,7 +1348,8 @@ var sfx={
  good:function(){tone(523,0,.12,'triangle');tone(659,.09,.12,'triangle');tone(784,.18,.25,'triangle');tone(1047,.3,.35,'triangle')},
  mid:function(){tone(523,0,.14,'triangle');tone(494,.12,.22,'triangle')},
  bad:function(){tone(196,0,.22,'sawtooth',.07);tone(139,.16,.4,'sawtooth',.07)},
- tick:function(){tone(1200,0,.04,'square',.03)}
+ tick:function(){tone(1200,0,.04,'square',.03)},
+ minus:function(){if(!S.sound)return;try{var a=sfx._m||(sfx._m=new Audio('audio/minus.mp3?v=1'));a.currentTime=0;a.volume=.9;var p=a.play();if(p&&p.catch)p.catch(function(){sfx.bad()})}catch(e){sfx.bad()}}
 };
 function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
 function speak(txt){if(!S.voice)return;try{var sy=window.speechSynthesis;if(!sy)return;sy.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='ar-SA';u.rate=1;sy.speak(u)}catch(e){}}
@@ -1889,7 +1890,7 @@ function tutJudge(how){
  if(S.i>=TUT.length){var tk=++timer.id;setTimeout(function(){if(timer.id===tk)endTut()},S.i&&900)}else nextCard();
 }
 function lose(amount){
- sfx.bad();buzz([120,60,220]);var el=$('bal'),from=S.bal,to=S.bal-amount,t0=performance.now();S.bal=to;
+ sfx.minus();buzz([120,60,220]);var el=$('bal'),from=S.bal,to=S.bal-amount,t0=performance.now();S.bal=to;
  el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');
  (function step(n){var k=Math.min(1,(n-t0)/600);el.textContent=fmt(from+(to-from)*k);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to)})(t0);
 }
@@ -2166,7 +2167,7 @@ function btPick(v){if(!BT||BT.busy||BT.strk)return;BT.busy=true;var my=BT.id,it=
   msg=it.scam?(v==='ver'?'🛡️ صدّيتها! {تحقّقت|تحقّقتي} من المصدر بنفسك':'🛡️ صدّيتها! {وقّفتها|وقّفتيها} قبل لا تبدأ'):'👌 صح، رسالة سليمة'}
  else if(it.scam&&v!=='ok'||!it.scam&&v==='ver'){var pd=it.scam?4:0;BT.fhp=Math.max(0,BT.fhp-pd);if(pd){btFloat('-'+pd,'f');btFace('shocked')}sfx.hit(1);cls='mid';wait=2300;
   msg=it.scam?'✋ {صدّيتها|صدّيتيها}، بس الأقوى هنا '+BT_NM[want]+'. '+btClean(it.right||''):'👍 التأكد ما يضر، بس كانت سليمة'}
- else{BT.combo=0;var loss=it.scam?100+(it.loss||20)*3:50;BT.bal=Math.max(0,BT.bal-loss);BT.miss.push(it);btFace('laugh');sfx.bad();buzz([120,60,200]);d.classList.add('hurt');setTimeout(function(){d.classList.remove('hurt')},450);
+ else{BT.combo=0;var loss=it.scam?100+(it.loss||20)*3:50;BT.bal=Math.max(0,BT.bal-loss);BT.miss.push(it);btFace('laugh');sfx.minus();buzz([120,60,200]);d.classList.add('hurt');setTimeout(function(){d.classList.remove('hurt')},450);
   btFloat('-'+btMoney(loss)+' د.ك','me');cls='no';wait=2600;
   msg=it.scam?'💸 كانت حيلة: '+btClean(it.tell||''):'كانت رسالة سليمة، لا {توقف|توقفين} كل شي'}
  $('bAtk').insertAdjacentHTML('beforeend',gx('<div class="bres '+cls+'">'+msg+'</div>'));btBars();btMeter();BT.r++;
@@ -2275,7 +2276,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26z6';
+var BUILD='2026-11-26z7';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
