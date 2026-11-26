@@ -805,16 +805,16 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 .duel .bhp.me i{background:linear-gradient(90deg,#1FC8B4,#6ff0de)}.duel .bhp.fx i{background:linear-gradient(90deg,#ff9b45,#FF6B6B)}
 .duel .bbar.low i{animation:bLow .6s infinite}@keyframes bLow{50%{opacity:.45}}
 .duel .bfox{position:relative;display:flex;justify-content:center;margin:.6rem 0 .2rem;flex-shrink:0}
-.duel .bfox img{width:7.5rem;height:7.5rem;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45))}
+.duel .bfox img{width:min(9rem,22vh);height:min(9rem,22vh);object-fit:contain;filter:drop-shadow(0 8px 10px rgba(0,0,0,.45))}
 .duel .bround{position:absolute;top:0;inset-inline-start:0;background:rgba(242,183,49,.15);color:var(--saffron);font-weight:800;font-size:.8rem;border-radius:99px;padding:.1rem .7rem}
-.duel .batk{flex:1 1 0;min-height:0;overflow:auto;background:#F6F6F0;color:#232C5A;border-radius:18px;padding:.8rem .9rem;box-shadow:0 8px 20px rgba(0,0,0,.35);position:relative}
+.duel .batk{flex:0 1 auto;min-height:0;max-height:100%;overflow:auto;margin:.9rem 0 auto;background:#F6F6F0;color:#232C5A;border-radius:18px;padding:.8rem .9rem;box-shadow:0 8px 20px rgba(0,0,0,.35);position:relative}
 .duel .batk.in{animation:bAtk .4s cubic-bezier(.3,1.5,.5,1)}@keyframes bAtk{from{transform:translateY(-30px) scale(.9);opacity:0}}
-.duel .batk::before{content:"⚔ هجوم";position:absolute;top:-.7rem;inset-inline-start:1rem;background:#FF6B6B;color:#fff;font-size:.7rem;font-weight:900;border-radius:99px;padding:0 .6rem}
+.duel .batk{overflow:visible}.duel .batk::before{content:"⚔ هجوم";position:absolute;top:-.75rem;line-height:1.5;inset-inline-start:1rem;background:#FF6B6B;color:#fff;font-size:.7rem;font-weight:900;border-radius:99px;padding:0 .6rem}
 .duel .bfrom{display:flex;align-items:baseline;gap:.5rem;border-bottom:1px solid #dcdcd4;padding-bottom:.35rem;margin-bottom:.4rem}.duel .bfrom b{font-size:.95rem}.duel .bfrom small{color:#6b6f88;font-size:.72rem}
 .duel .batk p{margin:0;line-height:1.7;font-size:.98rem}
 .duel .bres{margin-top:.6rem;border-radius:12px;padding:.45rem .65rem;font-weight:800;font-size:.88rem;line-height:1.6;animation:dIn .25s}
 .duel .bres.ok{background:#d7f7f2;color:#0e6b5f}.duel .bres.no{background:#ffe1e1;color:#a02a2a}
-.duel .btime{height:.4rem;border-radius:99px;background:rgba(255,255,255,.1);margin:.55rem 0;overflow:hidden;flex-shrink:0}.duel .btime i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#FF6B6B,#F2B731)}
+.duel .btime{margin-top:auto!important;height:.4rem;border-radius:99px;background:rgba(255,255,255,.1);margin:.55rem 0;overflow:hidden;flex-shrink:0}.duel .btime i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#FF6B6B,#F2B731)}
 .duel .bbtns{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;flex-shrink:0}
 .duel .bbtns button{border:0;border-radius:16px;min-height:3.6rem;font:900 1.15rem Cairo,sans-serif;color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.3)}
 .duel .bbtns button:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.3)}
@@ -829,6 +829,14 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 .duel .bstats{display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}.duel .bstats span{background:#2E3870;border-radius:99px;padding:.15rem .7rem;font-size:.82rem;font-weight:700}
 .duel .bmh{font-size:.95rem;margin:.9rem 0 0;text-align:right}
 .duel .bend li small{color:#9FF2E6}
+/* awareness index on prizes page */
+.ixcard{display:flex!important;align-items:center;gap:1rem}
+.ixring{--p:0;flex:none;width:6.2rem;height:6.2rem;border-radius:50%;display:grid;place-content:center;text-align:center;background:radial-gradient(closest-side,#232C5A 78%,transparent 80% 100%),conic-gradient(var(--tq) calc(var(--p)*1%),rgba(255,255,255,.1) 0)}
+.ixring b{font-size:2rem;font-weight:900;line-height:1;color:#F6F6F0}.ixring small{font-size:.7rem;color:var(--muted)}
+.ixtx{flex:1;min-width:0}.ixtx h4{margin:0 0 .2rem}.ixtx p{margin:0;font-size:.88rem;line-height:1.6;color:var(--muted)}.ixtx .ixw{color:#F6F6F0}
+.ixgo{margin-top:.45rem;border:0;border-radius:99px;background:var(--tq);color:#0E2B33;font:800 .85rem Cairo,sans-serif;padding:.3rem .9rem}
+.ixmore{margin-top:.45rem;margin-inline-start:.4rem;border:0;background:none;color:var(--saffron);font:700 .85rem Cairo,sans-serif;text-decoration:underline}
+.tot.ixl small.up{color:var(--tq)}.tot.ixl small.dn{color:var(--coral)}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -859,7 +867,7 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
     <button class="cta" id="start">ابدأ المرحلة 1</button>
 
     <div class="homefoot">
-      <div class="foot2"><button class="ghost" id="vault">خزنة الجوائز</button><button class="ghost" id="idx">مؤشر الوعي</button></div>
+      <div class="foot2"><button class="ghost" id="vault">خزنة الجوائز</button></div>
       <p class="fine">نموذج توعوي. كل الأسماء والأرقام وهمية.</p>
     </div>
   </section>
@@ -1281,7 +1289,7 @@ function openVault(){
   '<div class="fact"><small>قاعدة الجوائز</small>'+(kid()?'يستلمها أهلك من تطبيق البنك الرسمي فقط.':'جائزتك الحقيقية تظهر داخل تطبيق البنك الرسمي فقط.')+' لا رابط، لا رسالة، ولا طلب بيانات بطاقة. أي «جائزة» تطلب بياناتك احتيال.</div><button class="ghost" id="closeS">تم</button>';
  var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;
 }
-$('vault').onclick=openVault;$('idx').onclick=function(){openIndex()};
+$('vault').onclick=openVault;
 
 /* ---------- index, daily, drill ---------- */
 var GRP={msg:'الرسائل والروابط',call:'المكالمات',chat:'المحادثات والسوشال',life:'المواقف المباشرة',safe:'تمييز السليم من الاحتيال'};
@@ -1322,7 +1330,7 @@ function startStage(n,cu){
  var st=cu||STAGES[n-1],items=st.ids.map(function(id){return BYID[id]});if(!cu||cu.kind!=='daily')items=shuffle(items);
  if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
  if(!cu)items=buildMode(st,items,n);
- S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
+ S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.ixB=ixCalc();S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
  S.rapid=!cu&&st.m==='rapid';S.shields=PR.shields;S.lens=S.pro?0:Math.max(1,AGE[S.age].lens-(cu?0:Math.floor((n-1)/4)))+((PR.adapt||1)>1.1?1:0);S.phase='idle';
  S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:(PR.adapt||1));S.perWord=.62-.22*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;
@@ -1793,7 +1801,7 @@ function renderRest(){
    (R.pass?'<div><span>جائزة المرحلة</span><b class="plus">+'+fmt(R.reward)+'</b></div>':'<div><span>جائزة المرحلة ضاعت</span><b class="minus">'+fmt(S.pot)+'</b></div>')+
    (S.loot>0?'<div><span>أخذه بو حيلة</span><b class="minus">−'+fmt(S.loot)+'</b></div>':'')+
    ((R.refillMsg&&R.refillAmt>0)?'<div><span>'+R.refillMsg+'</span><b class="plus">+'+fmt(R.refillAmt)+'</b></div>':'')+
-   '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div></div>'+
+   '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div>'+(function(){var a=ixCalc(),b=S.ixB||{n:0};if(a.n<3)return '';var dd=b.n>=3?a.p-b.p:0;return '<div class="tot ixl"><span>مؤشر وعيك</span><b>'+a.p+(dd?' <small class="'+(dd>0?'up':'dn')+'">('+(dd>0?'+':'')+dd+')</small>':'')+'</b></div>'})()+'</div>'+
   (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} بكرة لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>خذ راحتك.</b> زدنا الوقت وتلميحًا إضافيًا في المحاولة الجاية.</span></div>':'')+'</div>';
  var nxt=S.stage+1;
  if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+'ونبدأ لك رصيد تدريبي 100 '+CUR()+'.'+'</p>';
@@ -1976,7 +1984,7 @@ function btPool(){var a=pool().filter(function(x){return x&&!x.kind&&x.body&&x.c
  return shuffle(sc.slice(0,7).concat(ok.slice(0,3)))}
 function duelRing(){var my=Date.now();BT={hp:100,fhp:100,r:0,items:btPool(),combo:0,best:0,id:my,miss:[],hits:0,fast:0};DU={id:my};
  var d=duelEl(),lvl=Object.keys(PR.done||{}).length;
- d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=1" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
+ d.innerHTML='<div class="bvs"><div class="bvsT"><img class="bav" src="img/duel/'+G('he','she')+'.webp?v=2" alt=""><b>'+G('أنت','أنتِ')+'</b><span class="blv">'+lvl+' ميداليات</span></div>'+
   '<img class="bvsMid" src="img/duel/vs.webp?v=1" alt="VS">'+
   '<div class="bvsB"><span class="blv">زعيم الحيل</span><b>بو حيلة</b><img class="bav" src="img/duel/fox.webp?v=1" alt=""></div>'+
   '<div class="bcd" id="bCd">3</div><button class="bxv" id="dX" aria-label="خروج">✕</button></div>';
@@ -1985,7 +1993,7 @@ function duelRing(){var my=Date.now();BT={hp:100,fhp:100,r:0,items:btPool(),comb
   if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)btArena()},550)}},800)}
 function btArena(){var d=duelEl();
  d.innerHTML='<div class="btop"><button class="dx" id="dX" aria-label="خروج">✕</button>'+
-  '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=1" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN">100</b></div>'+
+  '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=2" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN">100</b></div>'+
   '<div class="bhp fx"><img class="bmini" src="img/duel/fox.webp?v=1" alt=""><div class="bbar"><i id="bFx"></i></div><b id="bFxN">100</b></div></div>'+
   '<div class="bfox"><img id="bFace" src="img/fox-sneaky.png" alt=""><span class="bround" id="bRound"></span></div>'+
   '<div class="batk" id="bAtk"></div><div class="btime"><i id="bTime"></i></div>'+
@@ -2027,6 +2035,8 @@ function passedMax(){var d=PR.done||{},m=0;for(var k in d)if(d[k]&&+k>m)m=+k;ret
 function renderPrizes(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';for(n=1;n<=STAGES.length;n++){if(d[n])med++;if(d[n]===3)gold++}
  var pm=passedMax(),nx=null;REWARDS.forEach(function(r){if(!nx&&!d[r.at])nx=r});
  h+='<div class="pghead"><h2>الجوائز والأوسمة</h2><p>كل مرحلة {تعدّيها|تعدّينها} تعطيك وسام، والأوسمة تفتح لك الجوائز.</p></div>';
+ var ix=ixCalc();h+='<div class="pgcard ixcard"><div class="ixring" style="--p:'+(ix.n>=3?ix.p:0)+'"><b>'+(ix.n>=3?ix.p:'؟')+'</b><small>من 100</small></div><div class="ixtx"><h4>مؤشر الوعي</h4>'+
+  (ix.n<3?'<p>{العب|العبي} مرحلة وحدة ويطلع مؤشرك.</p>':'<p>'+(ix.p>=85?'{واعي|واعية} جدًا. بو حيلة يتعب معك.':ix.p>=65?'مستواك زين، وباقي نقاط تحتاج تقوية.':'بو حيلة يلقى ثغرات. التمرين يسدّها.')+'</p>'+(ix.weak&&ix.weak.p<85?'<p class="ixw">أضعف نقطة: <b>'+GRP[ix.weak.g]+'</b></p><button class="ixgo" id="pxDrill">{تمرّن|تمرّني} عليها</button>':'')+'<button class="ixmore" id="pxMore">التفاصيل</button>')+'</div></div>';
  h+='<div class="pgcard"><h4>'+(nx?'الجائزة الجاية: '+nx.t:'{فتحت|فتحتي} كل الجوائز 🎉')+'<small>'+med+' / '+STAGES.length+' وسام</small></h4>'+
   (nx?'<div class="nextbar"><i style="width:'+Math.round(pm/nx.at*100)+'%"></i></div><small class="pgnote" style="text-align:right;display:block">باقي لك '+(nx.at-pm===1?'مرحلة وحدة':(nx.at-pm===2?'مرحلتين':(nx.at-pm)+' مراحل'))+'</small>':'')+'</div>';
  h+='<div class="pgcard"><h4>خزانة الأوسمة<small>🥇 '+gold+' ذهبي</small></h4><div class="mdls">';
@@ -2042,7 +2052,7 @@ function renderPrizes(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';
  h+='<div class="pgcard"><h4>الجوائز<small>أمثلة توضيحية</small></h4>'+REWARDS.map(function(r){var open=!!d[r.at],left=r.at-pm;
   return '<div class="rwc'+(open?' open':'')+'"><span class="ri">'+(open?'🎁':'🔒')+'</span><div><b>'+r.t+'</b><small>'+r.s+'</small></div><span class="rs">'+(open?'مفتوحة':(left===1?'باقي مرحلة':(left===2?'باقي مرحلتين':'باقي '+left+' مراحل')))+'</span></div>'}).join('')+
   '<div class="fact" style="margin-top:.7rem"><small>قاعدة الجوائز</small>جائزتك الحقيقية تظهر داخل تطبيق البنك الرسمي فقط. لا رابط، لا رسالة، ولا طلب بيانات بطاقة. أي «جائزة» تطلب بياناتك احتيال.</div></div>';
- $('prizes').innerHTML=gx(h);$('prizes').scrollTop=0}
+ $('prizes').innerHTML=gx(h);$('prizes').scrollTop=0;var b;if((b=$('pxDrill')))b.onclick=function(){startDrill(ix.weak.g)};if((b=$('pxMore')))b.onclick=function(){openIndex()}}
 var LBT='week',LBD={
  week:[['صقر_الجهراء',4820],['أم_فهد_الواعية',4515],['كاشف_الحيل',4210],['بو_سالم',3980],['نوره.ك',3720],['ذيب_الفروانية',3410],['شهد_2009',3105],['أبو_عبدالله',2890],['مريوم',2640],['حارس_المحفظة',2400]],
  all:[['كاشف_الحيل',18450],['صقر_الجهراء',17920],['أم_فهد_الواعية',16880],['الواعي_الأول',15210],['بو_سالم',14760],['نوره.ك',13990],['دانة_الخليج',12430],['ذيب_الفروانية',11880],['أبو_عبدالله',10950],['شهد_2009',10120]],
@@ -2070,7 +2080,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26v';
+var BUILD='2026-11-26w';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
