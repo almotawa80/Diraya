@@ -1,4 +1,4 @@
-<!doctype html><html><head><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html><head><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* swipe bins: trash on the doubt side (left), saved folder on the trust side (right) */
 .bin{position:absolute;top:46%;width:3.1rem;height:3.1rem;border-radius:16px;display:grid;place-items:center;z-index:4;pointer-events:none;opacity:0;transition:opacity .18s,transform .18s;transform:scale(.8)}
 .bin svg{width:1.7rem;height:1.7rem}
@@ -1670,6 +1670,10 @@ function openWho(first){
 if(!store.age)openWho(true);
 window.addEventListener('hashchange',function(){parseHash();if(!$('home').hidden)renderHome()});
 document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.stop();hush()}else if(S.phase==='judge'){timer.last=performance.now()}});
+/* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
+var BUILD='2026-11-26c';
+function checkUpdate(){if(!$('play').hidden||!$('flip').hidden)return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
+setTimeout(checkUpdate,800);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
 </script>
 
