@@ -1,4 +1,4 @@
-<!doctype html><html><head><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html><head><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="theme-color" content="#232C5A"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* swipe bins: trash on the doubt side (left), saved folder on the trust side (right) */
 .bin{position:absolute;top:46%;width:3.1rem;height:3.1rem;border-radius:16px;display:grid;place-items:center;z-index:4;pointer-events:none;opacity:0;transition:opacity .18s,transform .18s;transform:scale(.8)}
 .bin svg{width:1.7rem;height:1.7rem}
@@ -561,6 +561,35 @@ html{overflow:hidden}
 #play .b-no small{color:rgba(255,255,255,.88)!important}
 
 #binN,#binY{display:none!important}
+
+html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+.card.sp .seg,.card.sp .tell,.card.sp bdi.url{background:rgba(91,180,229,.13);border:1.5px dashed rgba(70,110,190,.55);border-bottom-style:dashed;border-radius:.45rem;padding:.05rem .3rem;margin:0 .08rem;line-height:2.1;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.card.sp .seg.no{background:#ECEAF6;border-color:transparent}
+.card.found .tell,.card.found bdi.url{background:rgba(240,96,93,.16);border:1.5px solid #F0605D}
+
+#stage .tbar{height:14px!important;border-radius:99px;background:rgba(35,44,90,.28)!important;box-shadow:inset 0 1px 2px rgba(0,0,0,.25)!important;overflow:hidden;position:relative;margin-inline:.2rem}
+#stage .tbar i{background:linear-gradient(270deg,#2EC4A6,#E3BE7C)!important;border-radius:99px;box-shadow:0 0 8px rgba(227,190,124,.6);transition:background .3s}
+#stage .tbar.low i{background:linear-gradient(270deg,#F0605D,#FF8A65)!important;box-shadow:0 0 10px rgba(240,96,93,.8);animation:tLow .5s ease-in-out infinite}
+@keyframes tLow{50%{opacity:.55}}
+
+.sheet .shandle{width:2.6rem;height:.3rem;border-radius:99px;background:rgba(246,248,255,.25);margin:-.2rem auto .6rem}
+.sheet h3{margin:0 0 .8rem;font-size:1.35rem}
+.sgroup{background:rgba(246,248,255,.06);border-radius:16px;overflow:hidden;margin-bottom:.8rem}
+.srow{display:flex;align-items:center;gap:.75rem;width:100%;padding:.8rem .9rem;text-align:start;color:var(--fg);font:inherit;font-size:1rem;background:none;border:0}
+.sgroup .srow+.srow{border-top:1px solid rgba(246,248,255,.08)}
+.sic{width:2rem;height:2rem;border-radius:10px;background:rgba(227,190,124,.15);color:#E3BE7C;display:grid;place-items:center;flex:none}
+.sic svg{width:1.15rem;height:1.15rem}
+.slab{flex:1;font-weight:700}
+.sw{width:3rem;height:1.75rem;border-radius:99px;background:rgba(246,248,255,.2);position:relative;flex:none;transition:background .2s}
+.sw i{position:absolute;top:.15rem;right:.15rem;width:1.45rem;height:1.45rem;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:right .2s}
+.sw.on{background:#2EC4A6}.sw.on i{right:1.4rem}
+.seg2{display:flex;background:rgba(246,248,255,.12);border-radius:10px;padding:.15rem;flex:none}
+.seg2 button{padding:.3rem .8rem;border-radius:8px;font-weight:700;font-size:.9rem;color:var(--fg);opacity:.7}
+.seg2 button.on{background:#E3BE7C;color:#232C5A;opacity:1}
+.sreset{flex-wrap:wrap}.sreset .sic{background:rgba(240,96,93,.15);color:#F0605D}.sreset .slab{color:#F0605D}
+.sreset small{width:100%;padding-inline-start:2.75rem;margin-top:-.45rem;opacity:.6;font-size:.8rem}
+.sreset.sure{background:rgba(240,96,93,.15)}
+.sheet .sdone{width:100%;margin-top:.2rem}
 </style>
 
 <div class="app" dir="rtl" lang="ar" id="app">
@@ -952,13 +981,16 @@ function renderHome(keep){logoFox();
 }
 function openSettings(){
  var all=Object.keys(PR.done).length>=STAGES.length;
- function row(id,t,on){return '<button class="opt setrow" id="'+id+'" aria-pressed="'+on+'"><span>'+t+'</span><i>'+(on?'مفعّل':'متوقف')+'</i></button>'}
- var s=sheet('<h3>الإعدادات</h3>'+row('tgSound','الأصوات',S.sound)+row('tgVoice','قراءة صوتية للبطاقات',S.voice)+row('tgBig','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','دوري المحترفين: وقت أقل وبلا تلميح',S.pro):'')+'<button class="opt setrow" id="tgWho"><span>صيغة الخطاب</span><i>'+G('واعي','واعية')+'</i></button><button class="ghost" id="closeS">تم</button>');
+ function row(id,ico,t,on){return '<button class="srow" id="'+id+'" role="switch" aria-checked="'+on+'"><span class="sic">'+ico+'</span><span class="slab">'+t+'</span><span class="sw'+(on?' on':'')+'"><i></i></span></button>'}
+ var s=sheet('<div class="shandle"></div><h3>الإعدادات</h3><div class="sgroup">'+row('tgSound','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>','الأصوات',S.sound)+row('tgVoice','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>','قراءة البطاقات بصوت',S.voice)+row('tgBig','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 9 6l5 12M5.8 14h6.4M15 18l3-7 3 7M15.8 16h4.4"/></svg>','خط أكبر ووقت أطول',S.big)+(all?row('tgPro','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>','دوري المحترفين',S.pro):'')+'</div>'+
+  '<div class="sgroup"><div class="srow"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="slab">صيغة الخطاب</span><span class="seg2"><button id="whoM" class="'+(G('a','b')==='a'?'on':'')+'">واعي</button><button id="whoF" class="'+(G('a','b')==='b'?'on':'')+'">واعية</button></span></div></div>'+
+  '<div class="sgroup"><button class="srow sreset" id="tgReset"><span class="sic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><span class="slab">ابدأ من جديد</span><small>يمسح التقدم والمحفظة</small></button></div><button class="cta sdone" id="closeS">تم</button>');
  s.querySelector('#closeS').onclick=closeSheet;
  $('tgSound').onclick=function(){S.sound=!S.sound;store.sound=S.sound;save(store);openSettings();if(S.sound)sfx.ding()};
  $('tgVoice').onclick=function(){S.voice=!S.voice;store.voice=S.voice;save(store);openSettings();if(S.voice)speak('القراءة الصوتية تعمل');else hush()};
  $('tgBig').onclick=function(){S.big=!S.big;store.big=S.big;save(store);renderHome();openSettings()};
- $('tgWho').onclick=function(){openWho(false)};
+ $('whoM').onclick=function(){if(G('a','b')!=='a'){store.fem=0;save(store);location.reload()}};$('whoF').onclick=function(){if(G('a','b')!=='b'){store.fem=1;save(store);location.reload()}};
+ var rs=$('tgReset');rs.onclick=function(){if(!rs.classList.contains('sure')){rs.classList.add('sure');rs.querySelector('.slab').textContent='متأكد؟ اضغط مرة ثانية';rs.querySelector('small').textContent='ما تقدر ترجع التقدم بعدها';return}try{localStorage.removeItem('ranna.v2')}catch(e){}location.href=location.pathname};
  if(all)$('tgPro').onclick=function(){S.pro=!S.pro;renderHome();openSettings()};
 }
 $('gear').onclick=openSettings;
@@ -1187,7 +1219,11 @@ function buildMode0(st,items,n){
   var a1=ac.filter(function(x){return x.kind==='act'&&(!tp||x.id!==tp.id)})[0];sw=items.filter(function(x){return !x.kind&&(!tp||x.id!==tp.id)&&(!a1||x.id!==a1.id)})[0];
   out=[sw,tp,pr,a1,cl||ac[ac.length-1]].filter(Boolean);return out}
  var tellable=function(x){return x.scam&&x.ch!=='call'&&/\[\[|\{\{/.test(x.body)};
- if(m==='tap'){out=items.filter(tellable).map(function(x){return spCopy(x,'tap')});
+ if(m==='tap'){var allT=shuffle(Object.keys(BYID).map(function(k){return BYID[k]}).filter(function(x){return tellable(x)&&x.a!=='k'})),isL=function(x){return /\[\[[^\]]*\.[a-z]/i.test(x.body)||/\{\{[^}]*\.[a-z]/i.test(x.body)},pk=[],chs={},nl=0;
+  allT.forEach(function(x){if(pk.length<PER_STAGE&&!chs[x.ch]&&(!isL(x)||nl<1)){pk.push(x);chs[x.ch]=1;if(isL(x))nl++}});
+  allT.forEach(function(x){if(pk.length<PER_STAGE&&pk.indexOf(x)<0&&(!isL(x)||nl<2)){pk.push(x);if(isL(x))nl++}});
+  allT.forEach(function(x){if(pk.length<PER_STAGE&&pk.indexOf(x)<0)pk.push(x)});
+  out=shuffle(pk).map(function(x){return spCopy(x,'tap')});
   if(out.length<5)out=out.concat(items.filter(function(x){return x.scam&&!tellable(x)}).slice(0,5-out.length).map(function(x){return spCopy(x,'act')}));return out}
  if(m==='act'){out=items.filter(function(x){return x.scam}).slice(0,PER_STAGE-1).map(function(x){return spCopy(x,'act')});
   var O=poolFor(ORDERS),o=O[n%O.length];out.push({kind:'order',id:'ord'+n,d:o,from:'رتّب الخطوات',cap:'رتّب الخطوات',scam:1,lever:o.lever,tell:o.why,right:''});return out}
@@ -1500,4 +1536,4 @@ document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.
 })();
 </script>
 
-</body></html>
+<script>document.addEventListener('gesturestart',function(e){e.preventDefault()},{passive:false});document.addEventListener('dblclick',function(e){e.preventDefault()},{passive:false});</script></body></html>
