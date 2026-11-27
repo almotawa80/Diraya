@@ -810,7 +810,7 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 .duel .batk{flex:0 1 auto;min-height:0;max-height:100%;overflow:auto;margin:.9rem 0 auto;background:#F6F6F0;color:#232C5A;border-radius:18px;padding:.8rem .9rem;box-shadow:0 8px 20px rgba(0,0,0,.35);position:relative}
 .duel .batk.in{animation:bAtk .4s cubic-bezier(.3,1.5,.5,1)}@keyframes bAtk{from{transform:translateY(-30px) scale(.9);opacity:0}}
 .duel .batk{overflow:visible}.duel .batk::before{content:"⚔ هجوم";position:absolute;top:-.75rem;line-height:1.5;inset-inline-start:1rem;background:#FF6B6B;color:#fff;font-size:.7rem;font-weight:900;border-radius:99px;padding:0 .6rem}
-.duel .bfrom{display:flex;align-items:baseline;gap:.5rem;border-bottom:1px solid #dcdcd4;padding-bottom:.35rem;margin-bottom:.4rem}.duel .bfrom b{font-size:.95rem}.duel .bfrom small{color:#6b6f88;font-size:.72rem}
+.duel .bfrom{display:flex;flex-wrap:wrap;align-items:baseline;gap:.1rem .5rem;border-bottom:1px solid #dcdcd4;padding-bottom:.35rem;margin-bottom:.4rem}.duel .bfrom b{font-size:.95rem}.duel .bfrom small{color:#6b6f88;font-size:.72rem}
 .duel .batk p{margin:0;line-height:1.7;font-size:.98rem}
 .duel .bres{margin-top:.6rem;border-radius:12px;padding:.45rem .65rem;font-weight:800;font-size:.88rem;line-height:1.6;animation:dIn .25s}
 .duel .bres.ok{background:#d7f7f2;color:#0e6b5f}.duel .bres.no{background:#ffe1e1;color:#a02a2a}
@@ -2160,7 +2160,7 @@ function btMeter(){var m=$('bMeter'),s=$('bStrike');if(!m)return;[].forEach.call
 function btRound(){var max=BT.relax?12:BT.items.length;if(BT.r>=max){btEnd();return}if(BT.r>=BT.items.length)BT.items=BT.items.concat(btPool());
  var it=BT.items[BT.r];BT.busy=false;BT.inspd=false;btFace(BT.fhp<=40?'angry':'sneaky');
  $('bRound').textContent='هجوم '+(BT.r+1)+(BT.relax?' من 12':'');var a=$('bAtk');a.classList.remove('in');a.offsetWidth;
- a.innerHTML='<div class="bfrom"><b>'+btClean(it.from)+'</b><small>'+(it.sub||'')+'</small></div><p>'+btClean(gx(it.body))+'</p>';a.classList.add('in');sfx.ding();btBars();btMeter();BT.t0=Date.now()}
+ var sb=it.sub||'';a.innerHTML='<div class="bfrom"><b>'+btClean(it.from)+'</b><small'+(/^[+\d]/.test(sb)?' dir="ltr"':'')+'>'+sb+'</small></div><p>'+btClean(gx(it.body))+'</p>';a.classList.add('in');sfx.ding();btBars();btMeter();BT.t0=Date.now()}
 function btInsp(){if(!BT||BT.busy||BT.inspd||BT.insp<=0)return;var it=BT.items[BT.r];BT.insp--;BT.inspd=true;sfx.hit(2);
  $('bAtk').insertAdjacentHTML('beforeend','<div class="bclue">🔍 '+btClean(gx(it.insp||'ما فيها شي غريب واضح، {ركّز|ركّزي} في المطلوب منك.'))+'</div>');btMeter()}
 function btFloat(txt,cls){var d=$('duel');if(!d)return;var e=document.createElement('div');e.className='bdmg '+cls;e.textContent=txt;d.appendChild(e);setTimeout(function(){e.remove()},1100)}
@@ -2290,7 +2290,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27c';
+var BUILD='2026-11-27d';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
