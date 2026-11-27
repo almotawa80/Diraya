@@ -1057,6 +1057,45 @@ html{scroll-behavior:auto}
 .starw{width:1.5rem!important;height:1.2rem!important;top:-1.35rem!important}
 .inbt.gen button{padding:.5rem 0 .55rem}.inbt.gen .gav{width:4.2rem;height:4.2rem;border-radius:50%;object-fit:cover;border:3px solid #fff3cf;box-shadow:0 3px 8px rgba(0,0,0,.3);margin-bottom:.2rem;background:#232C5A}@media(max-height:620px){.inbt.gen .gav{width:3rem;height:3rem}}
 #home .map.world .walker{position:absolute;width:10%;transform:translate(-50%,-80%);z-index:6;pointer-events:none}#home .map.world .walker.sL{transform:translate(-185%,-80%)}#home .map.world .walker.sR{transform:translate(85%,-80%)}#home .map.world .walker.go{transition:left .6s linear,top .6s linear,transform .6s linear}.walker img{width:100%;display:block;filter:drop-shadow(0 6px 5px rgba(0,0,0,.5)) drop-shadow(0 0 6px rgba(255,224,138,.55));animation:wkBob 1.6s ease-in-out infinite;transform-origin:50% 100%}.walker.go img{animation:wkHop .3s ease-in-out infinite}@keyframes wkBob{50%{transform:translateY(-3%)}}@keyframes wkHop{25%{transform:translateY(-7%) rotate(-5deg)}75%{transform:translateY(-7%) rotate(5deg)}}
+/* «صيد بو حيلة» */
+.duel .ctop{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
+.duel .cwal{flex:1;display:flex;align-items:center;gap:.3rem;background:rgba(0,0,0,.25);border-radius:99px;padding:.2rem .7rem .2rem .5rem;min-height:2.6rem}
+.duel .cwal img{width:1.7rem;height:1.7rem;object-fit:contain}.duel .cwal b{font:900 1.15rem Cairo,sans-serif;color:#F2D39A}.duel .cwal small{color:#B9BCD3;font-size:.72rem}
+.duel .cwal.low b{color:#FF8A8A}
+.duel .cmasks{display:flex;gap:.25rem}.duel .cmasks i{width:1.9rem;height:1.9rem;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;font-style:normal;font-size:1rem;transition:background .3s,transform .3s}
+.duel .cmasks i::before{content:'🎭';opacity:.45}.duel .cmasks i.on{background:#1FC8B4;transform:scale(1.1)}.duel .cmasks i.on::before{content:'🦊';opacity:1}
+.duel .ctime{min-width:2.9rem;text-align:center;font:900 1.15rem Cairo,sans-serif;background:rgba(0,0,0,.25);border-radius:99px;padding:.25rem .5rem;direction:ltr}
+.duel .ctime.low{color:#FF8A8A;animation:orbP 1s infinite}
+.duel .cnetb{display:flex;align-items:center;gap:.5rem;margin:.55rem 0 .4rem;flex-shrink:0;font-size:.78rem;font-weight:800;color:#B9BCD3}
+.duel .cnetm{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:.25rem}.duel .cnetm i{height:.55rem;border-radius:99px;background:rgba(255,255,255,.12);transition:background .2s}
+.duel .cnetm i.on{background:#F2B731;box-shadow:0 0 8px rgba(242,183,49,.6)}
+.duel .carena{position:relative;flex:1 1 0;min-height:0;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,rgba(21,27,62,.55),rgba(21,27,62,.2)),url(img/duel/bg.webp?v=1) center/cover no-repeat;touch-action:none;-webkit-user-select:none;user-select:none}
+.duel .carena.aim{box-shadow:inset 0 0 0 3px #F2B731;cursor:crosshair}
+.duel .cfox{position:absolute;top:6px;left:50%;width:84px;margin-left:-42px;height:84px;z-index:3;will-change:transform;pointer-events:none}
+.duel .cfox img{width:84px;height:84px;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.duel .cfox.thr img{animation:cThr .3s}@keyframes cThr{40%{transform:translateY(8px) scale(1.08)}}
+.duel .cmask{position:absolute;left:50%;top:14px;width:54px;height:54px;margin-left:-27px;border-radius:50%;background:#F6F6F0;display:grid;place-items:center;font-size:2rem;line-height:1;box-shadow:0 3px 0 rgba(0,0,0,.3);transition:transform .6s cubic-bezier(.3,1.4,.5,1),opacity .6s}
+.duel .cmask.off{transform:translate(70px,-60px) rotate(140deg) scale(.4);opacity:0}
+.duel .ctag{position:absolute;left:50%;top:80px;transform:translateX(-50%);white-space:nowrap;background:rgba(0,0,0,.55);color:#F2D39A;font:800 .68rem Cairo,sans-serif;border-radius:99px;padding:0 .5rem}
+.duel .cit{position:absolute;top:0;left:0;max-width:62%;border:0;border-radius:14px;background:#F6F6F0;color:#1b2145;font:800 .92rem/1.5 Cairo,sans-serif;padding:.45rem .7rem;min-height:46px;box-shadow:0 4px 0 rgba(0,0,0,.35);z-index:2;will-change:transform;touch-action:none;text-align:center}
+.duel .cit.pop{background:#1FC8B4;color:#fff;transition:opacity .35s,scale .35s;scale:1.35;opacity:0}
+.duel .cit.wrong{background:#FF6B6B;color:#fff;transition:opacity .35s;opacity:0}
+.duel .cit.sink{background:#FF6B6B;color:#fff;transition:opacity .35s,scale .35s;scale:.5;opacity:0}
+.duel .cit.safe{background:#BFF3EA;transition:opacity .35s,scale .35s;scale:.5;opacity:0}
+.duel .cit.fade{transition:opacity .3s;opacity:0}
+.duel .cbase{position:absolute;left:0;right:0;bottom:0;height:64px;display:flex;align-items:center;justify-content:center;gap:.4rem;background:linear-gradient(180deg,rgba(35,44,90,0),rgba(14,18,48,.92) 45%);font:800 .85rem Cairo,sans-serif;color:#F2D39A;pointer-events:none;z-index:1;border-top:2px dashed rgba(242,211,154,.45)}
+.duel .cbase img{width:2.2rem;height:2.2rem;object-fit:contain}
+.duel .cmsg{position:absolute;left:6%;right:6%;top:46%;transform:translateY(-50%);z-index:6;text-align:center;background:rgba(10,12,30,.82);border-radius:16px;padding:.5rem .9rem;font:800 1rem/1.6 Cairo,sans-serif;pointer-events:none;animation:dIn .25s}
+.duel .cmsg.big{font-size:1.15rem;color:#F2D39A}.duel .cmsg.ok{color:#9FF2E6}
+.duel .cnote{position:absolute;left:8px;right:8px;bottom:70px;z-index:6;background:#ffe1e1;color:#7a1f1f;border-radius:14px;padding:.4rem .7rem;font:700 .86rem/1.55 Cairo,sans-serif;pointer-events:none;animation:dIn .25s;text-align:start}
+.duel .cnote b{float:left;direction:ltr;font-weight:900;margin-right:.4rem}
+.duel .cnet{position:absolute;width:96px;height:96px;margin-left:-48px;border-radius:50%;z-index:5;pointer-events:none;border:3px solid #F6F6F0;background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(246,246,240,.85) 9px 11px),repeating-linear-gradient(-45deg,transparent 0 9px,rgba(246,246,240,.85) 9px 11px);transform:scale(.35)}
+.duel .cnet{top:calc(100% - 110px)}.duel .cnet.go{top:0;transform:scale(1)}
+.duel .cnet{transition:top .3s ease-out,transform .3s ease-out,opacity .35s,left .15s}
+.duel .cnet.miss{opacity:0;transform:scale(1.3)}
+.duel .cnet.hit{border-color:#F2B731;box-shadow:0 0 24px rgba(242,183,49,.8)}
+.duel .cwal{min-width:0}@media(max-width:350px){.duel .cmasks i{width:1.5rem;height:1.5rem;font-size:.8rem}.duel .ctime{min-width:2.4rem;font-size:1rem}.duel .cwal small{display:none}.duel .ctop{gap:.3rem}}
+.duel.hurt .carena{box-shadow:inset 0 0 0 4px #FF6B6B}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1536,7 +1575,7 @@ var challenge=null;
 function parseHash(){var m=/^#?tahaddi-(\d+)-(\d+)$/.exec(location.hash||'');if(m)challenge={stage:+m[1],wallet:+m[2]}}
 function doneMap(){return S.pro?PR.pdone:PR.done}
 function nextStage(){var d=doneMap();for(var i=1;i<=STAGES.length;i++){if(!d[i])return Math.min(i,S.pro?STAGES.length:UN())}return STAGES.length}
-var MAPP=[[444,1925],[256,1775],[196,1590],[438,1475],[318,1315],[268,1150],[501,1025],[297,895,'R'],[195,765],[443,680]];
+var MAPP=[[444,1925],[256,1775],[196,1590],[438,1475,'L'],[318,1315],[268,1150],[501,1025],[297,895,'R'],[195,765],[443,680]];
 function mapPos(i){var n=STAGES.length,ix=n===6?[0,2,4,5,7,9]:n===9?[0,2,3,4,5,6,7,8,9]:null;return MAPP[ix?ix[i]:i]||MAPP[MAPP.length-1]}
 function renderHome(keep){logoFox();
  applyBig();
@@ -1568,9 +1607,9 @@ function renderHome(keep){logoFox();
   var at=function(i){var p=mapPos(i-1);wk.style.left=(p[0]/7.33)+'%';wk.style.top=((p[1]-246)/19)+'%';var L=(p[2]||(p[0]<366?'L':'R'))==='L';wk.classList.toggle('sL',L);wk.classList.toggle('sR',!L)};
   var key='walk_'+S.age,from=Math.max(1,Math.min(STAGES.length,store[key]||ns)),tok=renderHome._wk=(renderHome._wk||0)+1;at(from);box.appendChild(wk);
   if(from===ns){if(store[key]!==ns){store[key]=ns;save(store)}return}
-  store[key]=ns;save(store);var tries=0;
-  (function wait(){if(renderHome._wk!==tok)return;var h=$('home');if(SCR!=='home'||!h||h.hidden||$('splash')||$('intro')){if(++tries<80)setTimeout(wait,300);else at(ns);return}
-   setTimeout(function step(){if(renderHome._wk!==tok)return;if(from===ns){wk.classList.remove('go');sfx.hit(2);return}from+=ns>from?1:-1;wk.classList.add('go');at(from);setTimeout(step,620)},900)})()})();
+  var tries=0;
+  (function wait(){if(renderHome._wk!==tok)return;var h=$('home');if(SCR!=='home'||!h||h.hidden||$('splash')||$('intro')){if(++tries<400)setTimeout(wait,300);return}
+   setTimeout(function step(){if(renderHome._wk!==tok)return;if(from===ns){wk.classList.remove('go');sfx.hit(2);var sn=$('stage-'+ns);if(sn){sn.classList.add('glow');setTimeout(function(){sn.classList.remove('glow')},2600)}toast('{اضغط|اضغطي} المرحلة '+ns+' عشان {تكمل|تكملين}');return}if(store[key]!==ns){store[key]=ns;save(store)}from+=ns>from?1:-1;wk.classList.add('go');at(from);setTimeout(step,620)},900)})()})();
  renderHome._sc=1;
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
@@ -2143,12 +2182,12 @@ function renderRest(){
  if(okd.length)h+='<details class="more"><summary>اللي {كشفته|كشفتيه} صح ('+okd.length+')</summary><div class="recap">'+okd.join('')+'</div></details>';
  h+='<div class="btns">'+(!R.refilled&&PR.wallet<300?'<button class="ghost gold" id="rRefill">{اشحن|اشحني} رصيدك: {اقرأ|اقرئي} أوراق بو حيلة</button>':'')+(R.pass&&!last&&!R.custom?'<button class="ghost" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>':'')+(R.pass&&!R.custom?'<button class="ghost" id="rRetry">{أعد|أعيدي} المرحلة لوسام أعلى</button>':'')+'<button class="ghost" id="rMap">خريطة المراحل</button></div>';
  h+='<p class="fine">'+(kid()?'إذا صار {لك|لج} شي مثل هذا في الواقع، {قول|قولي} لأهلك فورًا.':'إذا {وقعت|وقعتي} فعلًا في الواقع: {اتصل|اتصلي} ببنكك فورًا لإيقاف البطاقة ثم {بلّغ|بلّغي} الجهات المختصة.')+'</p>';
- h+='<div class="sticky">'+(R.custom?(R.custom.kind==='daily'?'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بتحدي اليوم</button>':'<button class="cta" id="rIdx">مؤشر الوعي</button>'):R.pass&&!last?'<button class="cta" id="rNext">المرحلة '+nxt+': '+STAGES[nxt-1].n+'</button>':!R.pass?'<button class="cta" id="rRetry">{أعد|أعيدي} المرحلة</button>':'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>')+'</div>';
+ h+='<div class="sticky">'+(R.custom?(R.custom.kind==='daily'?'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بتحدي اليوم</button>':'<button class="cta" id="rIdx">مؤشر الوعي</button>'):R.pass&&!last?'<button class="cta" id="rNext">{كمّل|كمّلي} على الخريطة</button>':!R.pass?'<button class="cta" id="rRetry">{أعد|أعيدي} المرحلة</button>':'<button class="cta" id="rShare">{تحدَّ|تحدَّي} أهلك بنتيجتك</button>')+'</div>';
  var el=$('report');el.innerHTML=gx(h);el.scrollTop=0;
  (function(){var t=$('rTot'),from=R.shown===undefined?S.startBal:R.shown,to=PR.wallet,t0=performance.now();R.shown=to;if(!t||from===to)return;
   (function step(n){var k=Math.min(1,(n-t0)/900);t.textContent=fmt(from+(to-from)*k)+' '+CUR();if(k<1)requestAnimationFrame(step)})(t0)})();
  var b;
- if((b=$('rNext')))b.onclick=function(){startStage(nxt)};
+ if((b=$('rNext')))b.onclick=function(){renderHome();show('home');setTimeout(function(){try{homeGlide()}catch(e){}},150)};/* back to the map: the avatar walks to the next stage and the player taps it to go on (Khalid 2026-11-28) */
  if((b=$('rRetry')))b.onclick=function(){startStage(S.stage)};
  if((b=$('rRefill')))b.onclick=startFlip;
  if((b=$('rShare')))b.onclick=function(){doShare()};if((b=$('rIdx')))b.onclick=function(){renderHome();show('home');openIndex()};
@@ -2296,7 +2335,7 @@ var DUEL=[
 ];
 var DU=null;
 function duelEl(){var d=$('duel');if(!d){d=document.createElement('div');d.className='duel';d.id='duel';d.setAttribute('dir','rtl');document.body.appendChild(d)}d.hidden=false;return d}
-function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();if(BT){clearTimeout(BT.to);clearInterval(BT.clk)}BT=null;DU=null;if(SCR==='prizes')renderPrizes();else if(SCR==='lead')renderLead(LBT);else renderHome(true);navOn(SCR==='prizes'?'prize':SCR==='setp'?'set':SCR)}
+function duelClose(){var d=$('duel');if(d)d.remove();sfx.stop();if(BT){clearTimeout(BT.to);clearInterval(BT.clk)}BT=null;if(CT){cancelAnimationFrame(CT.raf)}CT=null;DU=null;if(SCR==='prizes')renderPrizes();else if(SCR==='lead')renderLead(LBT);else renderHome(true);navOn(SCR==='prizes'?'prize':SCR==='setp'?'set':SCR)}
 function duelRingOld(){var last=store.duelLast,pool=DUEL.map(function(_,i){return i}).filter(function(i){return i!==last});var k=pool[Math.floor(Math.random()*pool.length)];store.duelLast=k;save(store);
  DU={sc:DUEL[k],t:0,p:0,clues:[],miss:[],id:Date.now()};var d=duelEl();
  d.innerHTML='<div class="dring"><img src="img/fox-sneaky.png" alt=""><h2>مكالمة واردة</h2><b>'+DU.sc.who+'</b><small class="muted" dir="ltr">'+DU.sc.num+'</small><p class="muted" style="max-width:19rem;margin-top:.4rem">'+gx('بو حيلة متنكّر ويتصل {عليك|عليج}. {اكشف|اكشفي} حيلته، {لقّط|لقّطي} علاماتها، و{سكّر|سكّري} قبل لا ياخذ {منك|منج} شي.')+'</p><div class="dans"><button style="background:var(--coral)" id="dDec">رفض</button><button style="background:var(--tq)" id="dAcc">رد</button></div></div>';
@@ -2333,6 +2372,140 @@ function duelEnd(r){if(!DU)return;var win=r!=='lose',pts=win?Math.max(50,(r==='w
  DU={id:0,sc:DU.sc,clues:[],miss:[],p:0,t:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 
 /* ===== «معركة الحيل»: HP battle vs Bu Heela (Khalid 2026-11-26) ===== */
+/* ===== «صيد بو حيلة» (Khalid 2026-11-28): the fox throws labelled items in disguise; hit the tricks, let the safe ones land; 5 right = a net to throw at him; 3 catches unmask him ===== */
+var CT=null;window.__ct=function(){return CT};
+var CT_D={
+ bank:{n:'موظف البنك',e:'👨‍💼',s:[
+  ['{عطني|عطيني} رمز التحقق (OTP)','رمز التحقق (OTP) ما ينعطى لأحد، حتى موظف البنك'],
+  ['حسابك بيتسكر، {حدّثه|حدّثيه} بالرابط','البنك ما يهدد ولا يرسل رابط تحديث'],
+  ['كم الرقم السري (PIN)؟','الرقم السري (PIN) لك وحدك، ما ينقال لأحد'],
+  ['{حوّل|حوّلي} فلوسك لحساب آمن','ما في شي اسمه «حساب آمن»، هذي حيلة تحويل'],
+  ['{نزّل|نزّلي} برنامج التحكم بالشاشة','برنامج التحكم يخلي المحتال يشوف تلفونك كله']],
+  o:[['لا {تشارك|تشاركين} رمزك مع أحد','نصيحة صحيحة ما تطلب منك شي'],
+  ['{راجع|راجعي} أقرب فرع','زيارة الفرع بنفسك طريقة آمنة'],
+  ['{اتصل|اتصلي} على رقم البنك الرسمي','الاتصال على الرقم الرسمي بنفسك آمن'],
+  ['كشف حسابك داخل التطبيق','تطبيق البنك الرسمي مكان آمن']]},
+ del:{n:'مندوب التوصيل',e:'🚚',s:[
+  ['{ادفع|ادفعي} رسوم الشحنة بالرابط','رابط دفع من رقم غريب حيلة معروفة'],
+  ['شحنتك واقفة، {دش|دشي} الرابط','تتبع الشحنة يكون من التطبيق الرسمي بس'],
+  ['{عطني|عطيني} رمز التحقق وأسلمك','المندوب ما يحتاج رمز التحقق (OTP) مال البنك'],
+  ['{دز|دزي} صورة بطاقتك البنكية','صورة البطاقة ما تنعطى لأحد']],
+  o:[['المندوب عند الباب','توصيل عادي بدون طلب معلومات'],
+  ['الدفع كاش عند الاستلام','تدفع بإيدك وقت الاستلام، ما في رابط'],
+  ['تتبع الطلب من التطبيق','التطبيق الرسمي آمن'],
+  ['طلبك يوصل باجر','خبر عادي ما يطلب منك شي']]},
+ rel:{n:'واحد من أهلك',e:'🧔',s:[
+  ['رقمي يديد، {حوّل|حوّلي} لي فلوس','{كلّم|كلّمي} قريبك على رقمه القديم أول'],
+  ['{دز|دزي} لي الكود اللي وصلك','الكود يسرق حسابك بالواتساب'],
+  ['محتاج فلوس ضروري الحين','الاستعجال علامة حيلة، {تأكد|تأكدي} بمكالمة'],
+  ['لا {تقول|تقولين} لأحد و{حوّل|حوّلي}','اللي يطلب السرية يبي يعزلك عن أهلك']],
+  o:[['أشوفك بالديوانية الليلة','كلام عادي ما فيه طلب'],
+  ['{كلمني|كلميني} على رقمي القديم','الرقم المعروف عندك هو الآمن'],
+  ['شخبارك؟ من زمان عنك','سلام عادي ما يطلب شي'],
+  ['العشا اليوم ببيت الوالد','دعوة عادية ما فيها طلب']]},
+ prz:{n:'شركة جوائز',e:'🎁',s:[
+  ['مبروك ربحت سيارة!','ما أحد يربح بمسابقة ما شارك فيها'],
+  ['{ادفع|ادفعي} رسوم واستلم جائزتك','الجائزة الحقيقية ما تطلب رسوم'],
+  ['{دخّل|دخّلي} بيانات بطاقتك للسحب','السحب ما يحتاج بيانات بطاقتك'],
+  ['آخر 5 دقايق، {اضغط|اضغطي} الرابط','الاستعجال والرابط مع بعض = حيلة']],
+  o:[['السحب يعلن بحساب البنك الرسمي','الحساب الرسمي الموثق هو المصدر'],
+  ['النتايج بموقع البنك الرسمي','الموقع الرسمي آمن'],
+  ['{شارك|شاركي} من تطبيق البنك','المشاركة من التطبيق الرسمي آمنة'],
+  ['المسابقة مجانية بدون رسوم','ما تطلب منك فلوس ولا بيانات']]},
+ gam:{n:'لاعب بالقيم',e:'🎮',s:[
+  ['{عطني|عطيني} حسابك أزيد جواهرك','حسابك لك وحدك، ما ينعطى لأحد'],
+  ['{نزّل|نزّلي} هالبرنامج وخذ سكنات','البرامج الغريبة تسرق حسابك'],
+  ['{دز|دزي} رقم بطاقة أبوك','بطاقة الأهل ما تندز لأحد'],
+  ['لا {تعلّم|تعلّمين} أهلك، سر بيننا','اللي يطلب سر عن أهلك {لا تثق|لا تثقين} فيه']],
+  o:[['نلعب مع بعض باجر؟','دعوة لعب عادية'],
+  ['لعبتك حلوة اليوم','مدح عادي ما يطلب شي'],
+  ['{اسأل|اسألي} أهلك قبل تشتري','نصيحة صحيحة'],
+  ['الشراء من متجر اللعبة الرسمي','المتجر الرسمي آمن']]},
+ gov:{n:'موظف حكومي',e:'🏛️',s:[
+  ['عليك مخالفة، {ادفع|ادفعي} بالرابط','المخالفات تندفع من التطبيق الحكومي الرسمي بس'],
+  ['{حدّث|حدّثي} بطاقتك المدنية بالرابط','الجهات الحكومية ما ترسل روابط تحديث'],
+  ['{وافق|وافقي} على طلب هويتي الحين','{لا توافق|لا توافقين} على طلب ما {سويته|سويتيه}'],
+  ['ملفك بيتسكر خلال ساعة','التهديد والاستعجال علامة حيلة']],
+  o:[['مخالفاتك تلقاها بتطبيق سهل','التطبيق الحكومي الرسمي آمن'],
+  ['{راجع|راجعي} مركز الخدمة','المراجعة بنفسك آمنة'],
+  ['{احجز|احجزي} موعدك من تطبيق متى','التطبيق الرسمي آمن'],
+  ['التجديد من الموقع الرسمي','الموقع الرسمي آمن']]}
+};
+var CT_SET={kid:['gam','prz','rel'],youth:['bank','del','rel','prz','gov'],elder:['bank','rel','gov','del']};
+function ctBag(k){var d=CT_D[k],a=d.s.map(function(x){return {t:x[0],w:x[1],scam:1}}).concat(d.o.map(function(x){return {t:x[0],w:x[1],scam:0}}));return shuffle(a)}
+function ctArena(){var my=Date.now(),relax=!!S.big,ks=shuffle(CT_SET[trackOf()]||CT_SET.youth).slice(0,3);
+ CT={id:my,bal:1000,catches:0,charge:0,ks:ks,k:0,bag:[],items:[],miss:[],hits:0,combo:0,best:0,relax:relax,left:relax?0:100,phase:'wait',fx:0,ftx:0,last:0,spawnIn:.9,nets:0,seq:0};
+ var d=duelEl();
+ d.innerHTML='<div class="ctop"><button class="dx" id="dX" aria-label="خروج">✕</button>'+
+  '<div class="cwal"><img src="img/map/hWal.webp" alt=""><b id="cBal">1,000</b><small>د.ك</small></div>'+
+  '<div class="cmasks" id="cMasks"><i></i><i></i><i></i></div>'+
+  '<div class="ctime" id="cTime">'+(relax?'⏳':'100')+'</div></div>'+
+  '<div class="cnetb"><span>الشبكة</span><div class="cnetm" id="cNetM"><i></i><i></i><i></i><i></i><i></i></div></div>'+
+  '<div class="carena" id="cAr"><div class="cfox" id="cFox"><img id="cFace" src="img/fox-sneaky.png" alt=""><div class="cmask" id="cMask"></div><span class="ctag" id="cTag"></span></div>'+
+  '<div class="cmsg" id="cMsg" hidden></div><div class="cnote" id="cNote" hidden></div>'+
+  '<div class="cbase"><img src="img/map/hWal.webp" alt=""><span>محفظتك</span></div></div>';
+ $('dX').onclick=duelClose;
+ var ar=$('cAr');ar.addEventListener('pointerdown',ctTap);
+ CT.W=ar.clientWidth;CT.H=ar.clientHeight;CT.fx=CT.ftx=CT.W/2;ctHud();
+ var go=function(){if(!CT||CT.id!==my)return;ctDisguise();CT.last=performance.now();CT.raf=requestAnimationFrame(ctLoop)};
+ if(store.catchHow)go();else{var ho=document.createElement('div');ho.className='bhow';ho.innerHTML=gx('<div class="bhowc"><h3>صيد بو حيلة</h3><p>بو حيلة متنكر و{يحذف عليك|يحذف عليج} أشياء تطيح صوب محفظتك:</p><ul><li><b class="s">👆 حيلة؟ {اضربها|اضربيها}</b>{اضغط|اضغطي} عليها قبل لا توصل المحفظة.</li><li><b class="o">✅ آمنة؟ {خلها|خليها} تطيح</b>لا {تلمسها|تلمسينها}، {خلها|خليها} توصل المحفظة.</li><li><b class="v">🕸️ الشبكة</b>كل 5 صح تشحن الشبكة. {اضغط|اضغطي} على بو حيلة و{ارمها|ارميها} عليه وهو يحاول ينحاش.</li></ul><p class="hx">{صيده|صيديه} 3 مرات عشان ينكشف تنكره كله.</p><button class="bhgo" id="bHowGo">وعيت، {ابدأ|ابدئي}</button></div>');d.appendChild(ho);$('bHowGo').onclick=function(){store.catchHow=1;save(store);ho.remove();sfx.hit(3);go()}}}
+function ctHud(){if(!CT)return;var e=$('cBal');if(!e)return;e.textContent=btMoney(CT.bal);e.parentNode.classList.toggle('low',CT.bal<=400);
+ [].forEach.call($('cNetM').children,function(x,i){x.classList.toggle('on',i<CT.charge)});
+ [].forEach.call($('cMasks').children,function(x,i){x.classList.toggle('on',i<CT.catches)});
+ if(!CT.relax){var t=$('cTime');t.textContent=Math.max(0,Math.ceil(CT.left));t.classList.toggle('low',CT.left<=10)}}
+function ctSay(txt,ms,cls){var m=$('cMsg');if(!m)return;m.className='cmsg '+(cls||'');m.innerHTML=gx(txt);m.hidden=false;clearTimeout(ctSay.t);ctSay.t=setTimeout(function(){m.hidden=true},ms||1500)}
+function ctNote(txt,cls){var m=$('cNote');if(!m)return;m.className='cnote '+cls;m.innerHTML=gx(txt);m.hidden=false;clearTimeout(ctNote.t);ctNote.t=setTimeout(function(){m.hidden=true},2600)}
+function ctDisguise(){var d=CT_D[CT.ks[CT.k]];CT.bag=ctBag(CT.ks[CT.k]);$('cMask').textContent=d.e;$('cMask').className='cmask';$('cTag').textContent=d.n;$('cFace').src='img/fox-sneaky.png';
+ CT.phase='play';CT.spawnIn=1.1;ctSay('بو حيلة تنكّر: <b>'+d.n+'</b>',1600,'big');sfx.ding()}
+function ctSpawn(){if(!CT.bag.length)CT.bag=ctBag(CT.ks[CT.k]);var it=CT.bag.pop(),ar=$('cAr'),e=document.createElement('button');e.className='cit';e.type='button';e.innerHTML=gx(it.t);ar.appendChild(e);
+ var w=e.offsetWidth,x=Math.max(6,Math.min(CT.W-w-6,CT.fx-w/2+(Math.random()*60-30)));e.style.left=x+'px';
+ var o={it:it,e:e,y:92,id:++CT.seq};e._o=o;CT.items.push(o);var f=$('cFox');f.classList.remove('thr');f.offsetWidth;f.classList.add('thr')}
+function ctDrop(o,cls){var i=CT.items.indexOf(o);if(i>=0)CT.items.splice(i,1);o.e.classList.add(cls);o.dead=1;setTimeout(function(){o.e.remove()},380)}
+function ctGood(){CT.hits++;CT.combo++;CT.best=Math.max(CT.best,CT.combo);CT.charge=Math.min(5,CT.charge+1);ctHud();if(CT.charge>=5)ctNetReady()}
+function ctBad(o,why){CT.combo=0;CT.charge=Math.max(0,CT.charge-2);var loss=o.it.scam?200:100;CT.bal=Math.max(0,CT.bal-loss);if(CT.miss.length<8&&!CT.miss.some(function(x){return x.t===o.it.t}))CT.miss.push(o.it);
+ sfx.minus();buzz([100,50,140]);var d=$('duel');d.classList.add('hurt');setTimeout(function(){d.classList.remove('hurt')},400);$('cFace').src='img/fox-laugh.png';setTimeout(function(){var f=$('cFace');if(f&&CT&&CT.phase==='play')f.src='img/fox-sneaky.png'},900);
+ ctNote((o.it.scam?'💸 حيلة دخلت المحفظة: ':'✋ هذي كانت آمنة: ')+o.it.w+' <b>-'+loss+'</b>','no');ctHud();if(CT.bal<=0)ctEnd()}
+function ctTap(ev){if(!CT)return;var t=ev.target;
+ if(CT.phase==='net'){ev.preventDefault();var r=$('cAr').getBoundingClientRect();ctThrow(ev.clientX-r.left);return}
+ if(CT.phase!=='play'||!t.classList||!t.classList.contains('cit'))return;var o=t._o;if(!o||o.dead)return;ev.preventDefault();
+ if(o.it.scam){sfx.hit(Math.min(6,CT.combo+2));buzz(30);ctDrop(o,'pop');ctGood()}else{ctDrop(o,'wrong');ctBad(o)}}
+function ctNetReady(){CT.phase='net';CT.netT=CT.relax?9:6;CT.items.slice().forEach(function(o){ctDrop(o,'fade')});$('cFace').src='img/fox-shocked.png';$('cAr').classList.add('aim');
+ ctSay('🕸️ الشبكة جاهزة! {اضغط|اضغطي} على بو حيلة',CT.netT*1000,'big');sfx.hit(5);buzz([60,40,60])}
+function ctThrow(x){if(CT.phase!=='net')return;CT.phase='fly';CT.nets++;var my=CT.id,ar=$('cAr'),n=document.createElement('div');n.className='cnet';n.style.left=x+'px';ar.appendChild(n);$('cMsg').hidden=true;sfx.hit(3);
+ n.offsetWidth;n.classList.add('go');
+ setTimeout(function(){if(!CT||CT.id!==my)return;var hit=Math.abs(CT.fx-x)<=(CT.relax?90:76);ar.classList.remove('aim');
+  if(hit){n.classList.add('hit');n.style.left=CT.fx+'px';ctCatch(n)}else{n.classList.add('miss');setTimeout(function(){n.remove()},400);CT.charge=2;ctHud();ctSay('نحاش! {اشحن|اشحني} الشبكة مرة ثانية',1400);sfx.mid&&sfx.mid();$('cFace').src='img/fox-laugh.png';
+   setTimeout(function(){if(!CT||CT.id!==my)return;$('cFace').src='img/fox-sneaky.png';CT.phase='play';CT.spawnIn=.5},900)}},CT.relax?260:300)}
+function ctCatch(n){var my=CT.id,d=CT_D[CT.ks[CT.k]];CT.phase='caught';CT.catches++;CT.charge=0;ctHud();sfx.good();buzz([80,40,80,40,160]);$('cFace').src='img/fox-dizzy.png';$('cMask').classList.add('off');
+ var du=$('duel');du.classList.add('shake');setTimeout(function(){du.classList.remove('shake')},350);
+ ctSay('انكشف! مو '+d.n+'، هذا <b>بو حيلة</b>',1700,'big ok');
+ setTimeout(function(){if(!CT||CT.id!==my)return;n.remove();if(CT.catches>=3){ctEnd();return}CT.k++;ctDisguise()},1800)}
+function ctLoop(ts){if(!CT)return;var c=CT,dt=Math.min(.05,(ts-c.last)/1000);c.last=ts;c.raf=requestAnimationFrame(ctLoop);
+ if(!$('cAr')){return}
+ var net=c.phase==='net'||c.phase==='fly',lv=c.k,sp=net?(c.relax?130:185+lv*18):(c.phase==='play'?(c.relax?55:85+lv*28):0);
+ if(sp){if(Math.abs(c.ftx-c.fx)<4||(net&&(c.ret-=dt)<=0)){c.ftx=46+Math.random()*(c.W-92);c.ret=.35+Math.random()*.45}
+  c.fx+=Math.sign(c.ftx-c.fx)*Math.min(Math.abs(c.ftx-c.fx),sp*dt)}
+ var f=$('cFox');f.style.transform='translateX('+(c.fx-c.W/2)+'px)';
+ if(c.phase==='net'){c.netT-=dt;if(c.netT<=0){$('cAr').classList.remove('aim');c.charge=2;ctHud();ctSay('فاتت الفرصة! {اشحن|اشحني} الشبكة مرة ثانية',1400);c.phase='play';c.spawnIn=.5;$('cFace').src='img/fox-sneaky.png'}}
+ if(c.phase!=='play')return;
+ if(!c.relax){c.left-=dt;var s=Math.ceil(c.left);if(s!==c.ls){c.ls=s;ctHud();if(s<=10&&s>0)sfx.tick&&sfx.tick()}if(c.left<=0){ctEnd();return}}
+ var fall=(c.relax?6.2:[4.6,3.9,3.3][lv]),gap=(c.relax?2.3:[1.55,1.3,1.1][lv]),v=(c.H-92-64)/fall,bot=c.H-64;
+ c.spawnIn-=dt;if(c.spawnIn<=0&&c.items.length<4){ctSpawn();c.spawnIn=gap*(.85+Math.random()*.3)}
+ for(var i=c.items.length-1;i>=0;i--){var o=c.items[i];o.y+=v*dt;o.e.style.transform='translateY('+o.y+'px)';
+  if(o.y>=bot-o.e.offsetHeight){if(o.it.scam){ctDrop(o,'sink');ctBad(o);if(!CT)return}else{ctDrop(o,'safe');sfx.hit(1);ctGood();if(c.phase!=='play')return}}}}
+function ctEnd(){if(!CT)return;var c=CT;cancelAnimationFrame(c.raf);clearTimeout(ctSay.t);clearTimeout(ctNote.t);var win=c.catches>=3,
+  pts=win?300+Math.round(c.bal/5)+Math.round(Math.max(0,c.left))*3+c.best*15:0;
+ var du=store.duel=store.duel||{plays:0,wins:0,best:0};du.plays++;if(win)du.wins++;var rec=pts>(du.best||0);if(rec)du.best=pts;save(store);
+ var d=duelEl();if(win)sfx.good();else sfx.bad();
+ d.innerHTML=gx('<div class="dend bend'+(win?' won':'')+'">'+(win?'<div class="bko">انصاد بو حيلة!</div>':'')+'<img src="img/fox-'+(win?'dizzy':'laugh')+'.png" alt="">'+
+  '<h2>'+(win?'{كشفت|كشفتي} كل تنكراته':(c.bal<=0?'بو حيلة فضّى {محفظتك|محفظتج}':'خلص الوقت وبو حيلة نحاش'))+'</h2>'+
+  '<div class="bsafe">💰 '+G('حميت','حميتي')+' <b>'+btMoney(c.bal)+' د.ك</b> من 1,000</div>'+
+  (win?'<div class="dsc">'+pts+'</div><div class="muted">نقطة'+(rec?' · أعلى رقم لك 🏆':'')+'</div>':'<p class="muted">{صدته|صدتيه} '+c.catches+' من 3. ولا {يهمك|يهمج}، كل جولة {تعلّمك|تعلّمج} حيلة جديدة.</p>')+
+  '<div class="bstats"><span>🕸️ '+c.catches+' صيدة</span><span>👆 '+c.hits+' صح</span><span>🔥 كومبو '+c.best+'</span></div>'+
+  (c.miss.length?'<h3 class="bmh">اللي فاتك في هالجولة</h3><ul>'+c.miss.map(function(x){return '<li><b>«'+x.t+'»</b><br>'+(x.scam?'⚠️ حيلة: ':'✅ آمنة: ')+x.w+'</li>'}).join('')+'</ul>':'')+
+  '<button class="cta" id="dAgain">'+(win?'جولة ثانية':'{جرّب|جرّبي} مرة ثانية')+'</button><button class="ghost" id="dBack">رجوع</button></div>');
+ if(win){for(var i=0;i<16;i++){var k=document.createElement('i');k.className='coin';k.style.setProperty('--dx',(Math.random()*320-160)+'px');k.style.setProperty('--dy',(Math.random()*-320)+'px');k.style.animationDuration=(0.8+Math.random()*.6)+'s';d.appendChild(k)}}
+ CT=null;BT=null;DU={id:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 var BT=null;window.__bt=function(){return BT};
 function btClean(t){return String(t||'').replace(/\[\[|\]\]|\{\{|\}\}/g,'')}
 /* ===== «اكشف حيلته» duel (Khalid 2026-11-26) ===== */
@@ -2353,7 +2526,7 @@ function duelRing(){var my=Date.now();BT={bal:1000,fhp:100,r:0,items:btPool(),co
  $('dX').onclick=duelClose;sfx.ring&&sfx.ding();buzz([60,40,60]);
  
  var n=3;var tick=setInterval(function(){if(!BT||BT.id!==my){clearInterval(tick);return}n--;var c=$('bCd');if(!c){clearInterval(tick);return}
-  if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)btArena()},550)}},900)}
+  if(n>0){c.textContent=n;c.style.animation='none';c.offsetWidth;c.style.animation='';sfx.hit(1)}else{clearInterval(tick);c.textContent=gx('{ابدأ|ابدئي}!');sfx.hit(4);setTimeout(function(){if(BT&&BT.id===my)ctArena()},550)}},900)}
 function btArena(){var d=duelEl();
  d.innerHTML='<div class="btop"><button class="dx" id="dX" aria-label="خروج">✕</button>'+
   '<div class="bhp me"><img class="bmini" src="img/duel/'+G('he','she')+'.webp?v=3" alt=""><div class="bbar"><i id="bMe"></i></div><b id="bMeN" class="bmoney">1,000</b></div>'+
@@ -2518,7 +2691,7 @@ function renderLead(t){LBT=t=t||'week';var L=lbList(t),me=myPts(t),rank=1;L.forE
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-28d';
+var BUILD='2026-11-28f';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
