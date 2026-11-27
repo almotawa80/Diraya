@@ -1876,6 +1876,7 @@ function renderSpecial(it,sl){
   card.innerHTML=spHead(it,sl)+'<div class="cbody">'+body+'</div>';timed=true;
   if(k==='tap'){coach('<b>المس العلامة.</b> وين الجزء المريب في هالرسالة؟ {المسه|المسيه}.');segment(card.querySelector('.bub')||card.querySelector('.cbody'));
    var wrong=0;card.querySelector('.cbody').onclick=function(e){if(S.phase!=='judge')return;var t=e.target.closest('.tell,bdi.url'),s=e.target.closest('.seg');
+    if(!t&&s&&URG.test(s.textContent)){s.classList.add('tell');t=s}
     if(t){card.classList.add('found');spDone(it,card,wrong?1:2,'')}else if(s&&!s.classList.contains('no')){s.classList.add('no');wrong++;sfx.mid();buzz(40);if(wrong>=2)spDone(it,card,0,'هنا العلامة');else say('مو هذي.. {دوّر|دوّري} زين','mid')}}}
   else if(it.acts&&it.acts.length>=3){coach('<b>شنو {تسوي|تسوين} الحين؟</b> {اختر|اختاري} أحسن تصرّف.');
    var ra=it.acts.filter(function(a){return a[1]===2})[0];
@@ -1954,6 +1955,8 @@ function callVoice(cd,si,say){try{if(callAudio){callAudio.pause();callAudio=null
  var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';caInit();callAudio=wplay(f,1)}catch(e){}}
 function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'" data-t="'+String(o[0]).replace(/"/g,'&quot;')+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok,b.getAttribute('data-t'))}})}
+/* an unmarked urgency phrase is a valid tell too (Khalid 2026-11-27) */
+var URG=/(خلال|بعد)\s+(\S+\s+)?(ساعة|ساعات|ساعتين|دقيقة|دقايق|دقائق|دقيقتين|يوم|يومين|أيام)|الحين|فورًا|فوراً|اليوم|الليلة|بسرعة|آخر فرصة|ينتهي|مستعجل|عاجل|قبل نص الليل/;
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
  nodes.forEach(function(n){var parts=n.nodeValue.match(/\s*\S[\s\S]*?(?:[.،!؟:…]+(?=\s|$)|$)\s*/g);if(!parts)return;var f=document.createDocumentFragment();parts.forEach(function(p){if(!/[0-9A-Za-z\u0621-\u064A]/.test(p)){f.appendChild(document.createTextNode(p));return}var s=document.createElement('span');s.className='seg';s.textContent=p;f.appendChild(s)});el.replaceChild(f,n)})}
 function lossFor(it){if(S.practice)return 0;var b=S.lossAmt||0,v=it&&+it.loss;if(!v)return b;return Math.round(Math.max(b/2,Math.min(b*2,v)))}
@@ -2491,7 +2494,7 @@ function renderLead(t){LBT=t=t||'week';var L=lbList(t),me=myPts(t),rank=1;L.forE
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27za';
+var BUILD='2026-11-27zb';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
