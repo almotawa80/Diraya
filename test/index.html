@@ -1027,6 +1027,10 @@ html{scroll-behavior:auto}
 .intfb.no{color:#ffb3b3}
 .intfb.ok{margin-top:.8rem;background:#d7f7f2;color:#0e5a50;padding:.6rem .7rem .7rem;text-align:start;animation:dIn .25s}
 .intfb.ok b{display:block;font-weight:900;font-size:1.05rem}
+.stg.nope{animation:inNo .35s}
+.pfoot{position:sticky;bottom:0;background:#F4F5FA;padding:.35rem 0 .1rem;z-index:2;box-shadow:0 -8px 8px -6px rgba(35,44,90,.18)}
+.card.sp.page{overflow-y:auto}
+.card bdi.url{display:inline-block;max-width:100%;vertical-align:baseline;word-break:break-all}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1167,7 +1171,7 @@ html{scroll-behavior:auto}
 (function(){
 'use strict';
 document.documentElement.lang='ar'; document.documentElement.dir='rtl';
-var ART_URL='https://claude.ai/artifact/4w3hSVikaTB4jhGH5EBMDG';
+var ART_URL='https://almotawa80.github.io/Diraya/';
 
 var LEVERS={
  urgency:{n:'الاستعجال',how:'يضيّق الوقت حتى لا تفكّر ولا تسأل أحدًا.',anti:'أي أمر مستعجل يستحق دقيقة تأكّد.'},
@@ -1498,12 +1502,12 @@ function renderHome(keep){logoFox();
  $('pick').innerHTML='<b>'+sel+'. '+st.n+'</b><span>'+st.d+(st.m&&MODES[st.m]?' · '+MODES[st.m].n:'')+' · '+PER_STAGE+' مواقف</span>'+(d[sel]?'<span class="pm">'+medalSvg(d[sel])+'وسام '+MEDAL[d[sel]]+'</span>':'');
  var box=$('map');box.className='map world';box.innerHTML='';
  STAGES.forEach(function(x,i){var n=i+1,open=S.pro||n<=UN(),boss=n===STAGES.length,p=MAPP[i]||MAPP[MAPP.length-1],b=document.createElement('button');
-  b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked')+(boss?' boss':'')+((p[2]||(p[0]<366?'L':'R'))==='L'?' L':' R');b.id='stage-'+n;b.disabled=!open;
+  b.className='stg'+(d[n]?' m'+d[n]:'')+(n===sel?' sel':'')+(open?'':' locked')+(boss?' boss':'')+((p[2]||(p[0]<366?'L':'R'))==='L'?' L':' R');b.id='stage-'+n;if(!open)b.setAttribute('aria-disabled','true');
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.style.left=(p[0]/7.33)+'%';b.style.top=((p[1]-246)/19)+'%';
   var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
   b.innerHTML=(n===sel&&open?'<span class="starw" aria-hidden="true"></span>':'')+'<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=s\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=s\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+'</span>';
-  b.onclick=function(){if(b._go)return;b._go=1;S.sel=n;b.classList.add('tapgo');buzz(15);setTimeout(function(){startStage(n)},160)};box.appendChild(b)});
+  b.onclick=function(){if(!open){b.classList.remove('nope');void b.offsetWidth;b.classList.add('nope');buzz(30);toast('🔒 {خلّص|خلّصي} المرحلة '+(n-1)+' عشان تنفتح');return}if(b._go)return;b._go=1;S.sel=n;b.classList.add('tapgo');buzz(15);setTimeout(function(){startStage(n)},160)};box.appendChild(b)});
  renderHome._sc=1;
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
@@ -1798,8 +1802,8 @@ function buildMode0(st,items,n){
  if(m==='call'&&st.ids&&st.m==='call'){var tc=shuffle(poolFor(CALLS).filter(function(c){return c.t===st.pt})).slice(0,3).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});return shuffle(tc.concat(own(items,PER_STAGE-tc.length,1)))}
  if(m==='call')return tagFirst(poolFor(CALLS),st.pt).slice(0,5).map(function(c,k){return {kind:'call',id:'call'+n+'_'+k,d:c,from:c.from,cap:'مكالمة حية · '+c.from,scam:1,lever:c.lever,tell:c.why,right:''}});
  if(m==='page'){var pu=function(p){return p.parts[0][1]},pg=PAGES.filter(function(p){return p.fake&&!/iphone/.test(pu(p))}).concat(shuffle(PAGES.filter(function(p){return !p.fake})).slice(0,1));
-  return shuffle(pg.map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}}).concat(own(items,PER_STAGE-pg.length,1)))}
- if(m==='pageALL')return shuffle(PAGES.slice()).map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}});
+  return shuffle(pg.map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,ok:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}}).concat(own(items,PER_STAGE-pg.length,1)))}
+ if(m==='pageALL')return shuffle(PAGES.slice()).map(function(p,k){return {kind:'page',id:'page'+n+'_'+k,d:p,from:'افحص الصفحة',cap:'افحص صفحة الدفع',scam:p.fake,lever:p.lever,tell:p.why,ok:p.why,right:p.fake?'':p.why,body:p.parts.map(function(x){return x[1]}).join(' ')}});
  if(m==='scam')return shuffle(CHATS.slice()).map(function(c,k){return {kind:'chat',id:'chat'+n+'_'+k,d:c,from:c.from,cap:'محادثة · '+c.from,scam:1,lever:c.lever,tell:c.why,right:'',body:c.st.map(function(x){return x[0]}).join(' ')}});
  if(m==='scamOLD')return tagFirst(poolFor(SCAMS),'game').slice(0,6).map(function(c,k){return {kind:'scam',id:'scam'+n+'_'+k,d:c,from:c.ctx,cap:'العب دور المحتال',scam:1,lever:c.lever,tell:c.why,right:'',body:c.msg}});
  return items;
@@ -1859,8 +1863,8 @@ function renderSpecial(it,sl){
   card.innerHTML='<div class="chhd"><span class="cav">'+cd.av+'</span><span><b>'+cd.from+'</b><small>'+cd.plat+'</small></span></div><div class="clog" id="clog"></div><div class="copts" id="copts"></div>';
   var log=card.querySelector('.clog'),opts=card.querySelector('.copts');
   var show=function(){var st=cd.st[step];log.insertAdjacentHTML('beforeend','<div class="cb them typing"><i></i><i></i><i></i></div>');log.scrollTop=1e4;opts.innerHTML='';
-   setTimeout(function(){var t=log.querySelector('.typing');if(t){t.className='cb them';t.innerHTML=gx(st[0])}log.scrollTop=1e4;
-    opts.innerHTML=shuffle(st[1].slice()).map(function(o){return '<button class="copt" data-g="'+o[1]+'">'+gx(o[0])+'</button>'}).join('')},650)};
+   setTimeout(function(){var t=log.querySelector('.typing');if(t){t.className='cb them';t.innerHTML=gx(st[0])}
+    opts.innerHTML=shuffle(st[1].slice()).map(function(o){return '<button class="copt" data-g="'+o[1]+'">'+gx(o[0])+'</button>'}).join('');log.scrollTop=log.scrollHeight;requestAnimationFrame(function(){log.scrollTop=log.scrollHeight});setTimeout(function(){log.scrollTop=log.scrollHeight},120)},650)};
   opts.onclick=function(e){var b=e.target.closest('.copt');if(!b||S.phase!=='judge')return;var g=b.getAttribute('data-g')==='1';opts.innerHTML='';
    log.insertAdjacentHTML('beforeend','<div class="cb me'+(g?'':' bad')+'">'+b.innerHTML+'</div>');
    if(g){sfx.mid&&0;buzz(15)}else{bad++;buzz(60);log.insertAdjacentHTML('beforeend','<div class="cnote">⚠️ بو حيلة استغل هالرد</div>')}
@@ -1906,7 +1910,7 @@ function callVoice(cd,si,say){try{if(callAudio){callAudio.pause();callAudio=null
 function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'" data-t="'+String(o[0]).replace(/"/g,'&quot;')+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok,b.getAttribute('data-t'))}})}
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
- nodes.forEach(function(n){var parts=n.nodeValue.match(/[^.،!؟:…]+[.،!؟:…]*\s*/g);if(!parts)return;var f=document.createDocumentFragment();parts.forEach(function(p){if(!p.trim()){f.appendChild(document.createTextNode(p));return}var s=document.createElement('span');s.className='seg';s.textContent=p;f.appendChild(s)});el.replaceChild(f,n)})}
+ nodes.forEach(function(n){var parts=n.nodeValue.match(/\s*\S[\s\S]*?(?:[.،!؟:…]+(?=\s|$)|$)\s*/g);if(!parts)return;var f=document.createDocumentFragment();parts.forEach(function(p){if(!/[0-9A-Za-z\u0621-\u064A]/.test(p)){f.appendChild(document.createTextNode(p));return}var s=document.createElement('span');s.className='seg';s.textContent=p;f.appendChild(s)});el.replaceChild(f,n)})}
 function lossFor(it){if(S.practice)return 0;var b=S.lossAmt||0,v=it&&+it.loss;if(!v)return b;return Math.round(Math.max(b/2,Math.min(b*2,v)))}
 function spDone(it,card,ok,why){
  if(S.phase!=='judge')return;S.phase='busy';timer.run=false;sfx.stop();
@@ -2056,10 +2060,10 @@ function renderRest(){
    (S.loot>0?'<div><span>أخذه بو حيلة</span><b class="minus">−'+fmt(S.loot)+'</b></div>':'')+
    ((R.refillMsg&&R.refillAmt>0)?'<div><span>'+R.refillMsg+'</span><b class="plus">+'+fmt(R.refillAmt)+'</b></div>':'')+
    '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div>'+(function(){var a=ixCalc(),b=S.ixB||{n:0};if(a.n<3||S.practice)return '';var dd=b.n>=3?a.p-b.p:0;return '<div class="tot ixl"><span>مؤشر وعيك</span><b>'+a.p+(dd?' <small class="'+(dd>0?'up':'dn')+'">('+(dd>0?'+':'')+dd+')</small>':'')+'</b></div>'})()+'</div>'+
-  (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} بكرة لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>خذ راحتك.</b> زدنا الوقت وتلميحًا إضافيًا في المحاولة الجاية.</span></div>':'')+'</div>';
+  (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} بكرة لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>{خذ راحتك|خذي راحتج}.</b> زدنا لك الوقت في المحاولة الياية.</span></div>':'')+'</div>';
  var nxt=S.stage+1;
  if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+'ونبدأ لك رصيد تدريبي 100 '+CUR()+'.'+'</p>';
- var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · ورقة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'?okd:missed).push(row)});
+ var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · ورقة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'||r.kind==='partial'?okd:missed).push(row)});
  missed.sort(function(a,b){return (b.indexOf('احتيال')>0)-(a.indexOf('احتيال')>0)});
  if(missed.length)h+='<h2 class="lbl">أهم اللي فاتك</h2><div class="recap">'+missed.slice(0,2).join('')+'</div>';
  if(missed.length>2)h+='<details class="more"><summary>باقي اللي فاتك ('+(missed.length-2)+')</summary><div class="recap">'+missed.slice(2).join('')+'</div></details>';
@@ -2434,7 +2438,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27t';
+var BUILD='2026-11-27u';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
