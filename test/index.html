@@ -963,6 +963,19 @@ html{scroll-behavior:auto}
 .inclue{margin-top:.7rem;border-radius:12px;padding:.45rem .65rem;background:#fff3c9;color:#6b4a00;font-weight:700;font-size:.92rem;line-height:1.6;animation:dIn .25s}
 .inbt.gen button{background:linear-gradient(#ffe08a,#e0a52a);color:#3a2400;box-shadow:0 5px 0 #8a5a00}
 .incard2 .hand{inset:auto 0 6% 0}
+.why.teach{position:static!important;display:block;margin-top:.7rem;border-radius:14px;padding:.6rem .7rem .7rem;text-align:start;font-size:.92rem;line-height:1.7;animation:dIn .25s;transform:none!important;width:auto!important}
+.why.teach.bad{background:#ffe1e1;color:#7a1f1f}.why.teach.ok{background:#d7f7f2;color:#0e5a50}
+.why.teach b{display:block;font-size:1rem;font-weight:900}.why.teach span{display:block}
+.gotit{display:block;width:100%;margin-top:.6rem;border:0;border-radius:12px;min-height:2.9rem;background:#232C5A;color:#FFD66B;font:900 1.1rem Cairo,sans-serif;box-shadow:0 4px 0 #0c1030}
+.gotit:active{transform:translateY(3px);box-shadow:0 1px 0 #0c1030}
+.card.held{overflow:auto;max-height:100%}
+.card.reveal.safe{box-shadow:0 0 0 4px #1FC8B4,0 14px 30px rgba(35,44,90,.35)!important}
+#stage.holding #foeAva,#stage.holding .foe,#stage.holding #ctx{display:none!important}
+#stage.holding .cardwrap,#stage.holding #cardwrap{flex:1}
+.card.held{overflow-y:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.card.held .cbody{flex:0 0 auto!important;max-height:none!important;overflow:visible!important;font-size:1rem!important}
+.card.held .gotit{position:sticky;bottom:.3rem}
+.why.teach{font-size:.88rem;line-height:1.6;padding:.5rem .65rem .6rem}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1901,13 +1914,14 @@ function judge(how){
  S.res[S.i]=res;track(it,res.kind);$('score').textContent=fmt(S.pot);
  var cb=$('combo');if(S.combo>=2){cb.hidden=false;cb.textContent='×'+Math.min(5,S.combo);cb.classList.remove('in');void cb.offsetWidth;cb.classList.add('in')}else cb.hidden=true;
  setCtrl(false);
- if(hold){
-  card.style.transform='';card.querySelectorAll('.stamp').forEach(function(x){x.style.opacity=0});
+ /* a wrong answer stays on screen with the reason until the player taps «فهمت» (Khalid 2026-11-27) */
+ if(hold||res.kind==='miss'||res.kind==='timeout'){
+  card.style.transform='';card.style.opacity=1;card.querySelectorAll('.stamp').forEach(function(x){x.style.opacity=0});$('stage').classList.remove('lean-y','lean-n');
   var ip=card.querySelector('.insp');if(ip)ip.hidden=true;
-  var w=document.createElement('div');w.className='why';w.innerHTML='هنا العلامة<small>ورقة «'+LEVERS[it.lever].n+'» · الشرح في الاستراحة</small>';card.appendChild(w);
-  card.classList.add('reveal');fit(card);var tl=card.querySelector('.tell,bdi.url');if(tl)tl.scrollIntoView({block:'nearest'});
-  var tk=++timer.id,done=false,t0=performance.now(),go=function(e){if(done||timer.id!==tk||(e&&performance.now()-t0<350))return;done=true;flyOff(card,'trust');S.i++;nextCard()};
-  card.onclick=go;setTimeout(go,hold);return;
+  var w=document.createElement('div');w.className='why teach '+(it.scam?'bad':'ok');w.innerHTML=gx('<b>'+(it.scam?'⚠️ هذي حيلة':'✅ هذي رسالة سليمة')+'</b><span>'+(it.scam?(it.tell||''):(it.ok||'ما فيها طلب ولا رابط غريب.'))+'</span><button class="gotit" id="gotIt">فهمت</button>');card.appendChild(w);
+  $('stage').classList.add('holding');card.classList.add('reveal','held');if(!it.scam)card.classList.add('safe');fit(card);card.scrollTop=0;
+  var tk=++timer.id,done=false,go=function(){if(done||timer.id!==tk)return;done=true;card.classList.remove('held');$('stage').classList.remove('holding');flyOff(card,it.scam?'doubt':'trust');S.i++;nextCard()};
+  $('gotIt').onclick=function(e){e.stopPropagation();go()};return;
  }
  flyOff(card,how);S.i++;nextCard();
 }
@@ -2366,7 +2380,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27p1';
+var BUILD='2026-11-27k';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
