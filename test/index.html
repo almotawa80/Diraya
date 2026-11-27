@@ -1991,18 +1991,18 @@ var TUT0=[
  {id:'t2',ch:'sms',from:'شركة التوصيل',sub:'رسالة نصية',body:'شحنتك متوقفة. ادفع 1 د.ك رسوم التوصيل عبر الرابط {{kw-post.delivery-pay.co}}',insp:'عنوان الرابط ليس الموقع الرسمي للشركة، والاسم مركّب ليشبهه.',scam:1,lever:'urgency',lens:1,coach:'<b>تمرين 2 من 3.</b> مو {متأكد|متأكدة}؟ {اضغط|اضغطي} <b>التلميح</b> تحت ليكشف لك تفصيلة مخفية. عددها محدود في كل مرحلة.'},
  {id:'t3',ch:'notif',from:'البنك',sub:'إشعار من التطبيق',body:'تم إيداع راتبك في حسابك. لا يلزمك أي إجراء.',insp:'إشعار داخل التطبيق الرسمي، بلا رابط ولا طلب.',scam:0,coach:'<b>تمرين 3 من 3.</b> مو كل شي احتيال. هذي سليمة: {اسحب|اسحبي} <b>يمين</b> أو {اضغط|اضغطي} «أثق».',hand:'r'}
 ];
-var TUT=[TUT0[2],TUT0[0]];
-TUT[0].coach='<b>تمرين 1 من 2.</b> هذي رسالة <b>آمنة</b> من تطبيق البنك. {اسحبها|اسحبيها} <b>يمين</b> لأنك {تثق|تثقين} فيها.';
-TUT[1].coach='<b>تمرين 2 من 2.</b> هذي رسالة <b>احتيال</b>: تطلب رمزك السري. {اسحبها|اسحبيها} <b>يسار</b>.';TUT[1].hand='l';
+var TUT=[TUT0[2],TUT0[0],TUT0[1]];
+TUT[0].coach='<b>تمرين 1 من 3.</b> هذي رسالة <b>آمنة</b> من تطبيق البنك. {اسحبها|اسحبيها} <b>يمين</b> لأنك {تثق|تثقين} فيها.';
+TUT[2].lens=0;TUT[2].hand='l';TUT[2].coach='<b>تمرين 3 من 3.</b> {شوف|شوفي} الرابط: مو موقع الشركة الرسمي. هذي <b>احتيال</b>، {اسحبها|اسحبيها} <b>يسار</b>.';TUT[1].coach='<b>تمرين 2 من 3.</b> هذي رسالة <b>احتيال</b>: تطلب رمزك السري. {اسحبها|اسحبيها} <b>يسار</b>.';TUT[1].hand='l';
 function startTut(){
- var st=STAGES[0];S.tut=true;S.rapid=false;S.stage=1;S.st=st;S.items=TUT.slice();if(kid())S.items[0]={id:'t3',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'الغدا جاهز، '+G('تعال','تعالي')+' تحت 🍽',insp:'رقمها المحفوظ، ولا تطلب شيئًا.',scam:0,coach:TUT[2].coach,hand:'r'};S.i=0;S.res=[];S.bal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;S.shields=PR.shields;S.lens=3;S.mult=1;S.perWord=1;S.phase='idle';
+ var st=STAGES[0];S.tut=true;S.rapid=false;S.stage=1;S.st=st;S.items=TUT.slice();if(kid())S.items[0]={id:'t3',ch:'wa',from:'ماما',sub:'رقم محفوظ',body:'الغدا جاهز، '+G('تعال','تعالي')+' تحت 🍽',insp:'رقمها المحفوظ، ولا تطلب شيئًا.',scam:0,coach:TUT[0].coach,hand:'r'};S.i=0;S.res=[];S.bal=PR.wallet;S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;S.shields=PR.shields;S.lens=3;S.mult=1;S.perWord=1;S.phase='idle';
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;$('foeLoot').textContent=fmt(0);
  $('cardwrap').innerHTML='';$('stage').classList.add('tut');say(TAUNT.tut,'');show('play');nextCard();
 }
 function endTut(skip){
  timer.id++;store.tut=1;store.seenM=store.seenM||{};store.seenM.swipe=1;save(store);S.tut=false;$('stage').classList.remove('tut');$('bIn').classList.remove('glow');
  var sk=$('skipTut');if(sk)sk.remove();
- if(!skip)toast('المرحلة الأولى تدريب: الوقت يمشي، بس ما ينخصم شي');startStage(1);
+ stopAll();renderHome();show('home');if(!skip)toast(gx('{جاهز|جاهزة}! {اضغط|اضغطي} المرحلة الأولى على الخريطة'));try{homeGlide()}catch(e){}
 }
 function tutJudge(how){
  var it=S.items[S.i],card=$('card');
@@ -2138,7 +2138,7 @@ function openIntro(){var o=document.createElement('div');o.id='intro';o.classNam
   if(step===2){var fb=$('inFb'),hit=false;[].forEach.call(o.querySelectorAll('.inmsg span'),function(sp){sp.onclick=function(){if(hit)return;if(sp.dataset.k==='1'){hit=true;sp.classList.add('hit');o.querySelector('.intap').classList.add('done');var ic=o.querySelector('.incoach');if(ic)ic.style.display='none';var hh=sp.querySelector('.hand');if(hh)hh.remove();sfx.hit(3);buzz(25);fb.className='intfb ok';fb.innerHTML='<b>صح! هذي الحيلة</b>ما في بنك ولا جهة تطلب رمزك السري.<button class="gotit" id="inGo">كمّل</button>';$('inGo').onclick=function(){sfx.hit(2);step=3;draw()}}else{sfx.bad&&sfx.bad();sp.classList.remove('no');void sp.offsetWidth;sp.classList.add('no');fb.className='intfb no';fb.textContent='مو هذي. '+G('دوّر','دوّري')+' على الطلب الغريب.'}}});return}
   var ih=$('inH');if(ih){ih.onclick=function(e){e.stopPropagation();$('inHc').hidden=false;ih.hidden=true;sfx.hit(2)};ih.addEventListener('pointerdown',function(e){e.stopPropagation()})}var c=$('inC'),x0=null,dx=0,pid=null,sy=c.querySelector('.st.y'),sn=c.querySelector('.st.n'),done=false;
   function pick(right){if(done)return;done=true;sfx.hit(right?3:2);buzz(25);c.style.transition='transform .3s,opacity .3s';c.style.transform='translateX('+(right?420:-420)+'px) rotate('+(right?18:-18)+'deg)';c.style.opacity=0;
-   setTimeout(function(){if(step===0){store.fem=right?0:1;S.fem=!right;save(store);step=1;draw()}else{fin();close(function(){if(right)startStage(1);else startTut()})}},260)}
+   setTimeout(function(){if(step===0){store.fem=right?0:1;S.fem=!right;save(store);step=1;draw()}else{fin();close(function(){if(right){try{homeGlide()}catch(e){}}else startTut()})}},260)}
   c.addEventListener('pointerdown',function(e){x0=e.clientX;dx=0;pid=e.pointerId});
   c.addEventListener('pointermove',function(e){if(x0===null||e.pointerId!==pid)return;dx=e.clientX-x0;if(Math.abs(dx)>8){c.classList.add('drag');try{c.setPointerCapture(pid)}catch(_){}c.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80))}});
   function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70)pick(dx>0);else{c.classList.remove('drag');c.style.transform='';sy.style.opacity=0;sn.style.opacity=0}}
@@ -2430,7 +2430,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27q';
+var BUILD='2026-11-27r';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
