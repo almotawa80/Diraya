@@ -976,6 +976,12 @@ html{scroll-behavior:auto}
 .card.held .cbody{flex:0 0 auto!important;max-height:none!important;overflow:visible!important;font-size:1rem!important}
 .card.held .gotit{position:sticky;bottom:.3rem}
 .why.teach{font-size:.88rem;line-height:1.6;padding:.5rem .65rem .6rem}
+.incard2 .hand.inh{inset:auto 0 4% 0;animation:inHand 2.6s ease-in-out infinite!important;opacity:1}
+.incard2.drag .hand{display:none}
+@keyframes inHand{0%,100%{transform:translateX(0)}25%{transform:translateX(75px) rotate(10deg)}50%{transform:translateX(0)}75%{transform:translateX(-75px) rotate(-10deg)}}
+.dhand::before,.hand::before{content:""!important;display:block;width:3.2rem;height:3.84rem;margin:0 auto;background:url(img/hand.svg?v=1) center/contain no-repeat;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4))}
+.incard2 .hand.inh{background:none!important;box-shadow:none!important;border-radius:0;width:5.4rem;height:6.5rem;inset:auto 0 -2.2rem 0}
+.incard2 .hand.inh::before{width:5.4rem;height:6.5rem}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -2081,7 +2087,7 @@ function openIntro(){var o=document.createElement('div');o.id='intro';o.classNam
  function fin(){store.age='youth';store.asked=1;save(store);setProfile();renderHome(true)}
  function close(fn){o.classList.add('out');setTimeout(function(){o.remove();fn()},350)}
  function draw(){var h='<div class="indots">'+[0,1,2].map(function(k){return '<i'+(k===step?' class="on"':'')+'></i>'}).join('')+'</div><div class="inwrap">';
-  if(step===0)h+='<div class="incard2" id="inC"><i class="st y">واعي</i><i class="st n">واعية</i><img class="infox" src="img/fox-sneaky.png" alt=""><h2>أهلًا! كيف نخاطبك؟</h2><p>اسحب البطاقة يمين أو يسار</p><i class="hand lr"></i></div></div><div class="inbt gen"><button class="iy" id="inY"><b>واعي</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>واعية</b><small>← اسحب يسار</small></button></div>';
+  if(step===0)h+='<div class="incard2" id="inC"><i class="st y">واعي</i><i class="st n">واعية</i><img class="infox" src="img/fox-sneaky.png" alt=""><h2>أهلًا! كيف نخاطبك؟</h2><p>اسحب البطاقة يمين أو يسار</p><i class="hand inh"></i></div></div><div class="inbt gen"><button class="iy" id="inY"><b>واعي</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>واعية</b><small>← اسحب يسار</small></button></div>';
   else if(step===1)h+='<div class="incard2 still"><h2>كم عمرك؟</h2><p>عشان نعطيك وقت قراءة يناسبك</p><div class="inage"><button data-a="kid">أقل من 13</button><button data-a="mid">من 13 إلى 50</button><button data-a="old">فوق 50</button></div></div></div><div class="inbt ghosted"></div>';
   else h+='<div class="incard2" id="inC"><i class="st y">يلا!</i><i class="st n">'+G('فهّمني','فهّمني')+'</i><img class="infox" src="img/fox-laugh.png" alt=""><h2>بو حيلة يبي فلوسك</h2><p>عندك <b>1,000 د.ك</b>. '+G('حافظ','حافظي')+' عليها.</p><div class="inrule"><span class="tq">'+G('تثق','تثقين')+' في الرسالة؟ '+G('اسحبها','اسحبيها')+' يمين</span><span class="co">'+G('تشك','تشكين')+'؟ '+G('اسحبها','اسحبيها')+' يسار</span></div></div></div><div class="inbt"><button class="iy" id="inY"><b>يلا نبدأ</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>أبي أفهم زيادة</b><small>← اسحب يسار</small></button></div>';
   o.innerHTML=h;
@@ -2089,9 +2095,9 @@ function openIntro(){var o=document.createElement('div');o.id='intro';o.classNam
   var ih=$('inH');if(ih){ih.onclick=function(e){e.stopPropagation();$('inHc').hidden=false;ih.hidden=true;sfx.hit(2)};ih.addEventListener('pointerdown',function(e){e.stopPropagation()})}var c=$('inC'),x0=null,dx=0,pid=null,sy=c.querySelector('.st.y'),sn=c.querySelector('.st.n'),done=false;
   function pick(right){if(done)return;done=true;sfx.hit(right?3:2);buzz(25);c.style.transition='transform .3s,opacity .3s';c.style.transform='translateX('+(right?420:-420)+'px) rotate('+(right?18:-18)+'deg)';c.style.opacity=0;
    setTimeout(function(){if(step===0){store.fem=right?0:1;S.fem=!right;save(store);step=1;draw()}else{fin();close(function(){if(right)startStage(1);else startTut()})}},260)}
-  c.addEventListener('pointerdown',function(e){x0=e.clientX;dx=0;pid=e.pointerId;var hd=c.querySelector('.hand');if(hd)hd.remove()});
-  c.addEventListener('pointermove',function(e){if(x0===null||e.pointerId!==pid)return;dx=e.clientX-x0;if(Math.abs(dx)>8){try{c.setPointerCapture(pid)}catch(_){}c.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80))}});
-  function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70)pick(dx>0);else{c.style.transform='';sy.style.opacity=0;sn.style.opacity=0}}
+  c.addEventListener('pointerdown',function(e){x0=e.clientX;dx=0;pid=e.pointerId});
+  c.addEventListener('pointermove',function(e){if(x0===null||e.pointerId!==pid)return;dx=e.clientX-x0;if(Math.abs(dx)>8){c.classList.add('drag');try{c.setPointerCapture(pid)}catch(_){}c.style.transform='translateX('+dx+'px) rotate('+(dx/22)+'deg)';sy.style.opacity=Math.max(0,Math.min(1,dx/80));sn.style.opacity=Math.max(0,Math.min(1,-dx/80))}});
+  function end(){if(x0===null)return;x0=null;if(Math.abs(dx)>70)pick(dx>0);else{c.classList.remove('drag');c.style.transform='';sy.style.opacity=0;sn.style.opacity=0}}
   c.addEventListener('pointerup',end);c.addEventListener('pointercancel',end);$('inY').onclick=function(){pick(true)};$('inNo').onclick=function(){pick(false)}}
  draw()}
 function openWho(first){
@@ -2380,7 +2386,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27k';
+var BUILD='2026-11-27m';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
