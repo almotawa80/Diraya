@@ -1354,7 +1354,7 @@ var sfx={
  mid:function(){tone(523,0,.14,'triangle');tone(494,.12,.22,'triangle')},
  bad:function(){tone(196,0,.22,'sawtooth',.07);tone(139,.16,.4,'sawtooth',.07)},
  tick:function(){tone(1200,0,.04,'square',.03)},
- minus:function(){if(!S.sound)return;try{var a=sfx._m||(sfx._m=new Audio('audio/minus.mp3?v=1'));a.currentTime=0;a.volume=.9;var p=a.play();if(p&&p.catch)p.catch(function(){sfx.bad()})}catch(e){sfx.bad()}}
+ minus:function(){if(!S.sound)return;if(WB['audio/minus.mp3?v=1']&&WB['audio/minus.mp3?v=1'].b)wplay('audio/minus.mp3?v=1',.9);else{sfx.bad();wbuf('audio/minus.mp3?v=1',function(){})}}
 };
 function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
 function speak(txt){if(!S.voice)return;try{var sy=window.speechSynthesis;if(!sy)return;sy.cancel();var u=new SpeechSynthesisUtterance(txt);u.lang='ar-SA';u.rate=1;sy.speak(u)}catch(e){}}
@@ -1780,10 +1780,17 @@ function renderSpecial(it,sl){
 /* Recorded call lines: audio/call-<call#>-<line#>.mp3, with -m/-f when the line changes by player gender. Missing files fail silently. */
 var callAudio=null,CA=null;
 /* iPhone only lets audio play after a tap, so one shared player is unlocked on the first touch and reused. */
-function caInit(){if(CA)return;try{CA=new Audio();CA.preload='auto';CA.src='audio/call-1-1.mp3';CA.muted=true;var p=CA.play();if(p&&p.then)p.then(function(){CA.pause();CA.currentTime=0;CA.muted=false}).catch(function(){CA.muted=false});else CA.muted=false}catch(e){}}
+/* mp3 clips through Web Audio, not <audio>, so iOS shows no lock-screen player (Khalid 2026-11-27) */
+var WB={};function wac(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();return AC}catch(e){return null}}
+function wbuf(u,cb){if(WB[u]&&WB[u].b){cb(WB[u].b);return}if(WB[u]){WB[u].q.push(cb);return}var e=WB[u]={b:null,q:[cb]},a=wac();if(!a)return;
+ fetch(u).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()}).then(function(ab){return new Promise(function(ok,no){var p=a.decodeAudioData(ab,ok,no);if(p&&p.then)p.then(ok,no)})}).then(function(b){e.b=b;e.q.forEach(function(f){f(b)});e.q=[]}).catch(function(){delete WB[u]})}
+function wplay(u,vol){var a=wac(),h={dead:0,pause:function(){h.dead=1;try{h.s&&h.s.stop()}catch(x){}}};if(!a)return h;
+ wbuf(u,function(b){if(h.dead)return;var s=a.createBufferSource(),g=a.createGain();g.gain.value=vol||1;s.buffer=b;s.connect(g);g.connect(a.destination);s.start();h.s=s});return h}
+function caInit(){if(CA)return;CA=1;wac();wbuf('audio/call-1-1.mp3',function(){})}
+document.addEventListener('pointerdown',function(){wac();wbuf('audio/minus.mp3?v=1',function(){})},{once:true,passive:true});
 document.addEventListener('pointerdown',caInit,{once:true});
 function callVoice(cd,si,say){try{if(callAudio){callAudio.pause();callAudio=null}var n=CALLS.indexOf(cd)+1;if(!n)return;
- var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';if(!CA)caInit();CA.muted=false;CA.src=f;callAudio=CA;CA.play().catch(function(){})}catch(e){}}
+ var f='audio/call-'+n+'-'+(si+1)+(/\{[^}]*\|/.test(say)?(S.fem?'-f':'-m'):'')+'.mp3';caInit();callAudio=wplay(f,1)}catch(e){}}
 function spOpts(opts){return '<div class="spopts">'+opts.map(function(o){return '<button class="spopt" data-ok="'+o[1]+'" data-t="'+String(o[0]).replace(/"/g,'&quot;')+'">'+gx(o[0])+'</button>'}).join('')+'</div>'}
 function spBind(card,cb){[].forEach.call(card.querySelectorAll('.spopt'),function(b){b.onclick=function(){if(S.phase!=='judge')return;var ok=+b.getAttribute('data-ok');if(ok===0)b.classList.add('no');else if(ok===2)b.classList.add('ok');cb(ok,b.getAttribute('data-t'))}})}
 function segment(el){var nodes=[];[].forEach.call(el.childNodes,function(n){if(n.nodeType===3)nodes.push(n)});
@@ -2290,7 +2297,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27e';
+var BUILD='2026-11-27f';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
