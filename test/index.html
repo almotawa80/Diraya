@@ -1019,6 +1019,10 @@ html{scroll-behavior:auto}
 .inwrap{flex-direction:column;gap:.8rem}
 @media(max-height:620px){.incard2.gm.fx .infox{width:4rem;height:4rem}.incard2.gm.fx h2{font-size:1.1rem}.incard2.gm.fx .inrule span{font-size:.88rem;padding:.25rem .5rem}.incard2.gm.fx .inrule{margin-top:.4rem;gap:.3rem}.incard2.gm .chead{padding:.45rem .8rem}.incard2.gm{padding-bottom:.8rem}.incard2.gm .inb{padding-top:.5rem}}
 .incoach{width:min(21rem,88vw);background:rgba(255,255,255,.1);border-radius:14px;padding:.5rem .8rem;font-size:1rem;line-height:1.6;color:#F6F6F0}.incoach b{color:#FFD66B}
+.intap.gm .inmsg .inbub span[data-k="0"]{color:#9a9fb8;border-bottom:0!important;font-weight:600}
+.intap.gm .inmsg .inbub span[data-k="1"]{color:#1b2145;font-weight:900;border-bottom:0!important;background:#ffe27a!important;padding:.15rem .4rem!important;border-radius:8px;animation:inGlow 1.3s ease-in-out infinite}
+.intap.gm .inmsg .inbub span[data-k="1"].hit{animation:none;background:#ffd0d0!important;color:#9c1c1c}
+@keyframes inGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,183,49,.75)}50%{box-shadow:0 0 0 7px rgba(242,183,49,0)}}
 .intfb{margin-top:3.2rem;min-height:1.6rem;border-radius:14px;font-weight:700;font-size:.95rem;line-height:1.7}
 .intfb.no{color:#ffb3b3}
 .intfb.ok{margin-top:.8rem;background:#d7f7f2;color:#0e5a50;padding:.6rem .7rem .7rem;text-align:start;animation:dIn .25s}
@@ -2130,7 +2134,7 @@ function openIntro(){var o=document.createElement('div');o.id='intro';o.classNam
  function hd(f,sub){return '<header class="chead"><span class="cico">'+ICO.sms+'</span><span class="f"><b>'+f+'</b><span>'+sub+'</span></span><time>الآن</time></header><div class="inb">'}
  function draw(){var h='<div class="indots">'+[0,1,2,3].map(function(k){return '<i'+(k===step?' class="on"':'')+'></i>'}).join('')+'</div><div class="inwrap">';
   if(step===0)h+='<div class="incard2 gm" id="inC"><i class="st y">واعي</i><i class="st n">واعية</i>'+hd('واعي','رسالة نصية')+'<h2>أهلًا! كيف نخاطبك؟</h2><p>واعي أو واعية؟ اسحب الرسالة يمين أو يسار.</p></div><i class="hand inh"></i></div></div><div class="inbt gen"><button class="iy" id="inY"><b>واعي</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>واعية</b><small>← اسحب يسار</small></button></div>';
-  else if(step===1)h+='<div class="incard2 still gm">'+hd('واعي','رسالة نصية')+'<h2>كم عمرك؟</h2><p>عشان نعطيك وقت قراءة يناسبك.</p><div class="inage"><button data-a="kid">أقل من 13</button><button data-a="mid">من 13 إلى 50</button><button data-a="old">فوق 50</button></div></div></div></div><div class="inbt ghosted"></div>';
+  else if(step===1)h+='<div class="incard2 still gm">'+hd('واعي','رسالة نصية')+'<h2>كم عمرك؟</h2><div class="inage"><button data-a="kid">أقل من 13</button><button data-a="mid">من 13 إلى 50</button><button data-a="old">فوق 50</button></div></div></div></div><div class="inbt ghosted"></div>';
   else if(step===2)h+='<div class="incoach"><b>رسالة من بو حيلة.</b> وين الحيلة؟ '+G('المسها','المسيها')+'.</div><div class="incard2 still intap gm">'+hd('<bdi dir="ltr">+965 5512 0199</bdi>','رقم غريب · رسالة نصية')+'<div class="inmsg"><div class="inbub"><span data-k="0">مبروك!</span> <span data-k="0">ربحت جائزة 500 د.ك.</span> <span data-k="0">عشان تستلمها</span> <span data-k="1">أرسل رمزك السري<i class="hand intp"></i></span></div></div><div class="intfb" id="inFb"></div></div></div></div><div class="inbt ghosted"></div>';
   else h+='<div class="incard2 gm fx" id="inC"><i class="st y">يلا!</i><i class="st n">'+G('فهّمني','فهّمني')+'</i>'+hd('واعي','رسالة نصية')+'<img class="infox" src="img/fox-laugh.png" alt=""><h2>بو حيلة يبي يصفّر حسابك</h2><p>عندك <b>1,000 د.ك</b>. '+G('حافظ','حافظي')+' عليها.</p><div class="inrule"><span class="tq">'+G('اسحب','اسحبي')+' يمين: يلا نبدأ</span><span class="co">'+G('اسحب','اسحبي')+' يسار: أبي أفهم زيادة</span></div></div></div></div><div class="inbt"><button class="iy" id="inY"><b>يلا نبدأ</b><small>'+G('اسحب','اسحبي')+' يمين →</small></button><button class="in" id="inNo"><b>أبي أفهم زيادة</b><small>← '+G('اسحب','اسحبي')+' يسار</small></button></div>';
   o.innerHTML=h;
@@ -2430,7 +2434,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27s';
+var BUILD='2026-11-27t';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
