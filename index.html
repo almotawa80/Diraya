@@ -912,6 +912,9 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 html{scroll-behavior:auto}
 .stg.glow .pd{animation:stGlow .85s ease-in-out 3}.stg.glow .stgo{animation:stGlow .85s ease-in-out 3}
 @keyframes stGlow{50%{transform:scale(1.12);filter:drop-shadow(0 0 14px rgba(242,183,49,.9))}}
+.stg .starw{position:absolute;left:50%;top:-1.9rem;width:2.1rem;height:1.7rem;transform:translateX(-50%);background:linear-gradient(#ffe48a,#e09a1c);clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 2px 0 #7a3d00) drop-shadow(0 0 8px rgba(242,183,49,.8));animation:stArw .9s ease-in-out infinite;z-index:9;pointer-events:none}
+@keyframes stArw{50%{transform:translate(-50%,.5rem)}}
+.stg.tapgo .pd{transform:scale(.88);transition:transform .15s}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1387,8 +1390,8 @@ function renderHome(keep){logoFox();
   b.setAttribute('aria-label','المرحلة '+n+': '+x.n+(d[n]?'، وسام '+MEDAL[d[n]]:open?'':'، مقفلة'));
   b.style.left=(p[0]/7.33)+'%';b.style.top=((p[1]-246)/19)+'%';
   var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
-  b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=s\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=s\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
-  b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
+  b.innerHTML=(n===sel&&open?'<span class="starw" aria-hidden="true"></span>':'')+'<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=s\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=s\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+'</span>';
+  b.onclick=function(){if(b._go)return;b._go=1;S.sel=n;b.classList.add('tapgo');buzz(15);setTimeout(function(){startStage(n)},160)};box.appendChild(b)});
  renderHome._sc=1;
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
@@ -1460,7 +1463,7 @@ function startStage(n,cu){
  if(!cu)items=buildMode(st,items,n);
  S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.ixB=ixCalc();S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
  S.rapid=!cu&&st.m==='rapid';S.shields=PR.shields;S.lens=S.pro?0:Math.max(1,AGE[S.age].lens-(cu?0:Math.floor((n-1)/4)))+((PR.adapt||1)>1.1?1:0);S.phase='idle';
- S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:(PR.adapt||1));S.perWord=.62-.22*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
+ S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:Math.max(.9,PR.adapt||1));S.perWord=.9-.25*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;
  $('cardwrap').innerHTML='';say(n===STAGES.length?TAUNT.last:TAUNT.start,'');$('foeLoot').textContent=fmt(0);
  setCtrl(false);$('ctx').hidden=true;$('tfill').style.transform='';$('count').textContent='1 / '+items.length;
@@ -1534,7 +1537,7 @@ function nextCard(){
   if(it.lens){$('bYes').disabled=$('bNo').disabled=true;$('bIn').classList.add('glow')}
   if(!$('skipTut')){var sk=document.createElement('button');sk.className='skip';sk.id='skipTut';sk.textContent='تخطَّ التمرين';sk.onclick=function(){endTut(true)};$('stage').appendChild(sk)}
   return}
- S.phase='judge';timer.max=timer.left=(S.rapid?Math.max(4,2+words(it)*.22)+(call?1.5:0):(2.5+words(it)*S.perWord+(call?2:0)))*S.mult;if(card.classList.contains('demo-sw')){timer.max=timer.left=timer.left+9}timer.last=performance.now();timer.lastTick=9;timer.run=true;
+ S.phase='judge';timer.max=timer.left=(S.rapid?Math.max(5,3+words(it)*.32)+(call?1.5:0):(4+words(it)*S.perWord+(call?2:0)))*S.mult;if(card.classList.contains('demo-sw')){timer.max=timer.left=timer.left+9}timer.last=performance.now()+450;timer.lastTick=9;timer.run=true;
  $('tbar').classList.remove('low');var id=++timer.id;requestAnimationFrame(function f(now){if(!timer.run||timer.id!==id)return;loop(now);if(timer.run&&timer.id===id)requestAnimationFrame(f)});
 }
 /* ---------- extra interaction types ---------- */
@@ -1807,7 +1810,7 @@ function spDone(it,card,ok,why){
 function fit(card){var b=card.querySelector('.cbody'),f=1.12,k=0;b.style.fontSize='';while(b.scrollHeight>b.clientHeight+6&&k++<9){f-=.05;b.style.fontSize=f+'rem';b.style.lineHeight=k>5?1.45:1.6}}
 function setCtrl(on){$('bYes').disabled=$('bNo').disabled=!on;$('bIn').disabled=!on||S.lens<=0}
 function loop(now){
- var dt=Math.min(.25,(now-timer.last)/1000);timer.last=now;timer.left-=dt;
+ var dt=Math.max(0,Math.min(.25,(now-timer.last)/1000));if(now<timer.last)return;timer.last=now;timer.left-=dt;
  $('tfill').style.transform='scaleX('+Math.max(0,timer.left/timer.max)+')';(function(){var f=Math.max(0,Math.min(1,timer.left/timer.max)),el=$('tfill');el.style.background='hsl('+Math.round(f*130)+',78%,'+(48+f*4)+'%)';el.style.boxShadow='0 0 8px hsla('+Math.round(f*130)+',80%,50%,.6)'})();
  if(timer.left<=3){$('tbar').classList.add('low');var s=Math.ceil(timer.left);if(s<timer.lastTick){timer.lastTick=s;sfx.tick()}}
  if(timer.left<=0)judge('timeout');
@@ -1911,7 +1914,7 @@ function rest(){
   if(medal===3&&PR.shields<2){PR.shields++;gotShield=true}}
  if(cu&&cu.kind==='daily'){var td=today(),D=PR.daily=PR.daily||{};if(D.d!==td){D.streak=(D.d&&dayNum(td)-dayNum(D.d)===1)?(D.streak||0)+1:1;D.d=td}D.ok=ok;D.n=n;dl=D}
  var adapt='';if(!S.pro&&!cu){var ad=PR.adapt||1;if(pass&&medal===3){PR.g=(PR.g||0)+1;PR.f=0}else if(!pass){PR.f=(PR.f||0)+1;PR.g=0}else{PR.g=0;PR.f=0}
-  if(PR.g>=2){ad=Math.max(.75,ad*.88);PR.g=0;adapt='up'}if(PR.f>=2){ad=Math.min(1.5,ad*1.15);PR.f=0;adapt='down'}PR.adapt=ad}
+  if(PR.g>=2){ad=Math.max(.9,ad*.94);PR.g=0;adapt='up'}if(PR.f>=2){ad=Math.min(1.5,ad*1.15);PR.f=0;adapt='down'}PR.adapt=ad}
  save(store);
  R={custom:cu,daily:dl,adapt:adapt,pass:pass,broke:broke,ok:ok,n:n,need:need,medal:medal,reward:reward,gotShield:gotShield,first:first,refilled:false,refillMsg:''};
  renderRest();show('report');
@@ -2198,7 +2201,7 @@ function pgHead(ic,t,sub){return '<div class="ph"><span class="phi"><img src="im
 /* after the splash: glide from the top of home down to the current stage (Khalid 2026-11-27) */
 function homeGlide(){var h=$('home'),se=$('stage-'+S.sel);if(!h||h.hidden||SCR!=='home'||!se)return;
  var y0=h.scrollTop,hr=h.getBoundingClientRect(),r=se.getBoundingClientRect(),y1=Math.max(0,Math.min(h.scrollHeight-h.clientHeight,y0+r.top-hr.top-(h.clientHeight-r.height)/2-30));
- var d=y1-y0,t0=0,dur=Math.min(1600,Math.max(700,Math.abs(d)*1.4)),stop=false;function halt(){stop=true}
+ var d=y1-y0,t0=0,dur=Math.min(2800,Math.max(1800,Math.abs(d)*3.2)),stop=false;function halt(){stop=true}
  h.addEventListener('touchstart',halt,{once:true,passive:true});h.addEventListener('wheel',halt,{once:true,passive:true});
  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
  function glow(){se.classList.remove('glow');se.offsetWidth;se.classList.add('glow');setTimeout(function(){se.classList.remove('glow')},2600)}
@@ -2287,7 +2290,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27a';
+var BUILD='2026-11-27c';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
