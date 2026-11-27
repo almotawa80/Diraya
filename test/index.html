@@ -2086,7 +2086,7 @@ function openWho(first){
  s.querySelector('#wM').onclick=function(){g(0)};s.querySelector('#wF').onclick=function(){g(1)};if(first)s.querySelector('#wS').onclick=function(){g(0)};
  function step2(){store.age='youth';store.asked=1;save(store);setProfile();closeSheet();renderHome()}
 }
-if(!store.age)openIntro();
+if(!store.age||/[?&]intro\b/.test(location.search))openIntro();
 window.addEventListener('hashchange',function(){parseHash();if(!$('home').hidden)renderHome()});
 document.addEventListener('visibilitychange',function(){if(document.hidden){sfx.stop();hush()}else if(S.phase==='judge'){timer.last=performance.now()}});
 /* ===== Bottom bar + «واجه بو حيلة» (Khalid approved 2026-11-26) ===== */
