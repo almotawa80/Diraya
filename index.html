@@ -1046,6 +1046,11 @@ html{scroll-behavior:auto}
 .card.sp.held{overflow-y:auto!important;-webkit-overflow-scrolling:touch;max-height:100%}
 .card.sp.held .gotit{position:static}
 .duel .bres .gotit{margin-top:.5rem;min-height:2.6rem}
+.gleg{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin:0 0 .5rem}
+.gleg span{display:inline-flex;align-items:center;gap:.25rem}
+.gleg i{width:.7rem;height:.7rem;border-radius:.2rem;background:var(--muted);display:inline-block}
+.gleg i.perfect{background:var(--tq)}.gleg i.partial{background:var(--saffron)}.gleg i.fell{background:var(--coral)}
+.lsub{display:block;font-size:.72rem;font-weight:600;opacity:.75;line-height:1.4}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1593,6 +1598,7 @@ function startStage(n,cu){
  if(items[0].ch==='call'){for(var j=1;j<items.length;j++){if(items[j].ch!=='call'){var x=items[0];items[0]=items[j];items[j]=x;break}}}
  if(!cu)items=buildMode(st,items,n);
  S.stage=n;S.st=st;S.custom=cu||null;S.items=items;S.i=0;S.res=[];S.bal=PR.wallet;S.startBal=PR.wallet;S.ixB=ixCalc();S.pot=0;S.combo=0;S.maxCombo=0;S.loot=0;
+ if(!cu&&!S.practice)setTimeout(function(){if(S.stage===n&&S.i===0)toast('🎯 {تحتاج|تحتاجين} '+Math.ceil(PER_STAGE*.7)+' صح من '+PER_STAGE+' عشان {تعبر|تعبرين} المرحلة')},700);
  S.rapid=!cu&&st.m==='rapid';S.shields=PR.shields;S.lens=S.pro?0:Math.max(1,AGE[S.age].lens-(cu?0:Math.floor((n-1)/4)))+((PR.adapt||1)>1.1?1:0);S.phase='idle';
  S.mult=(S.pro?.7:1)*(S.big?Math.max(1.6,AGE[S.age].pw):AGE[S.age].pw)*(S.pro?1:Math.max(.9,PR.adapt||1))*(store.ageG==='kid'?1.35:store.ageG==='old'&&!S.big?1.4:1);S.perWord=.9-.25*((cu?Math.ceil(STAGES.length/2):n)-1)/(STAGES.length-1);S.tut=false;$('stage').classList.remove('tut');S.lossAmt=Math.round(st.loss*AGE[S.age].loss*(S.pro?1.5:1));
  $('bal').textContent=fmt(S.bal);$('score').textContent=fmt(0);$('combo').hidden=true;$('shieldN').textContent=S.shields;
@@ -2068,17 +2074,18 @@ function renderRest(){
  var h='<div class="rtop"><div class="pct">استراحة · '+st.n+'</div>'+
   (R.custom?'<div class="rfoe">'+foeSvg(R.pass?'defeat':'gloat',1)+'</div>':R.medal?'<div class="bigmedal">'+medalSvg(R.medal)+'</div>':'<div class="rfoe">'+foeSvg('gloat',1)+'</div>')+
   '<div class="rk"'+(R.pass?'':' style="color:var(--coral)"')+'>'+title+'</div>'+
-  '<div class="pct">'+R.ok+' صح من '+R.n+(R.custom?'':R.pass?' · وسام '+MEDAL[R.medal]:' · {تحتاج|تحتاجين} '+R.need+' {لتعبر|لتعبري}')+(S.practice?'':' · أعلى كومبو ×'+S.maxCombo)+'</div>'+
+  '<div class="pct">'+R.ok+' صح من '+R.n+(R.custom?'':R.pass?' · وسام '+MEDAL[R.medal]:' · {تحتاج|تحتاجين} '+R.need+' {لتعبر|لتعبري}')+(S.practice?'':' · أطول سلسلة صح: '+S.maxCombo)+'</div>'+
   '<div class="grid">'+S.items.map(function(it,i){var r=S.res[i];return '<i class="'+(r?r.kind:'')+'"></i>'}).join('')+'</div>'+
+  '<div class="gleg"><span><i class="perfect"></i>صح</span><span><i class="partial"></i>قريب</span><span><i class="fell"></i>غلط</span><span><i></i>سليمة {شكّيت|شكّيتي} فيها أو فات الوقت</span></div>'+
   '<div class="ledger">'+
-   (R.pass?'<div><span>جائزة المرحلة</span><b class="plus">+'+fmt(R.reward)+'</b></div>':'<div><span>جائزة المرحلة ضاعت</span><b class="minus">'+fmt(S.pot)+'</b></div>')+
+   (R.pass?'<div><span>جائزة المرحلة</span><b class="plus">+'+fmt(R.reward)+'</b></div>':'<div><span>جائزة المرحلة ما انحسبت<small class="lsub">{تحتاج|تحتاجين} '+R.need+' صح عشان {تاخذها|تاخذينها}</small></span><b class="minus">'+fmt(S.pot)+'</b></div>')+
    (S.loot>0?'<div><span>أخذه بو حيلة</span><b class="minus">−'+fmt(S.loot)+'</b></div>':'')+
    ((R.refillMsg&&R.refillAmt>0)?'<div><span>'+R.refillMsg+'</span><b class="plus">+'+fmt(R.refillAmt)+'</b></div>':'')+
-   '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div>'+(function(){var a=ixCalc(),b=S.ixB||{n:0};if(a.n<3||S.practice)return '';var dd=b.n>=3?a.p-b.p:0;return '<div class="tot ixl"><span>مؤشر وعيك</span><b>'+a.p+(dd?' <small class="'+(dd>0?'up':'dn')+'">('+(dd>0?'+':'')+dd+')</small>':'')+'</b></div>'})()+'</div>'+
+   '<div class="tot"><span>محفظتك الآن</span><b id="rTot">'+fmt(PR.wallet)+' '+CUR()+'</b></div>'+(function(){var a=ixCalc(),b=S.ixB||{n:0};if(a.n<3||S.practice)return '';var dd=b.n>=3?a.p-b.p:0;return '<div class="tot ixl"><span>مؤشر وعيك<small class="lsub">من 100، ويرتفع كل ما {كشفت|كشفتي} حيل أكثر</small></span><b>'+a.p+(dd?' <small class="'+(dd>0?'up':'dn')+'">('+(dd>0?'+':'')+dd+')</small>':'')+'</b></div>'})()+'</div>'+
   (function(){var rw=null;REWARDS.forEach(function(r){if(r.at===S.stage)rw=r});return (R.first&&rw)?'<div class="award gift"><span><b>فتحت جائزة: '+rw.t+'</b><br>مثال توضيحي. الجائزة الحقيقية تُستلم من تطبيق البنك فقط.</span></div>':''})()+(R.daily?'<div class="award"><span><b>سلسلة '+R.daily.streak+(R.daily.streak>2&&R.daily.streak<11?' أيام':' يوم')+' 🔥</b> {ارجع|ارجعي} باجر لتحدٍ جديد وتكمل السلسلة.</span></div>':'')+(R.gotShield?'<div class="award">'+SHIELD+'<span>وسام ذهبي = درع جديد. الدرع يمتص خطأك القادم.</span></div>':'')+(R.adapt==='up'?'<div class="award"><span><b>مستواك عالي!</b> صعّبناها شوي: الوقت صار أقصر.</span></div>':R.adapt==='down'?'<div class="award"><span><b>{خذ راحتك|خذي راحتج}.</b> زدنا لك الوقت في المحاولة الياية.</span></div>':'')+'</div>';
  var nxt=S.stage+1;
  if(PR.wallet<=0&&!R.refilled)h+='<p class="fine" style="color:var(--saffron)">محفظتك فاضية. {اشحن|اشحني} رصيدك من أوراق بو حيلة، أو {أعد|أعيدي} المرحلة '+'ونبدأ لك رصيد تدريبي 100 '+CUR()+'.'+'</p>';
- var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · ورقة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'||r.kind==='partial'?okd:missed).push(row)});
+ var missed=[],okd=[];S.items.forEach(function(it,i){var r=S.res[i];if(!r)return;var row='<div style="--k:'+kc[r.kind]+'"><b>'+(it.cap?it.cap:bd(fx(it.from)))+(it.cap?'':it.scam?' · احتيال · حيلة '+LEVERS[it.lever].n:' · سليمة')+'</b><span>'+(it.scam?it.tell+(it.right?'<br><b style="display:inline;color:var(--fg)">الصح:</b> '+it.right:''):it.ok)+'</span></div>';(r.kind==='perfect'||r.kind==='partial'?okd:missed).push(row)});
  missed.sort(function(a,b){return (b.indexOf('احتيال')>0)-(a.indexOf('احتيال')>0)});
  if(missed.length)h+='<h2 class="lbl">أهم اللي فاتك</h2><div class="recap">'+missed.slice(0,2).join('')+'</div>';
  if(missed.length>2)h+='<details class="more"><summary>باقي اللي فاتك ('+(missed.length-2)+')</summary><div class="recap">'+missed.slice(2).join('')+'</div></details>';
@@ -2457,7 +2464,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27x';
+var BUILD='2026-11-27y';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
