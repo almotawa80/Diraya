@@ -910,6 +910,8 @@ html.big #home .map.world .stg .lab b{font-size:1.05rem}
 [data-ph="3"] .ph::after{content:"";display:block;width:8rem;height:3px;margin-top:.55rem;border-radius:3px;background:linear-gradient(90deg,transparent,#F2B731,transparent)}
 .pgin{animation:pgIn .42s cubic-bezier(.22,.9,.3,1) both}@keyframes pgIn{from{opacity:0;transform:translateY(22px)}}
 html{scroll-behavior:auto}
+.stg.glow .pd{animation:stGlow .85s ease-in-out 3}.stg.glow .stgo{animation:stGlow .85s ease-in-out 3}
+@keyframes stGlow{50%{transform:scale(1.12);filter:drop-shadow(0 0 14px rgba(242,183,49,.9))}}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -1387,7 +1389,7 @@ function renderHome(keep){logoFox();
   var ic=boss?'s10':open?'s'+Math.min(n,9):'lock';
   b.innerHTML='<span class="pd"><img class="ic" src="img/map/'+ic+'.webp?v=s\" alt="">'+(d[n]?'<img class="md" src="img/map/m'+d[n]+'.webp?v=s\" alt="">':'')+'<span class="num">'+n+'</span></span><span class="lab"><b>'+x.n+'</b>'+(n===sel&&open?'<span class="stgo">'+gx(d[n]?'↻ {أعد|أعيدي}':'▶ {ابدأ|ابدئي}')+'</span>':'')+'</span>';
   b.onclick=function(){if(S.sel===n){startStage(n);return}S.sel=n;renderHome(true)};box.appendChild(b)});
- if(!renderHome._sc){renderHome._sc=1;var se=$('stage-'+sel);if(se&&sel>1)setTimeout(function(){se.scrollIntoView({block:'center'})},50)}
+ renderHome._sc=1;
  renderDaily();var c=$('challenge');
  if(challenge){c.hidden=false;c.textContent='وصلك تحدٍّ! صاحبه وصل المرحلة '+challenge.stage+' ومحفظته '+challenge.wallet.toLocaleString('en-US')+' '+CUR()+'. '+G('اغلبه','اغلبيه')+'.'}else c.hidden=true;
 }
@@ -2193,6 +2195,15 @@ function btEnd(){if(!BT)return;clearTimeout(BT.to);clearInterval(BT.clk);var dea
  BT=null;DU={id:0};$('dAgain').onclick=duelRing;$('dBack').onclick=duelClose}
 function pgHead(ic,t,sub){return '<div class="ph"><span class="phi"><img src="img/map/'+ic+'.webp?v=s" alt=""></span><div class="pht"><h1>'+t+'</h1><small>'+sub+'</small></div></div>'}
 (function(){var m=/[?&]ph=(\d)/.exec(location.search);document.documentElement.setAttribute('data-ph',m?m[1]:'2')})();
+/* after the splash: glide from the top of home down to the current stage (Khalid 2026-11-27) */
+function homeGlide(){var h=$('home'),se=$('stage-'+S.sel);if(!h||h.hidden||SCR!=='home'||!se)return;
+ var y0=h.scrollTop,hr=h.getBoundingClientRect(),r=se.getBoundingClientRect(),y1=Math.max(0,Math.min(h.scrollHeight-h.clientHeight,y0+r.top-hr.top-(h.clientHeight-r.height)/2-30));
+ var d=y1-y0,t0=0,dur=Math.min(1600,Math.max(700,Math.abs(d)*1.4)),stop=false;function halt(){stop=true}
+ h.addEventListener('touchstart',halt,{once:true,passive:true});h.addEventListener('wheel',halt,{once:true,passive:true});
+ function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+ function glow(){se.classList.remove('glow');se.offsetWidth;se.classList.add('glow');setTimeout(function(){se.classList.remove('glow')},2600)}
+ if(Math.abs(d)<8){glow();return}
+ requestAnimationFrame(function f(ts){if(stop)return;if(!t0)t0=ts;var k=Math.min(1,(ts-t0)/dur);h.scrollTop=y0+d*ease(k);if(k<1)requestAnimationFrame(f);else glow()})}
 /* ===== Full prizes and leaderboard pages (Khalid 2026-11-26) ===== */
 function passedMax(){var d=PR.done||{},m=0;for(var k in d)if(d[k]&&+k>m)m=+k;return m}
 function renderPrizesOld(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h='';for(n=1;n<=STAGES.length;n++){if(d[n])med++;if(d[n]===3)gold++}
@@ -2267,7 +2278,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
   '<p class="pgnote">الترتيب الحالي أرقام توضيحية لين نربطه بالأرقام الحقيقية.'+(t==='duel'?' النقاط هنا: أعلى نتيجة لك في معركة الحيل.':'')+'</p>';
  $('lead').innerHTML=gx(h);[].forEach.call($('lead').querySelectorAll('.gztabs button'),function(b){b.onclick=function(){renderLead(b.dataset.l)}})}
 /* splash: show about 2.4 s once per launch, tap to skip */
-(function(){var sp=$('splash');if(!sp)return;var gone=false;function hide(){if(gone)return;gone=true;sp.classList.add('out');setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},500)}
+(function(){var sp=$('splash');if(!sp)return;var gone=false;function hide(){if(gone)return;gone=true;sp.classList.add('out');setTimeout(homeGlide,450);setTimeout(function(){if(sp.parentNode)sp.parentNode.removeChild(sp)},500)}
  var name=(store&&store.fem)?'واعية':'واعي';var h=sp.querySelector('h2');if(h)h.textContent=name;
  sp.addEventListener('click',hide);
  /* wait for the map images so the home map appears complete (Khalid 2026-11-26) */
@@ -2276,7 +2287,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-26z7';
+var BUILD='2026-11-27a';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
