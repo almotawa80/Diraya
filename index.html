@@ -983,6 +983,23 @@ html{scroll-behavior:auto}
 .dhand::before,.hand::before{content:""!important;display:block;width:3.2rem;height:3.84rem;margin:0 auto;background:url(img/hand.svg?v=1) center/contain no-repeat;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4))}
 .incard2 .hand.inh{background:none!important;box-shadow:none!important;border-radius:0;width:5.4rem;height:6.5rem;inset:auto 0 -2.2rem 0}
 .incard2 .hand.inh::before{width:5.4rem;height:6.5rem}
+.intap .inmsg{position:relative;margin-top:.9rem;background:#F6F6F0;color:#1b2145;border-radius:16px;padding:.7rem .8rem 1rem;text-align:start;font-size:1.08rem;line-height:2.3;font-weight:700}
+.intap .inmsg small{display:block;font-size:.75rem;color:#6a7096;line-height:1.4;margin-bottom:.2rem}
+.intap .inmsg span{position:relative;display:inline;border-radius:8px;padding:.15rem .3rem;background:#e6e8f3;-webkit-box-decoration-break:clone;box-decoration-break:clone;cursor:pointer}
+.intap .inmsg span.hit{background:#ffd0d0;color:#9c1c1c;box-shadow:0 0 0 2px #e25555}
+.intap .inmsg span.no{animation:inNo .35s}
+@keyframes inNo{25%{transform:translateX(5px)}75%{transform:translateX(-5px)}}
+.intap .inmsg span{display:inline-block}
+.incard2 .hand.intp{inset:70% 0 auto 0;width:4.2rem;height:5rem;animation:inTap 1.3s ease-in-out infinite!important;opacity:1;z-index:5}
+.incard2 .hand.intp::before{width:4.2rem;height:5rem}
+@keyframes inTap{0%,100%{transform:translateY(14px)}45%,60%{transform:translateY(0) scale(.92)}}
+.intap h2{font-size:1.35rem!important;margin:0 0 .1rem!important}.intap.done>p{display:none}.intap.done .inmsg{margin-top:.5rem}
+.intro{overflow-y:auto}
+@media(max-height:620px){.intap .inmsg{font-size:.98rem;line-height:2.1;padding:.5rem .6rem .7rem}}
+.intfb{margin-top:3.2rem;min-height:1.6rem;border-radius:14px;font-weight:700;font-size:.95rem;line-height:1.7}
+.intfb.no{color:#ffb3b3}
+.intfb.ok{margin-top:.8rem;background:#d7f7f2;color:#0e5a50;padding:.6rem .7rem .7rem;text-align:start;animation:dIn .25s}
+.intfb.ok b{display:block;font-weight:900;font-size:1.05rem}
 .gzbox,.gzsec{position:relative;background:rgba(26,33,73,.82);border:2px solid rgba(242,183,49,.55);border-radius:20px;padding:1rem .8rem .8rem;margin-top:1.3rem;box-shadow:0 6px 0 rgba(0,0,0,.25)}
 .gzsec.cream{background:linear-gradient(#F8EBD0,#EFD9AE);border-color:#E3A93C;color:#3b2a14}
 .gztag{position:absolute;top:-1rem;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap;background:linear-gradient(#FFE29A,#E9B348);color:#4a2a08;font:900 .95rem/1.6 Cairo,sans-serif;border-radius:99px;padding:.05rem 1rem;border:2px solid #fff3cf;box-shadow:0 3px 0 rgba(0,0,0,.25)}
@@ -2087,12 +2104,14 @@ window.__ranna=S;window.__face=face;setProfile();parseHash();renderHome();
 function openIntro(){var o=document.createElement('div');o.id='intro';o.className='intro';o.setAttribute('dir','rtl');document.body.appendChild(o);var step=0;
  function fin(){store.age='youth';store.asked=1;save(store);setProfile();renderHome(true)}
  function close(fn){o.classList.add('out');setTimeout(function(){o.remove();fn()},350)}
- function draw(){var h='<div class="indots">'+[0,1,2].map(function(k){return '<i'+(k===step?' class="on"':'')+'></i>'}).join('')+'</div><div class="inwrap">';
+ function draw(){var h='<div class="indots">'+[0,1,2,3].map(function(k){return '<i'+(k===step?' class="on"':'')+'></i>'}).join('')+'</div><div class="inwrap">';
   if(step===0)h+='<div class="incard2" id="inC"><i class="st y">واعي</i><i class="st n">واعية</i><img class="infox" src="img/fox-sneaky.png" alt=""><h2>أهلًا! كيف نخاطبك؟</h2><p>اسحب البطاقة يمين أو يسار</p><i class="hand inh"></i></div></div><div class="inbt gen"><button class="iy" id="inY"><b>واعي</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>واعية</b><small>← اسحب يسار</small></button></div>';
   else if(step===1)h+='<div class="incard2 still"><h2>كم عمرك؟</h2><p>عشان نعطيك وقت قراءة يناسبك</p><div class="inage"><button data-a="kid">أقل من 13</button><button data-a="mid">من 13 إلى 50</button><button data-a="old">فوق 50</button></div></div></div><div class="inbt ghosted"></div>';
-  else h+='<div class="incard2" id="inC"><i class="st y">يلا!</i><i class="st n">'+G('فهّمني','فهّمني')+'</i><img class="infox" src="img/fox-laugh.png" alt=""><h2>بو حيلة يبي فلوسك</h2><p>عندك <b>1,000 د.ك</b>. '+G('حافظ','حافظي')+' عليها.</p><div class="inrule"><span class="tq">'+G('تثق','تثقين')+' في الرسالة؟ '+G('اسحبها','اسحبيها')+' يمين</span><span class="co">'+G('تشك','تشكين')+'؟ '+G('اسحبها','اسحبيها')+' يسار</span></div></div></div><div class="inbt"><button class="iy" id="inY"><b>يلا نبدأ</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>أبي أفهم زيادة</b><small>← اسحب يسار</small></button></div>';
+  else if(step===2)h+='<div class="incard2 still intap"><h2>رسالة من بو حيلة</h2><p><b>وين الحيلة؟ '+G('المسها','المسيها')+'</b></p><div class="inmsg"><small>رسالة نصية · رقم غريب</small><span data-k="0">مبروك!</span> <span data-k="0">ربحت جائزة 500 د.ك.</span> <span data-k="0">عشان تستلمها</span> <span data-k="1">أرسل رمزك السري<i class="hand intp"></i></span></div><div class="intfb" id="inFb"></div></div></div><div class="inbt ghosted"></div>';
+  else h+='<div class="incard2" id="inC"><i class="st y">يلا!</i><i class="st n">'+G('فهّمني','فهّمني')+'</i><img class="infox" src="img/fox-laugh.png" alt=""><h2>بو حيلة يبي يصفّر حسابك</h2><p>عندك <b>1,000 د.ك</b>. '+G('حافظ','حافظي')+' عليها.</p><div class="inrule"><span class="tq">'+G('تثق','تثقين')+' في الرسالة؟ '+G('اسحبها','اسحبيها')+' يمين</span><span class="co">'+G('تشك','تشكين')+'؟ '+G('اسحبها','اسحبيها')+' يسار</span></div></div></div><div class="inbt"><button class="iy" id="inY"><b>يلا نبدأ</b><small>اسحب يمين →</small></button><button class="in" id="inNo"><b>أبي أفهم زيادة</b><small>← اسحب يسار</small></button></div>';
   o.innerHTML=h;
   if(step===1){[].forEach.call(o.querySelectorAll('.inage button'),function(b){b.onclick=function(){store.ageG=b.dataset.a;save(store);sfx.hit(2);step=2;draw()}});return}
+  if(step===2){var fb=$('inFb'),hit=false;[].forEach.call(o.querySelectorAll('.inmsg span'),function(sp){sp.onclick=function(){if(hit)return;if(sp.dataset.k==='1'){hit=true;sp.classList.add('hit');o.querySelector('.intap').classList.add('done');var hh=sp.querySelector('.hand');if(hh)hh.remove();sfx.hit(3);buzz(25);fb.className='intfb ok';fb.innerHTML='<b>صح! هذي الحيلة</b>ما في بنك ولا جهة تطلب رمزك السري.<button class="gotit" id="inGo">كمّل</button>';$('inGo').onclick=function(){sfx.hit(2);step=3;draw()}}else{sfx.bad&&sfx.bad();sp.classList.remove('no');void sp.offsetWidth;sp.classList.add('no');fb.className='intfb no';fb.textContent='مو هذي. '+G('دوّر','دوّري')+' على الطلب الغريب.'}}});return}
   var ih=$('inH');if(ih){ih.onclick=function(e){e.stopPropagation();$('inHc').hidden=false;ih.hidden=true;sfx.hit(2)};ih.addEventListener('pointerdown',function(e){e.stopPropagation()})}var c=$('inC'),x0=null,dx=0,pid=null,sy=c.querySelector('.st.y'),sn=c.querySelector('.st.n'),done=false;
   function pick(right){if(done)return;done=true;sfx.hit(right?3:2);buzz(25);c.style.transition='transform .3s,opacity .3s';c.style.transform='translateX('+(right?420:-420)+'px) rotate('+(right?18:-18)+'deg)';c.style.opacity=0;
    setTimeout(function(){if(step===0){store.fem=right?0:1;S.fem=!right;save(store);step=1;draw()}else{fin();close(function(){if(right)startStage(1);else startTut()})}},260)}
@@ -2387,7 +2406,7 @@ function renderLead(t){LBT=t=t||'week';var L=LBD[t],me=myPts(t),rank=1;L.forEach
  list.forEach(function(n){var im=new Image();im.onload=im.onerror=one;im.src='img/map/'+n+'.webp?v=s'});
  setTimeout(hide,5000)})();
 /* silent self-update (Khalid 2026-11-26): fetch the page fresh; if BUILD changed, reload from a cache-busting URL, only while not in a stage */
-var BUILD='2026-11-27n';
+var BUILD='2026-11-27o';
 function checkUpdate(){if(!$('play').hidden||!$('flip').hidden||$('duel')||SCR==='play'||SCR==='flip'||SCR==='report')return;try{fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(t){var m=t.match(/var BUILD='([^']+)'/);if(m&&m[1]!==BUILD&&$('play').hidden&&$('flip').hidden){var q=new URLSearchParams(location.search);q.set('v',m[1]);location.replace(location.pathname+'?'+q.toString())}}).catch(function(){})}catch(e){}}
 checkUpdate();document.addEventListener('visibilitychange',function(){if(!document.hidden)checkUpdate()});
 })();
