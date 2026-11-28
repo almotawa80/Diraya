@@ -1668,7 +1668,7 @@ function openIndex(){var x=ixCalc(),h='<h3>مؤشر الوعي<small>يُحسب 
  if((b=sh.querySelector('#ixDrill')))b.onclick=function(){closeSheet();startDrill(x.weak.g)};
  if((b=sh.querySelector('#ixShare')))b.onclick=function(){closeSheet();doShare(certText())}}
 function renderDaily(){var dc=$('daily'),D=PR.daily||{},t=today(),td=D.d===t,sk=(D.d&&dayNum(t)-dayNum(D.d)<=1)?(D.streak||0):0;
- dc.style.display=(store.tut&&!S.pro)?'':'none';dc.className='daily'+(td?' done':'');
+ dc.style.display='none';/* daily challenge hidden 2026-11-28 */dc.className='daily'+(td?' done':'');
  dc.innerHTML=gx('<span class="fl">'+sk+'<small>يوم</small></span><span><b>'+(td?'أنجزت تحدي اليوم':'تحدي اليوم · دقيقة واحدة')+'</b><span>'+(td?'كشفت '+D.ok+' من '+D.n+'. {ارجع|ارجعي} باجر لتكمل السلسلة':'6 بطاقات، نفسها عند أهلك اليوم')+'</span></span>'+(td?'':'<span class="go">{ابدأ|ابدئي}</span>'));
  dc.onclick=function(){if(td){toast('تحدي باجر يفتح بعد منتصف الليل');return}startDaily()}}
 
@@ -2287,7 +2287,6 @@ function openLead(){var d=PR.done||{},med=0,du=store.duel||{};for(var k in d)if(
  '<div class="lbrow"><span>الأوسمة</span><b>'+med+' / '+STAGES.length+'</b></div>'+
  '<div class="lbrow"><span>أعلى نقاط في «واجه بو حيلة»</span><b>'+(du.best||0)+'</b></div>'+
  '<div class="lbrow"><span>مكالمات كشفتها / لعبتها</span><b>'+(du.wins||0)+' / '+(du.plays||0)+'</b></div>'+
- '<div class="lbrow"><span>أيام تحدي اليوم المتتالية</span><b>'+((PR.daily&&PR.daily.streak)||0)+'</b></div>'+
  '<button class="ghost" id="closeS">تم</button>';
  var s=sheet(h);s.querySelector('#closeS').onclick=closeSheet;$('dim').onclick=closeSheet}
 function navScrollTop(){var e=$(SCR),y=Math.max(window.scrollY||0,e?e.scrollTop:0);if(y<4)return false;try{window.scrollTo({top:0,behavior:'smooth'});if(e&&e.scrollTop)e.scrollTo({top:0,behavior:'smooth'})}catch(x){window.scrollTo(0,0)}return true}
@@ -2618,7 +2617,6 @@ function renderPrizesOld(){var d=PR.done||{},du=store.duel||{},med=0,gold=0,n,h=
  for(n=1;n<=STAGES.length;n++){var m=d[n]||0;h+='<div class="mdl m'+m+'"><b>'+(m?n:'🔒')+'</b>'+STAGES[n-1].n+'</div>'}
  h+='</div></div>';
  var A=[['📞','كاشف المكالمات','{افز|افزي} على بو حيلة في 5 مكالمات',du.wins||0,5],
-  ['🔥','سلسلة الوعي','{العب|العبي} تحدي اليوم 7 أيام ورا بعض',(PR.daily&&PR.daily.streak)||0,7],
   ['🥇','ثلاث ذهبيات','{احصل|احصلي} على الذهبي في 3 مراحل',gold,3],
   ['🏅','جامع الأوسمة','وسام في كل المراحل',med,STAGES.length],
   ['🦊','هازم بو حيلة','{عدّ|عدّي} المرحلة الأخيرة',d[STAGES.length]?1:0,1]];
